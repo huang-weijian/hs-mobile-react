@@ -1,3 +1,3 @@
-# hs-mobile-react
+# hs-mobile react ui lib
 
-hs-mobile react移动端ui库
+react mobile UI库

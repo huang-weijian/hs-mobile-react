@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "target": "ES6",
+    "jsx": "preserve",
+    "strict": true,
+    "moduleResolution": "Node",
+    "baseUrl": "src",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "web/src/hw",
+    "declarationDir": "web/src/hw"
+  },
+  "include": ["src"],
+  "exclude": ["web", "node_modules", "lib", "types"]
+}

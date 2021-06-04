@@ -1,0 +1,39 @@
+{
+  "name": "hs-mobile-react",
+  "version": "1.0.0",
+  "description": "react-mobile-ui react移动端UI",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev:lib": "tsc --watch --project tsconfig.dev.json",
+    "build:lib": "tsc --project tsconfig.pro.json",
+    "start:web": "cd ./web && npm run start",
+    "start:dev-all": "concurrently \"npm run dev:lib\" \"npm run start:web\""
+  },
+  "repository": {
+    "type": "git"
+  },
+  "private": true,
+  "keywords": [
+    "react-mobile-ui hs-mobile-react",
+    "react-mobile",
+    "react mobile ui"
+  ],
+  "workspaces": [
+    "web"
+  ],
+  "types": "types",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "typescript": "^4.2.4"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.1",
+    "react-dom": ">=17.0.1"
+  },
+  "author": "huang-weijian",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^6.2.0"
+  }
+}
