@@ -333,7 +333,7 @@ module.exports = function (webpackEnv) {
                     'react-dom$': 'react-dom/profiling',
                     'scheduler/tracing': 'scheduler/tracing-profiling',
                 }),
-                "@hw":path.join(__dirname,'../src/hw'),
+                "@hs":path.join(__dirname,'../src/hs'),
                 ...(modules.webpackAliases || {}),
             },
             plugins: [

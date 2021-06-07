@@ -8,9 +8,9 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": true,
-    "outDir": "web/src/hw",
-    "declarationDir": "web/src/hw"
+    "outDir": "web/src/hs",
+    "declarationDir": "web/src/hs"
   },
-  "include": ["src"],
+  "include": ["src", "./types.d.ts"],
   "exclude": ["web", "node_modules", "lib", "types"]
 }

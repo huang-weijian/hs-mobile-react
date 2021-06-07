@@ -11,6 +11,6 @@
     "outDir": "lib",
     "declarationDir": "types"
   },
-  "include": ["src"],
+  "include": ["src", "./types.d.ts"],
   "exclude": ["web", "node_modules", "lib", "types"]
 }
