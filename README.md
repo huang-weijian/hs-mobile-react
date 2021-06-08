@@ -1,2 +1,2 @@
-1. [中文](./README-ZH.md)
-2. [English](./README-ES.md)
+1. [中文](doc/md/README-ZH.md)
+2. [English](doc/md/README-ES.md)

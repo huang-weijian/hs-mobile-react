@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": "dist",
     "target": "ES6",
     "jsx": "preserve",
     "strict": true,
     "moduleResolution": "Node",
-    "baseUrl": "src",
+    "baseUrl": "dist",
     "sourceMap": true,
     "declaration": true,
-    "outDir": "lib",
-    "declarationDir": "types"
   },
-  "include": ["src", "./types.d.ts"],
+  "include": ["dist", "./types.d.ts"],
   "exclude": ["web", "node_modules", "lib", "types"]
 }

@@ -1,6 +1,9 @@
 const path = require("path");
 const copydir = require("copy-dir");
 const chokidar = require("chokidar");
+const colors = require("colors");
+
+console.log("hs".bgBlue.white, " dev start");
 
 // 源文件路径
 const sourcePath = path.join(__dirname, "src");
