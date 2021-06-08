@@ -17,6 +17,14 @@
     "react-mobile",
     "react mobile ui"
   ],
+  "engines": {
+    "node": ">=14.16.1",
+    "yarn": "1.22",
+    "npm": "6.14.12"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "workspaces": [
     "web"
   ],
