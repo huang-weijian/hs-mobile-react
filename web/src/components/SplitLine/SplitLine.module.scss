@@ -1,0 +1,23 @@
+.splitLine {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  $line-height: 2px;
+  $line-bg: #f3f3f3;
+
+  .leftLine {
+    width: 15%;
+    height: $line-height;
+    background-color: $line-bg;
+  }
+
+  .centerName {
+    font-size: 14px;
+  }
+
+  .rightLine {
+    width: 85%;
+    height: $line-height;
+    background-color: $line-bg;
+  }
+}

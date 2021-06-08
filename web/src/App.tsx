@@ -1,16 +1,10 @@
-import * as React from "react";
-import * as HSComponents from "@hs";
+import "./css/app.less";
+import DemoButton from "./views/DemoButton";
 
 function App() {
   return (
-    <div>
-      123
-      {Object.keys(HSComponents).map((key) => {
-        // @ts-ignore
-        let TempComponent = HSComponents[key];
-        // @ts-ignore
-        return <TempComponent key={key}></TempComponent>;
-      })}
+    <div className={"app"}>
+      <DemoButton></DemoButton>
     </div>
   );
 }
