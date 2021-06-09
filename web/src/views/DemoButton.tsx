@@ -19,6 +19,7 @@ function DemoButton(props: DemoButtonProps) {
         }}
       >
         primary
+        <span>111</span>
       </Button>
       <Button className={"demo-button"} type={"danger"} ref={btnRef}>
         danger

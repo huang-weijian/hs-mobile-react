@@ -1,10 +1,9 @@
 import {
   CSSProperties,
+  ForwardedRef,
   forwardRef,
-  Fragment,
   MouseEvent,
   ReactChild,
-  ReactText,
   useEffect,
   useRef,
   useState,
@@ -32,6 +31,7 @@ export declare interface ButtonProps {
    * 按钮原生type（button native type）
    */
   nativeType?: "submit" | "reset" | "button";
+  disabled?: boolean;
 }
 
 const defaultProps: ButtonProps = {
@@ -40,13 +40,14 @@ const defaultProps: ButtonProps = {
   block: false,
   round: false,
   onClick: (): void => {},
+  disabled: false,
+  nativeType: "button",
 };
 
-export default forwardRef<HTMLButtonElement, ButtonProps>(function (
-  props: ButtonProps,
-  ref
-) {
+function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
+  // 默认props（default props）
   props = Object.assign({}, defaultProps, props);
+
   // button样式（btn class
   const className = getClassByProp(props);
   const rippleConRef = useRef<HTMLDivElement>(null);
@@ -64,32 +65,40 @@ export default forwardRef<HTMLButtonElement, ButtonProps>(function (
       y: rippleConRef.current.offsetTop,
     });
   }, []);
+
+  // click event handler
+  function clickHandler(e: MouseEvent<HTMLButtonElement>): void {
+    // 添加水波纹效果（add ripple animated）
+    let tempChild = createRipple({
+      x: e.pageX - rippleConPos.x,
+      y: e.pageY - rippleConPos.y,
+    });
+    // @ts-ignore
+    rippleConRef.current.appendChild(tempChild);
+    setTimeout(() => {
+      // @ts-ignore
+      rippleConRef.current.removeChild(tempChild);
+    }, 1600);
+    // trigger click
+    if (props.onClick) {
+      props.onClick(e);
+    }
+  }
+
   return (
     <button
-      type={props.nativeType || "button"}
+      type={props.nativeType}
       style={props.style}
       ref={ref}
-      onClick={(e) => {
-        // 添加水波纹效果（add ripple animated）
-        let tempChild = createRipple({
-          x: e.pageX - rippleConPos.x,
-          y: e.pageY - rippleConPos.y,
-        });
-        // @ts-ignore
-        rippleConRef.current.appendChild(tempChild);
-        setTimeout(() => {
-          // @ts-ignore
-          rippleConRef.current.removeChild(tempChild);
-        }, 1600);
-        // trigger click
-        if (props.onClick) {
-          props.onClick(e);
-        }
-      }}
+      disabled={props.disabled}
+      onClick={clickHandler}
       className={`${prefix}-button ${className}`}
     >
       {props.children}
       <div ref={rippleConRef} className={"hs-button-ripple-container"}></div>
     </button>
   );
-});
+}
+
+Button.displayName = "HSButton";
+export default forwardRef<HTMLButtonElement, ButtonProps>(Button);
