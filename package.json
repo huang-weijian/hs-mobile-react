@@ -5,8 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build:lib-for-npm": "node lib-build.js && cd ./dist && tsc --project ../tsconfig.pro.json",
-    "start:web": "cd ./web && npm run start",
-    "start:dev-all": "concurrently \"node lib-dev.js\" \"npm run start:web\""
+    "start": "cd ./web && npm run dev"
   },
   "repository": {
     "type": "git"

@@ -1,10 +1,9 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
+
+import "./index.css";
+import { createElement } from "react";
+import * as ReactDom from "react-dom";
 import App from "./App";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+ReactDom.render(<App></App>, document.getElementById("app"));

@@ -1,6 +1,6 @@
 import SplitLine from "../components/SplitLine/SplitLine";
-import { Button } from "../hs/index";
-import { createRef } from "react";
+import { Button } from "@hs";
+import { createRef, createElement } from "react";
 
 export declare interface DemoButtonProps {}
 
