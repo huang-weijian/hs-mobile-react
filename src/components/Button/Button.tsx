@@ -101,5 +101,5 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   );
 }
 
-Button.displayName = "HSButton";
+Button.displayName = `${prefix.toUpperCase()}Button`;
 export default forwardRef<HTMLButtonElement, ButtonProps>(Button);

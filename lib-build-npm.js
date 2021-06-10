@@ -2,6 +2,13 @@ const path = require("path");
 const copydir = require("copy-dir");
 const colors = require("colors");
 const fs = require("fs");
+const del = require("del");
+
+console.log(
+  "hs".bgBlue.white,
+  " build start ",
+  new Date().toLocaleString().blue
+);
 
 const packageJson = JSON.parse(
   fs.readFileSync(path.join(__dirname, "package.json"))
@@ -12,18 +19,14 @@ delete packageJson.devDependencies;
 delete packageJson.private;
 delete packageJson.scripts;
 
-console.log(
-  "hs".bgBlue.white,
-  " build start ",
-  new Date().toLocaleString().blue
-);
-
 // 源文件路径
 const sourcePath = path.join(__dirname, "src");
 // 目标文件路径
 const targetPath = path.join(__dirname, "dist");
 // 文档源文件地址
 const mdSourcePath = path.join(__dirname, "doc");
+
+del.sync([targetPath]);
 
 copydir.sync(sourcePath, targetPath, {
   utimes: true, // keep add time and modify time
