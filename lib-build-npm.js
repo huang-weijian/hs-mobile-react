@@ -25,6 +25,8 @@ const sourcePath = path.join(__dirname, "src");
 const targetPath = path.join(__dirname, "dist");
 // 文档源文件地址
 const mdSourcePath = path.join(__dirname, "doc");
+// 文档目标路径
+const mdTargetPath = path.join(__dirname, "dist/doc");
 
 del.sync([targetPath]);
 
@@ -34,7 +36,7 @@ copydir.sync(sourcePath, targetPath, {
   cover: true, // cover file when exists, default is true
 });
 
-copydir.sync(mdSourcePath, targetPath, {
+copydir.sync(mdSourcePath, mdTargetPath, {
   utimes: true, // keep add time and modify time
   mode: true, // keep file mode
   cover: true, // cover file when exists, default is true

@@ -9,7 +9,14 @@ console.log(
   " delete start ",
   new Date().toLocaleString().blue
 );
-del.sync([`${targetPath}/**/*.ts`, `${targetPath}/**/*.tsx`], [`!*.d.ts`]);
+del.sync([
+  // ts源码 ts source code
+  `${targetPath}/**/*.ts`,
+  // tsx源码  tsx source code
+  `${targetPath}/**/*.tsx`,
+  // 声明文件 .d.ts
+  `!${targetPath}/**/*.d.ts`,
+]);
 console.log(
   "hs".bgBlue.white,
   " delete end ",
