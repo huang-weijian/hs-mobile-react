@@ -4,7 +4,7 @@
   "description": "react-mobile-ui react移动端UI",
   "main": "lib/index.js",
   "scripts": {
-    "build:npm": "node lib-build-npm.js && cd ./dist && tsc --project ../tsconfig.pro.json",
+    "build:npm": "node lib-build-npm.js && cd ./dist && tsc --project ../tsconfig.pro.json && cd ../ && node delete-ts.js",
     "start": "cd ./web && npm run dev"
   },
   "repository": {
