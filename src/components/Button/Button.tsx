@@ -8,9 +8,10 @@ import {
   useRef,
   useState,
   createElement,
+  MutableRefObject,
 } from "react";
 import "./style";
-import { types } from "../../types/types";
+import { sizes, types } from "../../types/types";
 import { prefix } from "../../string/txt";
 import { createRipple, getClassByProp } from "./func";
 
@@ -33,6 +34,14 @@ export declare interface ButtonProps {
    */
   nativeType?: "submit" | "reset" | "button";
   disabled?: boolean;
+  /**
+   * 是否是朴素按钮  is plain button
+   */
+  plain?: boolean;
+  /**
+   * 按钮尺寸 button size
+   */
+  size?: sizes;
 }
 
 const defaultProps: ButtonProps = {
@@ -43,6 +52,8 @@ const defaultProps: ButtonProps = {
   onClick: (): void => {},
   disabled: false,
   nativeType: "button",
+  plain: false,
+  size: "normal",
 };
 
 function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
@@ -51,7 +62,9 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
 
   // button样式（btn class
   const className = getClassByProp(props);
-  const rippleConRef = useRef<HTMLDivElement>(null);
+  const rippleConRef = useRef<HTMLDivElement>(
+    null
+  ) as MutableRefObject<HTMLDivElement>;
   // ripple容器位置（ripple container position）
   const [rippleConPos, setRippleConPos] = useState<{ x: number; y: number }>({
     x: 0,
@@ -60,9 +73,7 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   useEffect(() => {
     // 获得水波纹容器位置（get ripple container position）
     setRippleConPos({
-      // @ts-ignore
       x: rippleConRef.current.offsetLeft,
-      // @ts-ignore
       y: rippleConRef.current.offsetTop,
     });
   }, []);
@@ -74,12 +85,10 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       x: e.pageX - rippleConPos.x,
       y: e.pageY - rippleConPos.y,
     });
-    // @ts-ignore
     rippleConRef.current.appendChild(tempChild);
     setTimeout(() => {
-      // @ts-ignore
       rippleConRef.current.removeChild(tempChild);
-    }, 1600);
+    }, 1000);
     // trigger click
     if (props.onClick) {
       props.onClick(e);
@@ -101,5 +110,7 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   );
 }
 
-Button.displayName = `${prefix.toUpperCase()}Button`;
+namespace Button {
+  export const displayName = `${prefix.toUpperCase()}Button`;
+}
 export default forwardRef<HTMLButtonElement, ButtonProps>(Button);

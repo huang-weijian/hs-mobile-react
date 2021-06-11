@@ -6,7 +6,7 @@ const del = require("del");
 const env = require("./env");
 
 console.log(
-  "hs".bgBlue.white,
+  "HS".bgBlue.white,
   " build start ",
   new Date().toLocaleString().blue
 );
@@ -42,4 +42,4 @@ fs.writeFileSync(env.paths.packageTargetPath, JSON.stringify(packageJson));
 // 写入readme.md  create readme.md
 fs.writeFileSync(env.paths.targetDir + "/readme.md", readme);
 
-console.log("hs".bgBlue.white, " build end ", new Date().toLocaleString().blue);
+console.log("HS".bgBlue.white, " build end ", new Date().toLocaleString().blue);

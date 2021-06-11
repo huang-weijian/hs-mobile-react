@@ -28,6 +28,24 @@ export function getClassByProp(props: ButtonProps): string {
       typeClass = `${prefix}-button-default`;
       break;
   }
+  // 按钮大小 button size
+  let sizeClass = "";
+  switch (props.size) {
+    case "mini": {
+      sizeClass = `${prefix}-button-mini`;
+      break;
+    }
+    case "normal": {
+      sizeClass = `${prefix}-button-normal`;
+      break;
+    }
+    case "large": {
+      sizeClass = `${prefix}-button-large`;
+      break;
+    }
+  }
+  // 是否是朴素按钮 is plain button
+  typeClass = `${typeClass}-${props.plain ? "plain" : "normal"}`;
   propClass =
     props.className instanceof Array
       ? `${props.className.join(" ")}`
@@ -37,7 +55,16 @@ export function getClassByProp(props: ButtonProps): string {
     ? `${prefix}-button-block`
     : `${prefix}-button-inline`;
   let roundClass = props.round ? `${prefix}-button-round` : "";
-  return typeClass.concat(" ", propClass, " ", blockClass, " ", roundClass);
+  return typeClass.concat(
+    " ",
+    propClass,
+    " ",
+    blockClass,
+    " ",
+    roundClass,
+    " ",
+    sizeClass
+  );
 }
 
 /**

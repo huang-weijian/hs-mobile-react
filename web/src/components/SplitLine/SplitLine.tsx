@@ -2,7 +2,7 @@ import { createElement } from "react";
 import splitLineStyle from "./SplitLine.module.less";
 
 function SplitLine(props: { title: string }) {
-  let classArr = [splitLineStyle.splitLine];
+  let classArr = [splitLineStyle.centerName];
   return (
     <div className={`${splitLineStyle.splitLine}`}>
       {/*可以传一个数组*/}

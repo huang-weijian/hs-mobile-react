@@ -3,7 +3,7 @@ const colors = require("colors");
 const env = require("./env");
 
 console.log(
-  "hs".bgBlue.white,
+  "HS".bgBlue.white,
   " delete start ",
   new Date().toLocaleString().blue
 );
@@ -16,7 +16,7 @@ del.sync([
   `!${env.paths.targetDir}/**/*.d.ts`,
 ]);
 console.log(
-  "hs".bgBlue.white,
+  "HS".bgBlue.white,
   " delete end ",
   new Date().toLocaleString().blue
 );

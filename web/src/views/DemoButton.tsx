@@ -1,41 +1,17 @@
 import SplitLine from "../components/SplitLine/SplitLine";
 import { Button } from "@hs";
-import { createRef, createElement } from "react";
+import { createElement } from "react";
+import NormalButton from "@/components/NormalButton/NormalButton";
+import PlainButton from "@/components/PlainButton/PlainButton";
 
 export declare interface DemoButtonProps {}
-
-const btnRef = createRef<HTMLButtonElement>();
 
 function DemoButton(props: DemoButtonProps) {
   return (
     <div>
       <SplitLine title={"button"}></SplitLine>
-      <Button
-        className={"demo-button"}
-        type={"primary"}
-        ref={btnRef}
-        onClick={(e) => {
-          console.info(e);
-        }}
-      >
-        primary
-        <span>111</span>
-      </Button>
-      <Button className={"demo-button"} type={"danger"} ref={btnRef}>
-        danger
-      </Button>
-      <Button className={"demo-button"} type={"success"} ref={btnRef}>
-        success
-      </Button>
-      <Button className={"demo-button"} type={"info"} ref={btnRef}>
-        info
-      </Button>
-      <Button className={"demo-button"} type={"warning"} ref={btnRef}>
-        warning
-      </Button>
-      <Button className={"demo-button"} type={"default"} ref={btnRef}>
-        default
-      </Button>
+      <NormalButton></NormalButton>
+      <SplitLine title={"round button"}></SplitLine>
       <Button className={"demo-button"} type={"primary"} round={true}>
         Round
       </Button>
@@ -46,6 +22,33 @@ function DemoButton(props: DemoButtonProps) {
         block={true}
       >
         Block Round
+      </Button>
+      <SplitLine title={"disabled button"}></SplitLine>
+      <Button className={"demo-button"} type={"primary"} disabled round={true}>
+        disabled primary
+      </Button>
+      <Button className={"demo-button"} type={"danger"} disabled round={true}>
+        disabled danger
+      </Button>
+      <Button className={"demo-button"} type={"primary"} disabled plain>
+        plain disabled primary
+      </Button>
+      <PlainButton></PlainButton>
+      <SplitLine title={"button size"}></SplitLine>
+      <Button className={"demo-button"} type={"primary"} size={"mini"}>
+        mini primary
+      </Button>
+      <Button className={"demo-button"} type={"warning"} size={"normal"}>
+        normal warning
+      </Button>
+      <Button
+        className={"demo-button"}
+        type={"danger"}
+        size={"large"}
+        block
+        round
+      >
+        large block round danger
       </Button>
     </div>
   );

@@ -1,7 +1,12 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPluginAll = require("clean-webpack-plugin");
 const path = require("path");
+const colors = require("colors");
 const webpack = require("webpack");
+const internalIP = require("internal-ip");
+const publicIP = require("public-ip");
+
+const port = 9999;
 module.exports = {
   entry: "./src/index.tsx",
   resolve: {
@@ -105,11 +110,16 @@ module.exports = {
     ],
   },
   devServer: {
+    // 使外部可以访问
+    host: "0.0.0.0",
+    hot: true,
+    inline: true,
+    hotOnly: true,
     // devServer能访问的路径
     contentBase: "./dist",
     // 是否开启压缩
     compress: true,
-    port: 9999,
+    port: port,
   },
   plugins: [
     // 如果你有多个 webpack 入口点， 他们都会在生成的HTML文件中的 script 标签内
@@ -130,6 +140,28 @@ module.exports = {
       VERSION: "1.0.0",
     }),
     new CleanWebpackPluginAll.CleanWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProgressPlugin(function (percentage, msg) {
+      let perMsg = percentage * 100 + "";
+      console.log(
+        "HS".bgBlue.white,
+        " ",
+        "build progress",
+        ` ${perMsg}%`,
+        " ",
+        `${msg}`,
+        " ",
+        new Date().toLocaleString().blue
+      );
+      if (percentage == 1) {
+        internalIP.v4().then((ip) => {
+          console.log(`HS APP run at `.bgBlue.white, `http://${ip}:${port}`);
+        });
+        publicIP.v4().then((ip) => {
+          console.log(`HS APP run at `.bgBlue.white, `http://${ip}:${port}`);
+        });
+      }
+    }),
   ],
   optimization: {
     splitChunks: {
