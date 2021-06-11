@@ -1,18 +1,18 @@
 @import "../../../style/var";
 
-@com-prefix: ~"@{prefix}-button";
+@com-prefix: ~"@{hs-prefix}-button";
 
 .@{com-prefix} {
   margin: 0;
-  border-radius: @border-radius-1;
-  font-family: @font-family;
+  border-radius: @hs-border-radius-1;
+  font-family: @hs-font-family;
   text-align: center;
   outline: none;
   white-space: nowrap;
   display: inline-block;
-  box-shadow: @base-shadow;
-  font-weight: @font-weight-normal;
-  transition: @transition-time all linear;
+  box-shadow: @hs-base-shadow;
+  font-weight: @hs-font-weight-normal;
+  transition: @hs-transition-time all linear;
   overflow: hidden;
 
   .button-size(@fs,@padding) {
@@ -21,15 +21,15 @@
   }
 
   &-mini {
-    .button-size(0.8*@font-size, 0.8*@padding);
+    .button-size(0.8*@hs-font-size, 0.8*@hs-padding);
   }
 
   &-normal {
-    .button-size(@font-size, @padding);
+    .button-size(@hs-font-size, @hs-padding);
   }
 
   &-large {
-    .button-size(1.2*@font-size, 1.2*@padding);
+    .button-size(1.2*@hs-font-size, 1.2*@hs-padding);
   }
 
   .button-color(@bg,@color,@border-color) {
@@ -40,70 +40,70 @@
 
   &-primary {
     &-normal {
-      .button-color(@primary-color, @base-white, @primary-color);
+      .button-color(@hs-primary-color, @hs-base-white, @hs-primary-color);
     }
 
     &-plain {
-      .button-color(@base-white, @primary-color, @primary-color);
+      .button-color(@hs-base-white, @hs-primary-color, @hs-primary-color);
     }
   }
 
   &-success {
     &-normal {
-      .button-color(@success-color, @base-white, @success-color);
+      .button-color(@hs-success-color, @hs-base-white, @hs-success-color);
     }
 
     &-plain {
-      .button-color(@base-white, @success-color, @success-color);
+      .button-color(@hs-base-white, @hs-success-color, @hs-success-color);
     }
   }
 
   &-danger {
     &-normal {
-      .button-color(@danger-color, @base-white, @danger-color);
+      .button-color(@hs-danger-color, @hs-base-white, @hs-danger-color);
     }
 
     &-plain {
-      .button-color(@base-white, @danger-color, @danger-color);
+      .button-color(@hs-base-white, @hs-danger-color, @hs-danger-color);
     }
   }
 
   &-info {
     &-normal {
-      .button-color(@info-color, @base-white, @info-color);
+      .button-color(@hs-info-color, @hs-base-white, @hs-info-color);
     }
 
     &-plain {
-      .button-color(@base-white, @info-color, @info-color);
+      .button-color(@hs-base-white, @hs-info-color, @hs-info-color);
     }
   }
 
   &-warning {
     &-normal {
-      .button-color(@warning-color, @base-white, @warning-color);
+      .button-color(@hs-warning-color, @hs-base-white, @hs-warning-color);
     }
 
     &-plain {
-      .button-color(@base-white, @warning-color, @warning-color);
+      .button-color(@hs-base-white, @hs-warning-color, @hs-warning-color);
     }
   }
 
   &-default {
     &-normal {
-      .button-color(@base-white, @base-black, @default-color);
+      .button-color(@hs-base-white, @hs-base-black, @hs-default-color);
     }
 
     &-plain {
-      .button-color(@base-white, @base-black, @default-color);
+      .button-color(@hs-base-white, @hs-base-black, @hs-default-color);
     }
 
     &:active {
-      border-color: @primary-color;
+      border-color: @hs-primary-color;
     }
   }
 
   &:disabled {
-    opacity: @disabled-opacity;
+    opacity: @hs-disabled-opacity;
     cursor: wait;
   }
 
@@ -128,7 +128,7 @@
 
   &-inline {
     .@{com-prefix}-ripple {
-      animation: ripple-small @transition-time cubic-bezier(0.4, 0, 0.2, 1);
+      animation: ripple-small @hs-transition-time cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
@@ -136,12 +136,12 @@
     width: 100%;
 
     .@{com-prefix}-ripple {
-      animation: ripple-big @transition-time cubic-bezier(0.4, 0, 0.2, 1);
+      animation: ripple-big @hs-transition-time cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
   &-round {
-    border-radius: @border-radius-3;
+    border-radius: @hs-border-radius-3;
   }
 
   &-ripple-container {
@@ -153,7 +153,7 @@
       height: 1px;
       border-radius: 0.5px;
       opacity: 0.1;
-      background-color: @base-black;
+      background-color: @hs-base-black;
     }
   }
 }
