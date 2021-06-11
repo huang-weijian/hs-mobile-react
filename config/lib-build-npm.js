@@ -12,11 +12,13 @@ console.log(
 );
 
 const packageJson = JSON.parse(fs.readFileSync(env.paths.packagePath));
-const readme = fs.readFileSync(path.join(__dirname, "README.md"));
+const readme = fs.readFileSync(path.join(__dirname, "../README.md"));
 
 delete packageJson.devDependencies;
 delete packageJson.private;
 delete packageJson.scripts;
+
+fs.existsSync(env.paths.targetDir) || fs.mkdirSync(env.paths.targetDir);
 
 // 删除旧有npm包 delete old npm package
 del.sync([env.paths.npmTargetDir]);
@@ -36,7 +38,7 @@ copydir.sync(env.paths.docDir, env.paths.docTargetDir, {
 });
 
 // 写入package.json create package.json
-fs.writeFileSync(env.paths.packagePath, JSON.stringify(packageJson));
+fs.writeFileSync(env.paths.packageTargetPath, JSON.stringify(packageJson));
 // 写入readme.md  create readme.md
 fs.writeFileSync(env.paths.targetDir + "/readme.md", readme);
 

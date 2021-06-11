@@ -10,10 +10,12 @@ const npmTargetDir = path.join(targetDir, "npm");
 const scriptTargetDir = path.join(targetDir, "script");
 // package.json path
 const packagePath = path.join(__dirname, "../package.json");
+// package.json目标地址 package.json target dir
+const packageTargetPath = path.join(npmTargetDir, "package.json");
 // 文档地址 doc dir
 const docDir = path.join(__dirname, "../doc");
 // 文档打包地址 doc target dir
-const docTargetDir=path.join(targetDir,"doc")
+const docTargetDir = path.join(targetDir, "doc");
 
 module.exports = {
   paths: {
@@ -23,6 +25,7 @@ module.exports = {
     scriptTargetDir,
     packagePath,
     docDir,
-    docTargetDir
+    docTargetDir,
+    packageTargetPath
   },
 };
