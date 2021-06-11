@@ -3,6 +3,7 @@ const copydir = require("copy-dir");
 const colors = require("colors");
 const fs = require("fs");
 const del = require("del");
+const env = require("./env");
 
 console.log(
   "hs".bgBlue.white,
@@ -10,39 +11,33 @@ console.log(
   new Date().toLocaleString().blue
 );
 
-const packageJson = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "package.json"))
-);
+const packageJson = JSON.parse(fs.readFileSync(env.paths.packagePath));
 const readme = fs.readFileSync(path.join(__dirname, "README.md"));
 
 delete packageJson.devDependencies;
 delete packageJson.private;
 delete packageJson.scripts;
 
-// 源文件路径
-const sourcePath = path.join(__dirname, "src");
-// 目标文件路径
-const targetPath = path.join(__dirname, "dist");
-// 文档源文件地址
-const mdSourcePath = path.join(__dirname, "doc");
-// 文档目标路径
-const mdTargetPath = path.join(__dirname, "dist/doc");
+// 删除旧有npm包 delete old npm package
+del.sync([env.paths.npmTargetDir]);
 
-del.sync([targetPath]);
-
-copydir.sync(sourcePath, targetPath, {
+// 拷贝源码 copy source code
+copydir.sync(env.paths.sourceDir, env.paths.npmTargetDir, {
   utimes: true, // keep add time and modify time
   mode: true, // keep file mode
   cover: true, // cover file when exists, default is true
 });
 
-copydir.sync(mdSourcePath, mdTargetPath, {
+// 拷贝文档 copy doc
+copydir.sync(env.paths.docDir, env.paths.docTargetDir, {
   utimes: true, // keep add time and modify time
   mode: true, // keep file mode
   cover: true, // cover file when exists, default is true
 });
 
-fs.writeFileSync(targetPath + "/package.json", JSON.stringify(packageJson));
-fs.writeFileSync(targetPath + "/readme.md", readme);
+// 写入package.json create package.json
+fs.writeFileSync(env.paths.packagePath, JSON.stringify(packageJson));
+// 写入readme.md  create readme.md
+fs.writeFileSync(env.paths.targetDir + "/readme.md", readme);
 
 console.log("hs".bgBlue.white, " build end ", new Date().toLocaleString().blue);

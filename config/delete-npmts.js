@@ -1,8 +1,6 @@
 const del = require("del");
-const path = require("path");
 const colors = require("colors");
-
-const targetPath = path.join(__dirname, "dist");
+const env = require("./env");
 
 console.log(
   "hs".bgBlue.white,
@@ -11,11 +9,11 @@ console.log(
 );
 del.sync([
   // ts源码 ts source code
-  `${targetPath}/**/*.ts`,
+  `${env.paths.targetDir}/**/*.ts`,
   // tsx源码  tsx source code
-  `${targetPath}/**/*.tsx`,
+  `${env.paths.targetDir}/**/*.tsx`,
   // 声明文件 .d.ts
-  `!${targetPath}/**/*.d.ts`,
+  `!${env.paths.targetDir}/**/*.d.ts`,
 ]);
 console.log(
   "hs".bgBlue.white,

@@ -5,12 +5,13 @@
     "jsx": "preserve",
     "strict": true,
     "moduleResolution": "Node",
-    "baseUrl": "src",
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "web/src/hs",
-    "declarationDir": "web/src/hs"
+    "baseUrl": "./src",
+    "sourceMap": true
   },
-  "include": ["src", "./types.d.ts"],
-  "exclude": ["web", "node_modules", "lib", "types"]
+  "include": [
+    "./src", "./src/types.d.ts"
+  ],
+  "exclude": [
+    "./web", "node_modules", "lib", "src/types"
+  ]
 }

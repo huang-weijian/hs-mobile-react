@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "rootDir": "../dist/npm",
+    "target": "ES6",
+    "jsx": "preserve",
+    "strict": true,
+    "moduleResolution": "Node",
+    "baseUrl": "../dist/npm",
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": ["../dist/npm"
+  ],
+  "exclude": ["../web",
+    "../node_modules"]
+}

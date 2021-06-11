@@ -2,9 +2,9 @@
   "name": "hs-mobile-react",
   "version": "1.0.0",
   "description": "react-mobile-ui react移动端UI",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
-    "build:npm": "node lib-build-npm.js && cd ./dist && tsc --project ../tsconfig.pro.json && cd ../ && node delete-ts.js",
+    "build:npm": "node config/lib-build-npm.js && cd ./dist/npm && tsc --project ../../config/tsconfig.pro.json && cd ../../ && node config/delete-npmts.js",
     "start": "cd ./web && npm run dev"
   },
   "repository": {
