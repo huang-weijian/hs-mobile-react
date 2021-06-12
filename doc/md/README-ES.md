@@ -1,15 +1,15 @@
 ### hs-mobile ui lib for react
 
-```cmd
-# only run dev mode for ui-lib
-"dev:lib": "tsc --watch --project tsconfig.dev.json"
+#### branch specification
 
-# build ui-lib to lib dir and types dir
-"build:lib": "tsc --project tsconfig.pro.json"
+1. component/20210612_*
 
-# only run web to preview ui-lib 
-"start:web": "cd ./web && npm run start"
+> new component branch, '*' is name of new component
 
-# run ui-lib and dev mode ui-lib for programing
-"start:dev-all": "concurrently \"npm run dev:lib\" \"npm run start:web\""
-```
+2. fix/20210612_*
+
+> fix bug branch, '*' is name of bug be fixed
+
+3. feat/20210612_*
+
+> new function, such as new common function or new common css

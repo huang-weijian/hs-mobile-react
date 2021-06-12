@@ -1,15 +1,15 @@
 ### hs移动端UI库 react版
 
-```cmd
-# 只运行持续监控模式的ui-lib开发模式
-"dev:lib": "tsc --watch --project tsconfig.dev.json"
+#### 分支规范
 
-# 构建正式ui-lib
-"build:lib": "tsc --project tsconfig.pro.json"
+1. component/20210612_*
 
-# 运行web（内含ui-lib所有组件预览与使用）
-"start:web": "cd ./web && npm run start"
+> 新组件分支，*是组件名
 
-# 运行开发模式，运行持续监控与web预览
-"start:dev-all": "concurrently \"npm run dev:lib\" \"npm run start:web\""
-```
+2. fix/20210612_*
+
+> 修复bug分支，*是修复的问题
+
+3. feat/20210612_*
+
+> 新增功能分支，添加功能函数与全局样式
