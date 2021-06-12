@@ -82,26 +82,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
-        loaders: [
-          // 结合css-loader只能用style内嵌，需要用link引用单独css文件，要用file-loader等loader
-          // 先由css-loader处理，再交由style-loader进行打包进style或link标签
-          "style-loader",
-          "css-loader",
-        ],
+        test: /.css$/,
+        loaders: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(less)/,
-        loaders: [
-          // 结合css-loader只能用style内嵌，需要用link引用单独css文件，要用file-loader等loader
-          // 先由css-loader处理，再交由style-loader进行打包进style或link标签
-          // {loader: 'file-loader', options: {name: '[hash][name].css'}},
-          "style-loader",
-          "css-loader",
-          {
-            loader: "less-loader",
-          },
-        ],
+        test: /.(less)$/,
+        loaders: ["style-loader", "css-loader", "less-loader"],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,

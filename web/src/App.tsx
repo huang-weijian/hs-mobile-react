@@ -3,7 +3,7 @@ import "./css/app.less";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
-const Demobutton = lazy(() => import("./views/DemoButton"));
+const DemoButton = lazy(() => import("./views/DemoButton"));
 const Home = lazy(() => import("./views/Home/Home"));
 
 function ViewLoading() {
@@ -28,7 +28,7 @@ function App() {
           <Route path={"/home"} component={warpRouteComponent(Home)}></Route>
           <Route
             path={"/button"}
-            component={warpRouteComponent(Demobutton)}
+            component={warpRouteComponent(DemoButton)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>
