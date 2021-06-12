@@ -16,11 +16,13 @@
     "@types/fastclick": "^1.0.29",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.4",
+    "@types/react-router-dom": "^5.1.7",
     "core-js": "^2.6.12",
     "fastclick": "^1.0.6",
     "react": "^17.0.1",
     "react-app-polyfill": "^2.0.0",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

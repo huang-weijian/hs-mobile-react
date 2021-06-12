@@ -2,6 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "target": "ES6",
+    "module": "ESNext",
     "jsx": "react",
     "strict": true,
     "jsxFactory": "createElement",
