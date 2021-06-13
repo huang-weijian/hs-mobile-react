@@ -87,7 +87,20 @@ module.exports = {
       },
       {
         test: /.(less)$/,
-        loaders: ["style-loader", "css-loader", "less-loader"],
+        loaders: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                // hs定制UI
+                modifyVars: {  },
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
