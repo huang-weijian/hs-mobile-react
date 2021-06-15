@@ -5,6 +5,7 @@ import { RouteComponentProps } from "react-router";
 
 const DemoButton = lazy(() => import("./views/DemoButton"));
 const Home = lazy(() => import("./views/Home/Home"));
+const DemoCell = lazy(() => import("./views/DemoCell/DemoCell"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -29,6 +30,10 @@ function App() {
           <Route
             path={"/button"}
             component={warpRouteComponent(DemoButton)}
+          ></Route>
+          <Route
+            path={"/cell"}
+            component={warpRouteComponent(DemoCell)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>

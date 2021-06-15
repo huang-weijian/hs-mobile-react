@@ -1,3 +1,41 @@
 @import "../../../style/var";
 
 @com-prefix: ~"@{hs-prefix}-cell";
+
+.@{com-prefix} {
+  width: 100%;
+  color: @hs-primary-txt-color;
+  display: flex;
+  justify-content: space-between;
+  padding: @hs-padding;
+  box-sizing: border-box;
+  font-size: @hs-font-size;
+
+  &-border-bottom {
+    border-bottom: 1px solid @hs-first-border-color;
+  }
+
+  .@{com-prefix}-left {
+    .@{com-prefix}-title {
+      color: @hs-primary-txt-color;
+    }
+
+    .@{com-prefix}-sub-title {
+      color: @hs-sub-txt-color;
+      font-size: @hs-sub-font-size;
+    }
+  }
+
+  .@{com-prefix}-right {
+    color: @hs-sub-txt-color;
+
+    .@{com-prefix}-value {
+      display: inline-block;
+    }
+
+    .@{com-prefix}-icon {
+      margin-left: @hs-margin;
+      display: inline-block;
+    }
+  }
+}

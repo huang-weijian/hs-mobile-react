@@ -8,7 +8,10 @@ function Home(props: HomeProps) {
   return (
     <div className={"view-home"}>
       <a href="#/button" className={"a"}>
-        <PlayCircleOutlined></PlayCircleOutlined>button
+        button
+      </a>
+      <a href="#/cell" className={"a"}>
+        cell
       </a>
     </div>
   );
