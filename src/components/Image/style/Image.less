@@ -2,7 +2,13 @@
 
 @com-prefix: ~"@{hs-prefix}-image";
 
-.@{com-prefix} {
+.@{com-prefix}-container {
   position: relative;
+  display: inline-block;
 
+  .@{com-prefix} {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
 }
