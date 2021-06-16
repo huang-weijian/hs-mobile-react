@@ -13,6 +13,9 @@ function Home(props: HomeProps) {
       <a href="#/cell" className={"a"}>
         cell
       </a>
+        <a href="#/image" className={"a"}>
+            image
+        </a>
     </div>
   );
 }

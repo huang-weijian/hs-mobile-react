@@ -1,15 +1,16 @@
 @import "../../../style/var";
+@import "../../../style/func";
 
 @com-prefix: ~"@{hs-prefix}-cell";
 
 .@{com-prefix} {
+  .hs-base();
   width: 100%;
   color: @hs-primary-txt-color;
   display: flex;
   justify-content: space-between;
   padding: @hs-padding;
   box-sizing: border-box;
-  font-size: @hs-font-size;
 
   &-border-bottom {
     border-bottom: 1px solid @hs-first-border-color;
