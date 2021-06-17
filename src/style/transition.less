@@ -1,0 +1,27 @@
+@import "var";
+
+.test-css-enter {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+
+.test-css-enter-active {
+  width: auto;
+  height: auto;
+  opacity: 1;
+  transition: all @hs-transition-time linear;
+}
+
+.test-css-exit {
+  width: auto;
+  height: auto;
+  opacity: 1;
+}
+
+.test-css-exit-active {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  transition: all @hs-transition-time linear;
+}
