@@ -1,27 +1,30 @@
 @import "var";
 
-.test-css-enter {
-  width: 0px;
-  height: 0px;
+.hs-popup-css-enter {
   opacity: 0;
+  display: block;
 }
 
-.test-css-enter-active {
-  width: auto;
-  height: auto;
+.hs-popup-css-enter-active {
   opacity: 1;
-  transition: all @hs-transition-time linear;
+  display: block;
+  transition: all @hs-transition-time-popup linear;
 }
 
-.test-css-exit {
-  width: auto;
-  height: auto;
+// 退出开始
+.hs-popup-css-exit {
   opacity: 1;
+  display: block;
 }
 
-.test-css-exit-active {
-  width: 0px;
-  height: 0px;
+// 退出中
+.hs-popup-css-exit-active {
   opacity: 0;
-  transition: all @hs-transition-time linear;
+  transition: all @hs-transition-time-popup linear;
+}
+
+// 退出结束
+.hs-popup-css-exit-done {
+  opacity: 0;
+  display: none;
 }

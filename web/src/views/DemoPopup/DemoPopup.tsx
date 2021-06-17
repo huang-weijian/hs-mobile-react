@@ -1,14 +1,20 @@
-import { createElement } from "react";
+import { createElement, useState } from "react";
 import SplitLine from "@/components/SplitLine/SplitLine";
-import { Popup } from "@hs";
+import { Button, Popup } from "@hs";
 
 export declare interface DemoPopupProps {}
 
 function DemoPopup(props: DemoPopupProps) {
+  const [flag, setFlag] = useState(false);
   return (
     <div>
       <SplitLine title={"popup"}></SplitLine>
-      <Popup></Popup>
+      <Popup show={flag} onCancel={() => setFlag(false)}>
+        123
+      </Popup>
+      <Button type={"primary"} onClick={() => setFlag(!flag)}>
+        toggle
+      </Button>
     </div>
   );
 }
