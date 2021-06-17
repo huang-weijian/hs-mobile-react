@@ -36,7 +36,6 @@ function warpRouteComponent(
 function App() {
   return (
     <div className={"app"}>
-      123
       <HashRouter basename={"/"}>
         <Switch>
           <Route path={"/home"} component={warpRouteComponent(Home)}></Route>
