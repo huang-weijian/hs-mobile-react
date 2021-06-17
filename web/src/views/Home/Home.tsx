@@ -8,14 +8,20 @@ function Home(props: HomeProps) {
   return (
     <div className={"view-home"}>
       <a href="#/button" className={"a"}>
-        button
+        button 按钮
       </a>
       <a href="#/cell" className={"a"}>
-        cell
+        cell 单元格
       </a>
-        <a href="#/image" className={"a"}>
-            image
-        </a>
+      <a href="#/image" className={"a"}>
+        image 图片
+      </a>
+      <a href="#/icon" className={"a"}>
+        icon 图标
+      </a>
+      <a href="#/popup" className={"a"}>
+        popup 弹出层
+      </a>
     </div>
   );
 }

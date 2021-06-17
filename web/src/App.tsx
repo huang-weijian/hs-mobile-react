@@ -16,6 +16,8 @@ const DemoButton = lazy(() => import("./views/DemoButton"));
 const Home = lazy(() => import("./views/Home/Home"));
 const DemoCell = lazy(() => import("./views/DemoCell/DemoCell"));
 const DemoImage = lazy(() => import("./views/DemoImage/DemoImage"));
+const DemoIcon = lazy(() => import("./views/DemoIcon"));
+const DemoPopup = lazy(() => import("./views/DemoPopup/DemoPopup"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -48,6 +50,14 @@ function App() {
           <Route
             path={"/image"}
             component={warpRouteComponent(DemoImage)}
+          ></Route>
+          <Route
+            path={"/icon"}
+            component={warpRouteComponent(DemoIcon)}
+          ></Route>
+          <Route
+              path={"/popup"}
+              component={warpRouteComponent(DemoPopup)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>
