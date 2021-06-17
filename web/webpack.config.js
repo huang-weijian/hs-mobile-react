@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPluginAll = require("clean-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 const path = require("path");
 const colors = require("colors");
 const webpack = require("webpack");
@@ -44,10 +46,18 @@ module.exports = {
               plugins: [
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-transform-async-to-generator",
+                require.resolve("react-refresh/babel"),
               ],
             },
           },
-          "ts-loader",
+          {
+            loader: require.resolve('ts-loader'),
+            options: {
+              getCustomTransformers: () => ({
+                before: [ReactRefreshTypeScript()],
+              }),
+            },
+          }
         ],
       },
       {
@@ -76,6 +86,7 @@ module.exports = {
               plugins: [
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-transform-async-to-generator",
+                require.resolve("react-refresh/babel"),
               ],
             },
           },
@@ -95,7 +106,7 @@ module.exports = {
             options: {
               lessOptions: {
                 // hs定制UI
-                modifyVars: {  },
+                modifyVars: {},
                 javascriptEnabled: true,
               },
             },
@@ -138,6 +149,7 @@ module.exports = {
     new webpack.DefinePlugin({
       VERSION: "1.0.0",
     }),
+    new ReactRefreshWebpackPlugin(),
     new CleanWebpackPluginAll.CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProgressPlugin(function (percentage, msg) {

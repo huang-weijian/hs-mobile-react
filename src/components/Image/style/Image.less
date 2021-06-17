@@ -1,10 +1,27 @@
 @import "../../../style/var";
+@import "../../../style/func";
 
 @com-prefix: ~"@{hs-prefix}-image";
 
 .@{com-prefix}-container {
+  .hs-base();
   position: relative;
   display: inline-block;
+
+  .@{com-prefix}-mask {
+    width: 100%;
+    height: 100%;
+    color: @hs-base-white;
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: @hs-info-color;
+  }
 
   .@{com-prefix} {
     width: 100%;

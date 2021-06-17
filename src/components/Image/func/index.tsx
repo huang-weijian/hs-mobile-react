@@ -52,3 +52,15 @@ export function getRadius(props: ImageProps): string {
   }
   return rRadius;
 }
+
+/**
+ * 获取image容器的className  get image container className
+ * @param props
+ */
+export function getClassName(props: ImageProps): string {
+  let className = "hs-image-container";
+  if (props.className) {
+    className = `${className} ${props.className}`;
+  }
+  return className;
+}

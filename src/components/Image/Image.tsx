@@ -3,15 +3,24 @@ import {
   MouseEventHandler,
   ReactChild,
   MouseEvent,
+  CSSProperties,
+  SyntheticEvent,
+  ReactEventHandler,
+  useRef,
+  MutableRefObject,
+  useEffect,
+  useState,
 } from "react";
 import { Property } from "csstype";
-import { getRadius, getRectangle } from "./func";
+import { getClassName, getRadius, getRectangle } from "./func";
 import "./style";
 
 export declare interface ImageProps {
   width?: number | string;
   height?: number | string;
   src: string;
+  style?: CSSProperties;
+  className?: string;
   /**
    * 图片填充模式 image fill mode
    */
@@ -24,12 +33,8 @@ export declare interface ImageProps {
    * 图片圆角 image radius
    */
   radius?: number | string;
-  errorTxt?: string;
   showError?: boolean;
-  /**
-   * 图片延迟加载 image lazy load
-   */
-  lazy?: boolean;
+  loadingNode?: ReactChild;
   /**
    * 图片加载失败节点 image load error node
    */
@@ -37,7 +42,7 @@ export declare interface ImageProps {
   /**
    * 图片加载失败 image load error event
    */
-  onError?: () => any;
+  onError?: ReactEventHandler<HTMLImageElement>;
   /**
    * 点击事件 click event
    */
@@ -45,44 +50,65 @@ export declare interface ImageProps {
   /**
    * 图片加载完成 image load end event
    */
-  onLoad?: () => any;
+  onLoad?: ReactEventHandler<HTMLImageElement>;
 }
 
 const defaultProps: ImageProps = {
-  errorNode: undefined,
-  errorTxt: "",
+  errorNode: "error",
+  loadingNode: "loading",
   fit: "fill",
   height: undefined,
-  lazy: false,
-  onClick(event: MouseEvent<HTMLDivElement>): void {},
-  onError(): any {},
-  onLoad(): any {},
   radius: undefined,
   round: false,
-  showError: false,
+  showError: true,
   src: "",
   width: "",
 };
 
 function Image(props: ImageProps) {
+  let imageRef =
+    useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
+  useEffect(() => {}, []);
+  let [error, setError] = useState(false);
+  let [loading, setLoading] = useState(true);
+
   let rectangle = getRectangle(props);
   let radius = getRadius(props);
-  props = Object.assign({}, defaultProps, props, rectangle, { radius: radius });
+  props = Object.assign({}, defaultProps, props);
+  let className = getClassName(props);
+  let style: CSSProperties = Object.assign(
+    {},
+    rectangle,
+    { borderRadius: radius },
+    props.style
+  );
   return (
-    <div
-      className={"hs-image-container"}
-      style={{
-        width: props.width,
-        height: props.height,
-        borderRadius: props.radius,
-      }}
-    >
-      <div></div>
+    <div onClick={props.onClick} className={className} style={style}>
+      {loading ? (
+        <div className={"hs-image-mask"}>{props.loadingNode}</div>
+      ) : null}
+      {error && props.showError ? (
+        <div className={"hs-image-mask"}>{props.errorNode}</div>
+      ) : null}
       <img
+        ref={imageRef}
         className={"hs-image"}
+        style={{ opacity: error ? "0" : "1", objectFit: props.fit }}
         src={props.src}
         alt=""
-        style={{ objectFit: props.fit }}
+        onError={(e) => {
+          setLoading(false);
+          setError(true);
+          if (props.onError) {
+            props.onError(e);
+          }
+        }}
+        onLoad={(e) => {
+          setLoading(false);
+          if (props.onLoad) {
+            props.onLoad(e);
+          }
+        }}
       />
     </div>
   );
