@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPluginAll = require("clean-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const ReactRefreshTypeScript = require('react-refresh-typescript');
+const ReactRefreshTypeScript = require("react-refresh-typescript");
 const path = require("path");
 const colors = require("colors");
 const webpack = require("webpack");
@@ -10,6 +10,7 @@ const publicIP = require("public-ip");
 
 const port = 9999;
 module.exports = {
+  devtool:"source-map",
   entry: "./src/index.tsx",
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
@@ -27,6 +28,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
+              sourceMaps:true,
               presets: [
                 [
                   "@babel/preset-env",
@@ -51,13 +53,13 @@ module.exports = {
             },
           },
           {
-            loader: require.resolve('ts-loader'),
+            loader: require.resolve("ts-loader"),
             options: {
               getCustomTransformers: () => ({
                 before: [ReactRefreshTypeScript()],
               }),
             },
-          }
+          },
         ],
       },
       {
@@ -67,6 +69,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
+              sourceMaps:true,
               presets: [
                 [
                   "@babel/preset-env",
@@ -94,13 +97,13 @@ module.exports = {
       },
       {
         test: /.css$/,
-        loaders: ["style-loader", "css-loader"],
+        loaders: ["style-loader", { loader: 'css-loader', options: { sourceMap: true } }],
       },
       {
         test: /.(less)$/,
         loaders: [
           "style-loader",
-          "css-loader",
+          { loader: "css-loader", options: { sourceMap: true } },
           {
             loader: "less-loader",
             options: {
@@ -165,11 +168,15 @@ module.exports = {
         new Date().toLocaleString().blue
       );
       if (percentage == 1) {
+        let prefix = `HS APP run at `;
         internalIP.v4().then((ip) => {
-          console.log(`HS APP run at `.bgBlue.white, `http://${ip}:${port}`);
+          console.log(`${prefix}`.bgBlue.white, `http://127.0.0.1:${port}`);
+        });
+        internalIP.v4().then((ip) => {
+          console.log(`${prefix}`.bgBlue.white, `http://${ip}:${port}`);
         });
         publicIP.v4().then((ip) => {
-          console.log(`HS APP run at `.bgBlue.white, `http://${ip}:${port}`);
+          console.log(`${prefix}`.bgBlue.white, `http://${ip}:${port}`);
         });
       }
     }),

@@ -1,3 +1,5 @@
+import { ReactChild } from "react";
+
 /**
  * 组件类型   types of component
  */

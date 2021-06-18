@@ -8,16 +8,16 @@ import {
   useRef,
   useState,
   createElement,
-  MutableRefObject,
+  MutableRefObject, ReactNode,
 } from "react";
 import "./style";
-import { sizes, types } from "../../types/types";
+import {sizes, types} from "../../types/types";
 import { prefix } from "../../string/txt";
 import { createRipple, getClassByProp } from "./func";
 
 export declare interface ButtonProps {
   type?: types;
-  children?: Array<ReactChild> | ReactChild;
+  children?: ReactNode;
   className?: string | Array<string>;
   style?: CSSProperties;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => any;

@@ -2,15 +2,19 @@ import {
   createElement,
   CSSProperties,
   MutableRefObject,
-  ReactChild,
+  ReactChild, ReactNode,
   useRef,
   useState,
 } from "react";
 import "./style";
-import { positions } from "../../types/types";
+import {positions} from "../../types/types";
 import { prefix } from "../../string/txt";
-import { operaIndex } from "./func";
-import { CSSTransition } from "react-transition-group";
+import { getPopupBodyStyle, operaIndex } from "./func";
+import {
+  CSSTransition,
+  Transition,
+  TransitionStatus,
+} from "react-transition-group";
 
 export declare interface PopupProps {
   /**
@@ -18,13 +22,13 @@ export declare interface PopupProps {
    */
   show: boolean;
   /**
-   * popup的style  popup style
+   * popup body的style  popup body style
    */
-  style?: CSSProperties;
+  bodyStyle?: CSSProperties;
   /**
-   * popup的className  popup className
+   * popup body的className  popup body className
    */
-  className?: string;
+  bodyClassName?: string;
   /**
    * 是否展示遮罩层  show or hide mask
    */
@@ -40,6 +44,7 @@ export declare interface PopupProps {
   maskStyle?: CSSProperties;
   /**
    * 动画持续时间单位ms animated duration time unit number
+   * todo
    */
   duration?: number;
   /**
@@ -47,58 +52,120 @@ export declare interface PopupProps {
    */
   round?: boolean;
   /**
-   *  是否适配手机安全区域  phone safa area
+   * popup body radius
    */
-  safaArea?: boolean;
+  radius?: string;
   /**
-   * 顶部左边节点 popup top-left react node
+   *  是否适配手机安全区域  phone safe area
    */
-  topLeftNode?: ReactChild;
-  /**
-   * 顶部右边节点 popup top-right react node
-   */
-  topRightNode?: ReactChild;
+  safeArea?: boolean;
+  bodyTitleNode?: ReactChild;
   /**
    * 是否展示右上角关闭按钮  show or hide top-right close btn
    */
   showClose?: boolean;
-  children?: ReactChild;
+  children?: ReactNode;
   /**
    *  popup打开后的事件 on Popup opened
    */
   onOpened?: () => any;
+  /**
+   *  popup关闭后的事件 on Popup closed
+   */
+  onClosed?: () => any;
   /**
    * 取消popup  cancel popup
    */
   onCancel: () => any;
 }
 
+const defaultProps: PopupProps = {
+  onCancel(): any {},
+  show: true,
+  position: "top",
+  bodyClassName: "",
+  showMask: true,
+  maskClassName: "",
+  showClose: true,
+};
+
 function Popup(props: PopupProps) {
-  let { get, reduc } = operaIndex;
-  let [zIndex] = useState(get());
-  let [maskZIndex] = useState(get() - 2);
-  let [bodyZIndex] = useState(get() - 1);
+  props = Object.assign({}, defaultProps, props);
+  // position index
+  let { get } = operaIndex;
+  let [zIndex, setZIndex] = useState(get());
+  // ref
   let popupRef = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  let bodyRef = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  // popup body transition style
+  let { enterStyle, exitStyle } = getPopupBodyStyle(props);
+  enterStyle.zIndex = zIndex + 2;
+  exitStyle.zIndex = zIndex + 2;
+  const transitionStyles: { [props: string]: CSSProperties } = {
+    entering: enterStyle,
+    entered: enterStyle,
+    exiting: exitStyle,
+    exited: exitStyle,
+  };
+  let popBody = (state: TransitionStatus) => {
+    return (
+      <div
+        ref={bodyRef}
+        style={{ ...enterStyle, ...transitionStyles[state] }}
+        className={`hs-popup-body ${
+          props.safeArea && props.position !== "top"
+            ? "hs-popup-body-safearea"
+            : ""
+        } ${props.bodyClassName}`}
+      >
+        {/*popup body title*/}
+        {props.showClose && !props.bodyTitleNode ? (
+          <div className={`hs-popup-body-title`}>
+            <span onClick={props.onCancel} className={`hs-popup-close-btn`}>
+              +
+            </span>
+          </div>
+        ) : null}
+        {/*popup body title*/}
+        {props.bodyTitleNode}
+        {/*popup body content*/}
+        <div className={`hs-popup-body-content`}>
+          {props.show ? props.children : null}
+        </div>
+      </div>
+    );
+  };
   return (
     <CSSTransition
       in={props.show}
       timeout={200}
       classNames={"hs-popup-css"}
       addEndListener={() => {}}
-      mountOnEnter={true}
       nodeRef={popupRef}
+      onEnter={() => setZIndex(get())}
+      onEntered={props.onOpened}
+      onExited={props.onClosed}
     >
       <div className={"hs-popup"} style={{ zIndex: zIndex }} ref={popupRef}>
         {/*遮罩层 mask*/}
         <div
-          style={{ zIndex: maskZIndex }}
-          className={"hs-popup-mask"}
+          style={{
+            zIndex: zIndex + 1,
+            ...props.maskStyle,
+            ...(props.showMask ? {} : { opacity: 0 }),
+          }}
+          className={`hs-popup-mask ${props.maskClassName}`}
           onClick={() => props.onCancel()}
         ></div>
         {/*popup body*/}
-        <div style={{ zIndex: bodyZIndex }} className={"hs-popup-body"}>
-          {props.show ? props.children : null}
-        </div>
+        <Transition
+          nodeRef={bodyRef}
+          in={props.show}
+          timeout={200}
+          addEndListener={() => {}}
+        >
+          {popBody}
+        </Transition>
       </div>
     </CSSTransition>
   );

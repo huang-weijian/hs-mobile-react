@@ -2,29 +2,34 @@
 
 .hs-popup-css-enter {
   opacity: 0;
-  display: block;
 }
 
 .hs-popup-css-enter-active {
   opacity: 1;
-  display: block;
-  transition: all @hs-transition-time-popup linear;
+  height: 100%;
+  transition: opacity @hs-transition-time-popup linear;
+}
+
+.hs-popup-css-enter-done {
+  opacity: 1;
+  height: 100%;
 }
 
 // 退出开始
 .hs-popup-css-exit {
   opacity: 1;
-  display: block;
+  height: 100%;
 }
 
 // 退出中
 .hs-popup-css-exit-active {
   opacity: 0;
-  transition: all @hs-transition-time-popup linear;
+  height: 100%;
+  transition: opacity @hs-transition-time-popup linear;
 }
 
 // 退出结束
 .hs-popup-css-exit-done {
+  height: 0%;
   opacity: 0;
-  display: none;
 }

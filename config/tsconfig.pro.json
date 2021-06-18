@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": "../dist/npm",
+    "removeComments": true,
     "target": "ES6",
     "jsx": "preserve",
     "strict": true,
