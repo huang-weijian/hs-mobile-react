@@ -1,8 +1,8 @@
 > 基础 Base
 > > 所有组件采用Function Component、Hook
-
+>
 > > All component are Function Component
-
+>
 > > React 17.0.1、react-transition-group 4.4.2
 
 > 依赖 dependencies
@@ -11,9 +11,9 @@
 >> The principle is to use as few dependencies as possible to make the code simpler
 
 > 分支规范 branches specification
-
+>
 > > [中文](doc/md/BRANCHES-ZH.md)
-
+>
 > > [English](doc/md/BRANCHES-ES.md)
 
 > 开发预览 development preview
