@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "target": "ES6",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "moduleResolution": "Node",
     "baseUrl": "./src",
