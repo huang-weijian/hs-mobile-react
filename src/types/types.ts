@@ -20,3 +20,9 @@ export type sizes = "mini" | "normal" | "large";
  * 位置   position
  */
 export type positions = "left" | "top" | "right" | "bottom";
+
+/**
+ * Toast类型
+ * Toast types
+ */
+export type toastTypes = "info" | "success" | "loading" | "error";
