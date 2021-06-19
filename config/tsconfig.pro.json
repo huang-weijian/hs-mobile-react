@@ -3,7 +3,7 @@
     "rootDir": "../dist/npm",
     "removeComments": true,
     "target": "ES6",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "moduleResolution": "Node",
     "baseUrl": "../dist/npm",

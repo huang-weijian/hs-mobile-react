@@ -1,5 +1,12 @@
 ### homepage
-[hs-mobile-react](https://github.com/huang-weijian/hs-mobile-react)
+
+[hs-mobile-react github](https://github.com/huang-weijian/hs-mobile-react)
+
+### npm
+
+> npm i hs-mobile-react -S
+
+[hs-mobile-react npm](https://www.npmjs.com/package/hs-mobile-react)
 
 > #### 基础 Base
 > > 所有组件采用Function Component、Hook
