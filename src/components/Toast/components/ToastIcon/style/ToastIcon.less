@@ -4,18 +4,23 @@
 @com-prefix: ~"@{hs-prefix}-toast-icon";
 
 .@{com-prefix} {
-  .hs-base();
   color: @hs-base-white;
 
-  @{com-prefix}-loading {
+  .@{com-prefix}-loading {
+    width: 1 * @hs-font-size;
+    height: 2.5 * @hs-font-size;
+    border-right: @hs-border-radius-2 solid @hs-base-white;
+    border-bottom: @hs-border-radius-2 solid @hs-base-white;
+    display: inline-block;
+    transform: rotateZ(45deg);
   }
 
-  @{com-prefix}-success {
+  .@{com-prefix}-success {
   }
 
-  @{com-prefix}-error {
+  .@{com-prefix}-error {
   }
 
-  @{com-prefix}-info {
+  .@{com-prefix}-info {
   }
 }

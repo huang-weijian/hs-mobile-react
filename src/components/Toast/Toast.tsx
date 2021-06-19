@@ -8,6 +8,11 @@ export declare interface IToastMsg {
    */
   type?: toastTypes;
   /**
+   * toast消息
+   * toast msg
+   */
+  msg?: string;
+  /**
    * toast持续时间
    * toast duration time unit ms
    * -1为不关闭
@@ -20,11 +25,17 @@ export declare interface IToastMsg {
   showMask?: boolean;
 }
 
+const defaultIToastMsg: IToastMsg = {
+  type: "info",
+  msg: "",
+};
+
 function Toast(msg: IToastMsg) {
   return (
     <div className={"hs-toast"}>
       {/*toast图标 toast icon*/}
       <ToastIcon.Loading></ToastIcon.Loading>
+      <div className={"hs-toast-msg"}>{msg.msg}</div>
     </div>
   );
 }

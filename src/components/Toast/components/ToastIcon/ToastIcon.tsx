@@ -20,7 +20,7 @@ const ToastIcon: IToastIcon = {
   Loading() {
     return (
       <ToastIconBase>
-        <div className={"hs-toast-icon-loading"}>123</div>
+        <div className={"hs-toast-icon-loading"}></div>
       </ToastIconBase>
     );
   },
