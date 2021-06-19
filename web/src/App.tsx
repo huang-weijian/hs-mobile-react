@@ -39,7 +39,7 @@ function App() {
     <div className={"app"}>
       <HashRouter basename={"/"}>
         <Switch>
-          <Route path={"/home"} component={warpRouteComponent(Home)}></Route>
+          <Route path={"/"} exact component={warpRouteComponent(Home)}></Route>
           <Route
             path={"/button"}
             component={warpRouteComponent(DemoButton)}
