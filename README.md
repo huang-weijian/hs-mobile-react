@@ -13,7 +13,7 @@
 >
 > > All component are Function Component
 >
-> > React 17.0.1、react-transition-group 4.4.2、typescript 4.2.3
+> > React 17.0.1、react-transition-group 4.4.2、typescript 4.2.3、 less 4.1.0、 less-loader 7.2.1
 
 > #### 依赖 dependencies
 >> 原则是尽量引用少一些的依赖，让代码更简
