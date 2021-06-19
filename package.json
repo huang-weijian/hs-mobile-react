@@ -8,7 +8,8 @@
     "start": "cd ./web && npm run dev"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/huang-weijian/hs-mobile-react.git"
   },
   "private": true,
   "keywords": [
@@ -38,6 +39,7 @@
     "react-dom": ">=17.0.1"
   },
   "author": "huang-weijian",
+  "homepage": "https://github.com/huang-weijian/hs-mobile-react",
   "license": "MIT",
   "devDependencies": {
     "chokidar": "^3.5.1",
