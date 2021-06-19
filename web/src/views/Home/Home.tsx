@@ -22,6 +22,9 @@ function Home(props: HomeProps) {
       <a href="#/popup" className={"a"}>
         popup 弹出层
       </a>
+      <a href="#/toast" className={"a"}>
+        toast 轻提示
+      </a>
     </div>
   );
 }
