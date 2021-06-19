@@ -17,11 +17,15 @@ const readme = fs.readFileSync(path.join(__dirname, "../README.md"));
 delete packageJson.devDependencies;
 delete packageJson.private;
 delete packageJson.scripts;
+delete packageJson.workspaces;
+delete packageJson.engines;
 
 fs.existsSync(env.paths.targetDir) || fs.mkdirSync(env.paths.targetDir);
 
 // 删除旧有npm包 delete old npm package
-del.sync([env.paths.npmTargetDir]);
+del.sync([`${env.paths.npmTargetDir}/*`]);
+// 删除旧有文档 delete old doc
+del.sync([`${env.paths.docTargetDir}/*`]);
 
 // 拷贝源码 copy source code
 copydir.sync(env.paths.sourceDir, env.paths.npmTargetDir, {
@@ -40,6 +44,6 @@ copydir.sync(env.paths.docDir, env.paths.docTargetDir, {
 // 写入package.json create package.json
 fs.writeFileSync(env.paths.packageTargetPath, JSON.stringify(packageJson));
 // 写入readme.md  create readme.md
-fs.writeFileSync(env.paths.targetDir + "/readme.md", readme);
+fs.writeFileSync(env.paths.npmTargetDir + "/README.md", readme);
 
 console.log("HS".bgBlue.white, " build end ", new Date().toLocaleString().blue);

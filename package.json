@@ -1,7 +1,7 @@
 {
   "name": "hs-mobile-react",
-  "version": "1.0.0",
-  "description": "react-mobile-ui react移动端UI",
+  "version": "1.0.1",
+  "description": "hs-mobile-react react-mobile-ui react移动端UI",
   "main": "index.js",
   "scripts": {
     "build:npm": "node config/lib-build-npm.js && cd ./dist/npm && tsc --project ../../config/tsconfig.pro.json && cd ../../ && node config/delete-npmts.js",
@@ -13,7 +13,8 @@
   },
   "private": true,
   "keywords": [
-    "react-mobile-ui hs-mobile-react",
+    "hs-mobile-react",
+    "react-mobile-ui",
     "react-mobile",
     "react mobile ui"
   ],
@@ -38,7 +39,10 @@
     "react": ">=17.0.1",
     "react-dom": ">=17.0.1"
   },
-  "author": "huang-weijian",
+  "author": {
+    "name": "huang-weijian",
+    "email": "1411932776@qq.com"
+  },
   "homepage": "https://github.com/huang-weijian/hs-mobile-react",
   "license": "MIT",
   "devDependencies": {
