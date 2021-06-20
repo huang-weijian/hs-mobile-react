@@ -10,12 +10,32 @@
   text-align: center;
   // min-width和max-width在position为fixed时生效
   // min-width and max-width work when position's value is fixed
-  min-width: 7 * @hs-font-size;
-  max-width: 70%;
-  height: 7 * @hs-font-size;
   padding: 2 * @hs-padding;
   border-radius: @hs-border-radius-2;
   background-color: @hs-base-black-alpha;
+  position: fixed;
+  left: 50%;
+
+  &_icon {
+    min-width: 7 * @hs-font-size;
+    max-width: 70%;
+    height: 7 * @hs-font-size;
+  }
+
+  &_top {
+    top: 10%;
+    transform: translateX(-50%);
+  }
+
+  &_normal {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &_bottom {
+    top: 60%;
+    transform: translateX(-50%);
+  }
 
   .@{com-prefix}-msg {
     margin-top: @hs-margin;

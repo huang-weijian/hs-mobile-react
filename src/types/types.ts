@@ -26,3 +26,9 @@ export type positions = "left" | "top" | "right" | "bottom";
  * Toast types
  */
 export type toastTypes = "info" | "success" | "loading" | "error";
+
+/**
+ * Toast位置
+ * Toast Position
+ */
+export type toastPositions = "top" | "normal" | "bottom";

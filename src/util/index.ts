@@ -10,3 +10,23 @@ export function clone<T>(
 ): T {
   return JSON.parse(JSON.stringify(data), reviver);
 }
+
+/**
+ * 获取popup的index
+ * get popup index
+ */
+export const operaIndex = (function (): {
+  get: () => number;
+  reduc: () => void;
+} {
+  let zIndex = 2000;
+  return {
+    get: function () {
+      return ++zIndex;
+    },
+    // todo
+    reduc: function () {
+      zIndex--;
+    },
+  };
+})();

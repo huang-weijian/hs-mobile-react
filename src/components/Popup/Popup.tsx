@@ -2,14 +2,16 @@ import {
   createElement,
   CSSProperties,
   MutableRefObject,
-  ReactChild, ReactNode,
+  ReactChild,
+  ReactNode,
   useRef,
   useState,
 } from "react";
 import "./style";
-import {positions} from "../../types/types";
+import { positions } from "../../types/types";
 import { prefix } from "../../string/txt";
-import { getPopupBodyStyle, operaIndex } from "./func";
+import { getPopupBodyStyle } from "./func";
+import { operaIndex } from "../../util";
 import {
   CSSTransition,
   Transition,

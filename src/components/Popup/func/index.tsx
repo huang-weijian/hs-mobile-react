@@ -2,26 +2,6 @@ import { PopupProps } from "../Popup";
 import { CSSProperties } from "react";
 
 /**
- * 获取popup的index
- * get popup index
- */
-export const operaIndex = (function (): {
-  get: () => number;
-  reduc: () => void;
-} {
-  let zIndex = 2000;
-  return {
-    get: function () {
-      return ++zIndex;
-    },
-    // todo
-    reduc: function () {
-      zIndex--;
-    },
-  };
-})();
-
-/**
  * 根据popup位置获取popup body的进入与离开的内联样式
  * get popup body enter and exit style by popup position
  * @param props
