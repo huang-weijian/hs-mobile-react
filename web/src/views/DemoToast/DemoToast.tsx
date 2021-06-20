@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { Button, Toast } from "@hs";
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { RouteComponentProps } from "react-router";
@@ -18,8 +17,14 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
       <SplitLine title={"Toast"}></SplitLine>
       <p>Toast的自带图标是dom和css</p>
       <p>Toast's icons are dom node</p>
+      <p>Toast是单例模式</p>
+      <p>Toast is Singleton mode</p>
       <SplitLine title={"no icon"}></SplitLine>
-      <Button type={"primary"} round onClick={() => Toast({ msg: "test" })}>
+      <Button
+        type={"primary"}
+        round
+        onClick={() => Toast({ msg: "test", duration: 3000 })}
+      >
         noicon toast
       </Button>
       <SplitLine title={"loading"}></SplitLine>
@@ -29,6 +34,22 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
         onClick={() => Toast.loading({ msg: "loading" })}
       >
         loading toast
+      </Button>
+      <SplitLine title={"success"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() => Toast.success({ msg: "success" })}
+      >
+        success toast
+      </Button>
+      <SplitLine title={"error"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() => Toast.error({ msg: "error" })}
+      >
+        error toast
       </Button>
     </div>
   );

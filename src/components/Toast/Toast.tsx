@@ -1,9 +1,17 @@
-import "./style/index";
+import "./style";
 import { toastPositions, toastTypes } from "../../types/types";
 import ToastIcon from "./components/ToastIcon";
 import { getToastClass } from "./func";
 import ToastContainerUtil from "./components/ToastContainer";
-import { ReactChild } from "react";
+import {
+  CSSProperties,
+  MutableRefObject,
+  ReactChild,
+  useEffect,
+  useRef,
+} from "react";
+import { prefix } from "../../string/txt";
+import { operaIndex } from "../../util";
 
 export declare interface IToastMsg {
   /**
@@ -47,13 +55,26 @@ export declare interface IToastMsg {
 const defaultIToastMsg: IToastMsg = {
   type: "info",
   msg: "",
+  position: "normal",
   duration: 2500,
 };
+let key = 0;
 
 function ToastComponent(msg: IToastMsg) {
   let className = getToastClass(msg);
+  let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  useEffect(() => {
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.style.display = "none";
+      }
+    }, msg.duration);
+  }, []);
+  let style: CSSProperties = {
+    zIndex: operaIndex.get(),
+  };
   return (
-    <div className={`hs-toast ${className}`}>
+    <div className={`hs-toast ${className}`} ref={ref} style={{ ...style }}>
       {/*toast图标 toast icon*/}
       {msg.iconNode}
       {msg.msg ? <div className={"hs-toast-msg"}>{msg.msg}</div> : null}
@@ -61,17 +82,51 @@ function ToastComponent(msg: IToastMsg) {
   );
 }
 
+namespace ToastComponent {
+  export const displayName = `${prefix.toUpperCase()}ToastComponent`;
+}
+
 function Toast(msg: IToastMsg = defaultIToastMsg) {
-  ToastContainerUtil.addToast(<ToastComponent {...msg}></ToastComponent>);
+  msg = Object.assign<IToastMsg, IToastMsg>(defaultIToastMsg, msg);
+  if (msg.type !== "info" && !msg.iconNode) {
+    switch (msg.type) {
+      case "success":
+        msg.iconNode = <ToastIcon.Success></ToastIcon.Success>;
+        break;
+      case "loading":
+        msg.iconNode = <ToastIcon.Loading></ToastIcon.Loading>;
+        break;
+      case "error":
+        msg.iconNode = <ToastIcon.Error></ToastIcon.Error>;
+        break;
+    }
+  }
+  ToastContainerUtil.setToast([
+    <ToastComponent key={++key} {...msg}></ToastComponent>,
+  ]);
 }
 
 namespace Toast {
   export const loading = function (msg: IToastMsg = defaultIToastMsg) {
-    let loadingMsg: IToastMsg = {
-      iconNode: <ToastIcon.Loading></ToastIcon.Loading>,
-      msg: "loading",
+    let errorMsg: IToastMsg = {
+      type: "loading",
     };
-    Toast(loadingMsg);
+    msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
+    Toast(msg);
+  };
+  export const success = function (msg: IToastMsg = defaultIToastMsg) {
+    let errorMsg: IToastMsg = {
+      type: "success",
+    };
+    msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
+    Toast(msg);
+  };
+  export const error = function (msg: IToastMsg = defaultIToastMsg) {
+    let errorMsg: IToastMsg = {
+      type: "error",
+    };
+    msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
+    Toast(msg);
   };
 }
 

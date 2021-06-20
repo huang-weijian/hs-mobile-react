@@ -1,6 +1,7 @@
 import { render } from "react-dom";
 import { prefix } from "../../../../string/txt";
 import {
+  cloneElement,
   createRef,
   ForwardedRef,
   forwardRef,
@@ -11,15 +12,11 @@ import {
 } from "react";
 import { getToastContainerDOM } from "./func";
 
-export declare interface IToastContainerUtil {
-  addToast: (node: ReactChild) => void;
-  closeToast: () => void;
-}
-
 export declare interface IToastContainerProps {}
 
 export declare interface IToastContainerRef {
   setToast: (node: ReactNode) => void;
+  setNone: () => void;
 }
 
 // Toast是否初始化
@@ -39,11 +36,18 @@ function ToastContainer(
         setToast: (node) => {
           setToast(node);
         },
+        setNone() {
+          setToast(<span></span>);
+        },
       };
     },
     []
   );
-  return <div className={`hs-toast-container`}>{toast}</div>;
+  return (
+    <div className={`hs-toast-container`}>
+      {toast}
+    </div>
+  );
 }
 
 namespace ToastContainer {
@@ -52,8 +56,8 @@ namespace ToastContainer {
 
 const ToastContainerForward = forwardRef(ToastContainer);
 
-const ToastContainerUtil: IToastContainerUtil = {
-  addToast(node: ReactNode) {
+const ToastContainerUtil: IToastContainerRef = {
+  setToast(node: ReactNode) {
     if (!ToastContainerInitFlag) {
       // 如果toast container没渲染
       // 渲染toast container，再把toast插入
@@ -72,7 +76,7 @@ const ToastContainerUtil: IToastContainerUtil = {
     // @ts-ignore
     ToastContainerRef.current.setToast(node);
   },
-  closeToast() {},
+  setNone() {},
 };
 
 export default ToastContainerUtil;

@@ -1,5 +1,5 @@
 import "./style";
-import { ReactChild, ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface IToastIconBase {
   children: ReactNode;
@@ -13,7 +13,6 @@ interface IToastIcon {
   Loading: () => JSX.Element;
   Success: () => JSX.Element;
   Error: () => JSX.Element;
-  Info: () => JSX.Element;
 }
 
 const ToastIcon: IToastIcon = {
@@ -25,13 +24,25 @@ const ToastIcon: IToastIcon = {
     );
   },
   Success() {
-    return <ToastIconBase>loading</ToastIconBase>;
+    return (
+      <ToastIconBase>
+        <div className={"hs-toast-icon-success"}></div>
+      </ToastIconBase>
+    );
   },
   Error() {
-    return <ToastIconBase>loading</ToastIconBase>;
-  },
-  Info() {
-    return <ToastIconBase>loading</ToastIconBase>;
+    return (
+      <ToastIconBase>
+        <div className={"hs-toast-icon-error"}>
+          <div
+            className={"hs-toast-icon-error-itemone hs-toast-icon-error-item"}
+          ></div>
+          <div
+            className={"hs-toast-icon-error-itemtwo hs-toast-icon-error-item"}
+          ></div>
+        </div>
+      </ToastIconBase>
+    );
   },
 };
 
