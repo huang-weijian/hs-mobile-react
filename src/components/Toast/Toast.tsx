@@ -11,7 +11,7 @@ import {
   useRef,
 } from "react";
 import { prefix } from "../../string/txt";
-import { operaIndex } from "../../util";
+import { clone, operaIndex } from "../../util";
 
 export declare interface IToastMsg {
   /**
@@ -64,20 +64,31 @@ function ToastComponent(msg: IToastMsg) {
   let className = getToastClass(msg);
   let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   useEffect(() => {
-    setTimeout(() => {
-      if (ref.current) {
-        ref.current.style.display = "none";
-      }
-    }, msg.duration);
+    setTimeout(
+      () => {
+        if (ref.current) {
+          ref.current.style.display = "none";
+        }
+      },
+      msg.duration === -1 ? 1000 * 100000000000000 : msg.duration
+    );
   }, []);
   let style: CSSProperties = {
     zIndex: operaIndex.get(),
   };
+  ["info", "loading"].indexOf(msg.type || "") > -1
+    ? (style.height = "auto")
+    : "";
+  let msgStyle: CSSProperties = msg.iconNode ? {} : { marginTop: 0 };
   return (
     <div className={`hs-toast ${className}`} ref={ref} style={{ ...style }}>
       {/*toast图标 toast icon*/}
       {msg.iconNode}
-      {msg.msg ? <div className={"hs-toast-msg"}>{msg.msg}</div> : null}
+      {msg.msg ? (
+        <div className={"hs-toast-msg"} style={{ ...msgStyle }}>
+          {msg.msg}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -86,8 +97,8 @@ namespace ToastComponent {
   export const displayName = `${prefix.toUpperCase()}ToastComponent`;
 }
 
-function Toast(msg: IToastMsg = defaultIToastMsg) {
-  msg = Object.assign<IToastMsg, IToastMsg>(defaultIToastMsg, msg);
+function Toast(msg: IToastMsg = clone(defaultIToastMsg)) {
+  msg = Object.assign<IToastMsg, IToastMsg>(clone(defaultIToastMsg), msg);
   if (msg.type !== "info" && !msg.iconNode) {
     switch (msg.type) {
       case "success":
@@ -107,21 +118,21 @@ function Toast(msg: IToastMsg = defaultIToastMsg) {
 }
 
 namespace Toast {
-  export const loading = function (msg: IToastMsg = defaultIToastMsg) {
+  export const loading = function (msg: IToastMsg = clone(defaultIToastMsg)) {
     let errorMsg: IToastMsg = {
       type: "loading",
     };
     msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
     Toast(msg);
   };
-  export const success = function (msg: IToastMsg = defaultIToastMsg) {
+  export const success = function (msg: IToastMsg = clone(defaultIToastMsg)) {
     let errorMsg: IToastMsg = {
       type: "success",
     };
     msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
     Toast(msg);
   };
-  export const error = function (msg: IToastMsg = defaultIToastMsg) {
+  export const error = function (msg: IToastMsg = clone(defaultIToastMsg)) {
     let errorMsg: IToastMsg = {
       type: "error",
     };

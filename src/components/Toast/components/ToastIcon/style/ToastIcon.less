@@ -19,27 +19,20 @@
   }
 
   .@{com-prefix}-error {
-    position: relative;
-    height: 2.5 * @hs-font-size;
+    text-align: center;
 
-    .@{com-prefix}-error-item {
+    .hs-toast-icon-error-line {
+      background-color: @hs-base-white;
       width: @hs-border-radius-2;
       height: 2.5 * @hs-font-size;
-      position: absolute;
+      display: inline-block;
     }
 
-    .@{com-prefix}-error-itemone {
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+    .hs-toast-icon-error-point {
       background-color: @hs-base-white;
-    }
-
-    .@{com-prefix}-error-itemtwo {
-      left: 50%;
-      top: 50%;
-      transform: rotateZ(45deg);
-      background-color: @hs-base-white;
+      width: @hs-border-radius-2;
+      height: @hs-border-radius-2;
+      display: inline-block;
     }
   }
 }

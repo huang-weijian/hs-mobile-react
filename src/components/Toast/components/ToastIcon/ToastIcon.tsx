@@ -1,5 +1,5 @@
 import "./style";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface IToastIconBase {
   children: ReactNode;
@@ -15,11 +15,30 @@ interface IToastIcon {
   Error: () => JSX.Element;
 }
 
+function Ellipsis() {
+  const [strArr, setStrArr] = useState(new Array<string>("."));
+  useEffect(() => {
+    let key = setTimeout(() => {
+      if (strArr.length >= 3) {
+        setStrArr(["."]);
+      } else {
+        setStrArr(strArr.concat("."));
+      }
+    }, 1000 * 1);
+    return () => {
+      // 防止内存泄漏
+      // prevent memory leaks
+      clearTimeout(key);
+    };
+  }, [strArr.length]);
+  return <div>{strArr.join(" ")}</div>;
+}
+
 const ToastIcon: IToastIcon = {
   Loading() {
     return (
       <ToastIconBase>
-        <div className={"hs-toast-icon-loading"}></div>
+        <Ellipsis></Ellipsis>
       </ToastIconBase>
     );
   },
@@ -34,12 +53,12 @@ const ToastIcon: IToastIcon = {
     return (
       <ToastIconBase>
         <div className={"hs-toast-icon-error"}>
-          <div
-            className={"hs-toast-icon-error-itemone hs-toast-icon-error-item"}
-          ></div>
-          <div
-            className={"hs-toast-icon-error-itemtwo hs-toast-icon-error-item"}
-          ></div>
+          <div>
+            <div className={"hs-toast-icon-error-line"}></div>
+          </div>
+          <div style={{ lineHeight: 0 }}>
+            <div className={"hs-toast-icon-error-point"}></div>
+          </div>
         </div>
       </ToastIconBase>
     );

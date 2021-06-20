@@ -51,6 +51,33 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
       >
         error toast
       </Button>
+      <SplitLine title={"自定义Icon custom IconNode"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() =>
+          Toast({
+            msg: "custom IconNode",
+            iconNode: <div>custom IconNode</div>,
+          })
+        }
+      >
+        custom IconNode
+      </Button>
+      <SplitLine title={"continued"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() =>
+          Toast({
+            type: "loading",
+            msg: "continued",
+            duration: -1,
+          })
+        }
+      >
+        continued
+      </Button>
     </div>
   );
 }
