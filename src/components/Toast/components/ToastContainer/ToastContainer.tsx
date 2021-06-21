@@ -43,11 +43,7 @@ function ToastContainer(
     },
     []
   );
-  return (
-    <div className={`hs-toast-container`}>
-      {toast}
-    </div>
-  );
+  return <div className={`hs-toast-container`}>{toast}</div>;
 }
 
 namespace ToastContainer {
@@ -76,7 +72,10 @@ const ToastContainerUtil: IToastContainerRef = {
     // @ts-ignore
     ToastContainerRef.current.setToast(node);
   },
-  setNone() {},
+  setNone() {
+    // @ts-ignore
+    ToastContainerRef.current?.setNone();
+  },
 };
 
 export default ToastContainerUtil;

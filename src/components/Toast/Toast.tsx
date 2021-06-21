@@ -52,6 +52,10 @@ export declare interface IToastMsg {
   showMask?: boolean;
 }
 
+interface IToastNodeEvent {
+  closedResolve: () => void;
+}
+
 const defaultIToastMsg: IToastMsg = {
   type: "info",
   msg: "",
@@ -60,22 +64,25 @@ const defaultIToastMsg: IToastMsg = {
 };
 let key = 0;
 
-function ToastComponent(msg: IToastMsg) {
+function ToastComponent(msg: IToastMsg & IToastNodeEvent) {
   let className = getToastClass(msg);
   let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   useEffect(() => {
-    setTimeout(
-      () => {
-        if (ref.current) {
-          ref.current.style.display = "none";
-        }
-      },
-      msg.duration === -1 ? 1000 * 100000000000000 : msg.duration
-    );
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.style.display = "none";
+      }
+      msg.closedResolve();
+    }, msg.duration);
+    return () => {
+      msg.closedResolve();
+    };
   }, []);
   let style: CSSProperties = {
     zIndex: operaIndex.get(),
   };
+  // info或者loading类型
+  // if toast type is info or loading
   ["info", "loading"].indexOf(msg.type || "") > -1
     ? (style.height = "auto")
     : "";
@@ -98,23 +105,34 @@ namespace ToastComponent {
 }
 
 function Toast(msg: IToastMsg = clone(defaultIToastMsg)) {
-  msg = Object.assign<IToastMsg, IToastMsg>(clone(defaultIToastMsg), msg);
-  if (msg.type !== "info" && !msg.iconNode) {
-    switch (msg.type) {
-      case "success":
-        msg.iconNode = <ToastIcon.Success></ToastIcon.Success>;
-        break;
-      case "loading":
-        msg.iconNode = <ToastIcon.Loading></ToastIcon.Loading>;
-        break;
-      case "error":
-        msg.iconNode = <ToastIcon.Error></ToastIcon.Error>;
-        break;
+  function run(openedResolve: () => void) {
+    msg = Object.assign<IToastMsg, IToastMsg>(clone(defaultIToastMsg), msg);
+    msg.duration = msg.duration === -1 ? 1000 * 100000000000000 : msg.duration;
+    if (msg.type !== "info" && !msg.iconNode) {
+      switch (msg.type) {
+        case "success":
+          msg.iconNode = <ToastIcon.Success></ToastIcon.Success>;
+          break;
+        case "loading":
+          msg.iconNode = <ToastIcon.Loading></ToastIcon.Loading>;
+          break;
+        case "error":
+          msg.iconNode = <ToastIcon.Error></ToastIcon.Error>;
+          break;
+      }
     }
+    ToastContainerUtil.setToast([
+      <ToastComponent
+        key={++key}
+        {...msg}
+        closedResolve={openedResolve}
+      ></ToastComponent>,
+    ]);
   }
-  ToastContainerUtil.setToast([
-    <ToastComponent key={++key} {...msg}></ToastComponent>,
-  ]);
+
+  return new Promise<void>((openedResolve) => {
+    run(openedResolve);
+  });
 }
 
 namespace Toast {
@@ -123,21 +141,24 @@ namespace Toast {
       type: "loading",
     };
     msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
-    Toast(msg);
+    return Toast(msg);
   };
   export const success = function (msg: IToastMsg = clone(defaultIToastMsg)) {
     let errorMsg: IToastMsg = {
       type: "success",
     };
     msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
-    Toast(msg);
+    return Toast(msg);
   };
   export const error = function (msg: IToastMsg = clone(defaultIToastMsg)) {
     let errorMsg: IToastMsg = {
       type: "error",
     };
     msg = Object.assign<IToastMsg, IToastMsg>(msg, errorMsg);
-    Toast(msg);
+    return Toast(msg);
+  };
+  export const clear = function () {
+    ToastContainerUtil.setNone();
   };
 }
 

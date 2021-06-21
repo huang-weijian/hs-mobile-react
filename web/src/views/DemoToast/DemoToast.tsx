@@ -23,7 +23,7 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
       <Button
         type={"primary"}
         round
-        onClick={() => Toast({ msg: "test", duration: 3000 })}
+        onClick={() => Toast({ msg: "test info", duration: 3000 })}
       >
         noicon toast
       </Button>
@@ -59,12 +59,12 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
           Toast({
             msg: "custom IconNode",
             iconNode: <div>custom IconNode</div>,
-          })
+          }).then(() => console.info("custom IconNode is closed"))
         }
       >
         custom IconNode
       </Button>
-      <SplitLine title={"continued"}></SplitLine>
+      <SplitLine title={"持续loading continued"}></SplitLine>
       <Button
         type={"primary"}
         round
@@ -77,6 +77,22 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
         }
       >
         continued
+      </Button>
+      <Button type={"danger"} onClick={() => Toast.clear()}>
+        关闭 close
+      </Button>
+      <SplitLine title={"关闭回调 onClosed"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() =>
+          Toast({
+            type: "loading",
+            msg: "onClosed",
+          }).then(() => console.info("on Closed Toast is closed"))
+        }
+      >
+        onClosed
       </Button>
     </div>
   );
