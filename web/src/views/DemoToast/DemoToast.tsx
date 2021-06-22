@@ -124,6 +124,21 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
       >
         custom msg body
       </Button>
+      <SplitLine title={"各个位置消息 msg position"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() => Toast({ position: "top", msg: "top msg" })}
+      >
+        top msg
+      </Button>
+      <Button
+        type={"primary"}
+        round
+        onClick={() => Toast({ position: "bottom", msg: "bottom msg" })}
+      >
+        bottom msg
+      </Button>
     </div>
   );
 }
