@@ -24,9 +24,9 @@ delete packageJson.peerDependencies;
 fs.existsSync(env.paths.targetDir) || fs.mkdirSync(env.paths.targetDir);
 
 // 删除旧有npm包 delete old npm package
-del.sync([`${env.paths.npmTargetDir}`]);
+del.sync([`${env.paths.npmTargetDir}`],{force:true});
 // 删除旧有文档 delete old doc
-del.sync([`${env.paths.docTargetDir}`]);
+del.sync([`${env.paths.docTargetDir}`],{force:true});
 
 // 拷贝源码 copy source code
 copydir.sync(env.paths.sourceDir, env.paths.npmTargetDir, {
