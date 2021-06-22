@@ -8,10 +8,13 @@ import {
   useRef,
   useState,
   createElement,
-  MutableRefObject, ReactNode,
+  MutableRefObject,
+  ReactNode,
+  useCallback,
+  useMemo,
 } from "react";
 import "./style";
-import {sizes, types} from "../../types/types";
+import { sizes, types } from "../../types/types";
 import { prefix } from "../../string/txt";
 import { createRipple, getClassByProp } from "./func";
 
@@ -61,7 +64,17 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   props = Object.assign({}, defaultProps, props);
 
   // button样式（btn class
-  const className = getClassByProp(props);
+  const className = useMemo(
+    () => getClassByProp(props),
+    [
+      props.type,
+      props.size,
+      props.plain,
+      props.round,
+      props.block,
+      props.className,
+    ]
+  );
   const rippleConRef = useRef<HTMLDivElement>(
     null
   ) as MutableRefObject<HTMLDivElement>;
@@ -79,21 +92,24 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   }, []);
 
   // click event handler
-  function clickHandler(e: MouseEvent<HTMLButtonElement>): void {
-    // 添加水波纹效果（add ripple animated）
-    let tempChild = createRipple({
-      x: e.pageX - rippleConPos.x,
-      y: e.pageY - rippleConPos.y,
-    });
-    rippleConRef.current.appendChild(tempChild);
-    setTimeout(() => {
-      rippleConRef.current.removeChild(tempChild);
-    }, 1000);
-    // trigger click
-    if (props.onClick) {
-      props.onClick(e);
-    }
-  }
+  let clickHandler = useCallback(
+    function (e: MouseEvent<HTMLButtonElement>): void {
+      // 添加水波纹效果（add ripple animated）
+      let tempChild = createRipple({
+        x: e.pageX - rippleConPos.x,
+        y: e.pageY - rippleConPos.y,
+      });
+      rippleConRef.current.appendChild(tempChild);
+      setTimeout(() => {
+        rippleConRef.current.removeChild(tempChild);
+      }, 1000);
+      // trigger click
+      if (props.onClick) {
+        props.onClick(e);
+      }
+    },
+    [rippleConPos,props.onClick]
+  );
 
   return (
     <button
