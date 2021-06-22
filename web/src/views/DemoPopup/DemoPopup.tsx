@@ -129,7 +129,7 @@ function DemoPopup(props: DemoPopupProps) {
           </Button>
         </div>
         {Array(10)
-          .fill("这是第一段话，真的不知道说什么了，好烦啊，我tmd的，我日哦")
+          .fill("这是第一段话，真的不知道说什么了")
           .map(
             (function () {
               let count = 0;
