@@ -10,13 +10,13 @@ export function getToastPositionClass(msg: IToastMsg): string {
   let className = "";
   switch (msg.position) {
     case "top":
-      className = `${prefix}-toast_top`;
+      className = `${prefix}-toast-body_top`;
       break;
     case "bottom":
-      className = `${prefix}-toast_bottom`;
+      className = `${prefix}-toast-body_bottom`;
       break;
     default:
-      className = `${prefix}-toast_normal`;
+      className = `${prefix}-toast-body_normal`;
   }
   return className;
 }
@@ -29,11 +29,13 @@ export function getToastPositionClass(msg: IToastMsg): string {
 export function getToastIconClass(msg: IToastMsg): string {
   let className = "";
   if (msg.iconNode) {
-    className = `${prefix}-toast_icon`;
+    className = `${prefix}-toast-body_icon`;
   }
   return className;
 }
 
-export function getToastClass(msg: IToastMsg) {
-  return `${getToastPositionClass(msg)} ${getToastIconClass(msg)}`;
+export function getToastBodyClass(msg: IToastMsg) {
+  return `${getToastPositionClass(msg)} ${getToastIconClass(msg)}`.concat(
+    ` ${msg.bodyClassName}` || ""
+  );
 }

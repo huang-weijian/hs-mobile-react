@@ -1,7 +1,7 @@
 import "./style";
 import { toastPositions, toastTypes } from "../../types/types";
 import ToastIcon from "./components/ToastIcon";
-import { getToastClass } from "./func";
+import { getToastBodyClass } from "./func";
 import ToastContainerUtil from "./components/ToastContainer";
 import {
   CSSProperties,
@@ -9,6 +9,7 @@ import {
   ReactChild,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { prefix } from "../../string/txt";
 import { clone, operaIndex } from "../../util";
@@ -46,6 +47,46 @@ export declare interface IToastMsg {
    */
   duration?: number;
   /**
+   * Toast的样式
+   * Toast className
+   */
+  toastClassName?: string;
+  /**
+   * Toast的style
+   * Toast style
+   */
+  toastStyle?: CSSProperties;
+  /**
+   * Toast body的样式
+   * Toast body className
+   */
+  bodyClassName?: string;
+  /**
+   * Toast body的style
+   * Toast body style
+   */
+  bodyStyle?: CSSProperties;
+  /**
+   * Toast msg的样式
+   * Toast msg className
+   */
+  msgClassName?: string;
+  /**
+   * Toast msg的style
+   * Toast msg style
+   */
+  msgStyle?: CSSProperties;
+  /**
+   * Toast mask的样式
+   * Toast mask className
+   */
+  maskClassName?: string;
+  /**
+   * Toast mask的style
+   * Toast mask style
+   */
+  maskStyle?: CSSProperties;
+  /**
    * 展示或隐藏遮罩层
    * show or hide mask
    */
@@ -65,12 +106,18 @@ const defaultIToastMsg: IToastMsg = {
 let key = 0;
 
 function ToastComponent(msg: IToastMsg & IToastNodeEvent) {
-  let className = getToastClass(msg);
+  const [zIndex] = useState<number>(operaIndex.get());
+  let bodyClassName = getToastBodyClass(msg);
   let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   useEffect(() => {
     setTimeout(() => {
       if (ref.current) {
-        ref.current.style.display = "none";
+        ref.current.style.opacity = "0";
+        setTimeout(() => {
+          if (ref.current) {
+            ref.current.style.display = "none";
+          }
+        }, 1000);
       }
       msg.closedResolve();
     }, msg.duration);
@@ -78,24 +125,50 @@ function ToastComponent(msg: IToastMsg & IToastNodeEvent) {
       msg.closedResolve();
     };
   }, []);
-  let style: CSSProperties = {
-    zIndex: operaIndex.get(),
+  let toastStyle: CSSProperties = {
+    zIndex: zIndex,
   };
-  // info或者loading类型
-  // if toast type is info or loading
-  ["info", "loading"].indexOf(msg.type || "") > -1
-    ? (style.height = "auto")
-    : "";
+  let maskStyle: CSSProperties = {
+    zIndex: zIndex + 1,
+    ...(msg.showMask ? {} : { display: "none" }),
+  };
+  let toastBodyStyle: CSSProperties = {
+    zIndex: zIndex + 2,
+    // info或者loading类型
+    // if toast type is info or loading
+    ...(["info", "loading"].indexOf(msg.type || "") > -1
+      ? { height: "auto" }
+      : {}),
+    ...msg.bodyStyle,
+  };
   let msgStyle: CSSProperties = msg.iconNode ? {} : { marginTop: 0 };
   return (
-    <div className={`hs-toast ${className}`} ref={ref} style={{ ...style }}>
-      {/*toast图标 toast icon*/}
-      {msg.iconNode}
-      {msg.msg ? (
-        <div className={"hs-toast-msg"} style={{ ...msgStyle }}>
-          {msg.msg}
-        </div>
-      ) : null}
+    <div
+      className={`hs-toast ${msg.toastClassName || ""}`}
+      ref={ref}
+      style={{ ...toastStyle, ...msg.toastStyle }}
+    >
+      <div
+        className={`hs-toast-mask ${msg.maskClassName || ""}`}
+        style={{ ...maskStyle, ...msg.maskStyle }}
+      ></div>
+      {/*消息容器*/}
+      {/*msg container*/}
+      <div
+        className={`hs-toast-body ${bodyClassName}`}
+        style={{ ...toastBodyStyle }}
+      >
+        {/*toast图标 toast icon*/}
+        {msg.iconNode}
+        {msg.msg ? (
+          <div
+            className={"hs-toast-msg"}
+            style={{ ...msgStyle, ...msg.msgStyle }}
+          >
+            {msg.msg}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

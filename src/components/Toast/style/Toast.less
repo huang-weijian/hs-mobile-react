@@ -5,40 +5,54 @@
 
 .@{com-prefix} {
   .hs-base();
-  color: @hs-base-white;
-  box-sizing: border-box;
-  text-align: center;
-  // min-width和max-width在position为fixed时生效
-  // min-width and max-width work when position's value is fixed
-  padding: 2 * @hs-padding;
-  border-radius: @hs-border-radius-2;
-  background-color: @hs-base-black-alpha;
-  position: fixed;
-  left: 50%;
+  opacity: 1;
+  transition: opacity @hs-transition-time linear;
 
-  &_icon {
-    min-width: 7 * @hs-font-size;
-    max-width: 70%;
-    height: 7 * @hs-font-size;
+  .@{com-prefix}-mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
   }
 
-  &_top {
-    top: 10%;
-    transform: translateX(-50%);
-  }
+  .@{com-prefix}-body {
+    color: @hs-base-white;
+    box-sizing: border-box;
+    text-align: center;
+    // min-width和max-width在position为fixed时生效
+    // min-width and max-width work when position's value is fixed
+    padding: 2 * @hs-padding;
+    border-radius: @hs-border-radius-2;
+    background-color: @hs-base-black-alpha;
+    position: fixed;
+    left: 50%;
 
-  &_normal {
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
+    &_icon {
+      min-width: 7 * @hs-font-size;
+      max-width: 70%;
+      height: 7 * @hs-font-size;
+    }
 
-  &_bottom {
-    top: 60%;
-    transform: translateX(-50%);
-  }
+    &_top {
+      top: 10%;
+      transform: translateX(-50%);
+    }
 
-  .@{com-prefix}-msg {
-    margin-top: @hs-margin;
-    display: inline-block;
+    &_normal {
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &_bottom {
+      top: 60%;
+      transform: translateX(-50%);
+    }
+
+    .@{com-prefix}-msg {
+      margin-top: @hs-margin;
+      display: inline-block;
+    }
   }
 }

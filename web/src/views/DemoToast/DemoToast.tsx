@@ -94,6 +94,36 @@ function DemoToast(props: DemoToastProps & RouteComponentProps) {
       >
         onClosed
       </Button>
+      <SplitLine title={"遮罩层 mask"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        onClick={() =>
+          Toast({
+            type: "loading",
+            msg: "onClosed",
+            showMask: true,
+          })
+        }
+      >
+        mask
+      </Button>
+      <SplitLine title={"自定义消息 custom msg body"}></SplitLine>
+      <Button
+        type={"primary"}
+        round
+        block
+        onClick={() =>
+          Toast({
+            type: "success",
+            bodyStyle: { color: "#67c23a", backgroundColor: "#909399" },
+            msg: "custom msg",
+            showMask: true,
+          })
+        }
+      >
+        custom msg body
+      </Button>
     </div>
   );
 }
