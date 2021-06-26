@@ -19,6 +19,7 @@ const DemoImage = lazy(() => import("./views/DemoImage/DemoImage"));
 const DemoIcon = lazy(() => import("./views/DemoIcon"));
 const DemoPopup = lazy(() => import("./views/DemoPopup/DemoPopup"));
 const DemoToast = lazy(() => import("./views/DemoToast/DemoToast"));
+const DemoCheckbox = lazy(() => import("./views/DemoCheckbox/DemoCheckbox"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -63,6 +64,10 @@ function App() {
           <Route
             path={"/toast"}
             component={warpRouteComponent(DemoToast)}
+          ></Route>
+          <Route
+            path={"/checkbox"}
+            component={warpRouteComponent(DemoCheckbox)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>

@@ -25,6 +25,9 @@ function Home(props: HomeProps) {
       <a href="#/toast" className={"a"}>
         toast 轻提示
       </a>
+      <a href="#/checkbox" className={"a"}>
+        checkbox 复选框
+      </a>
     </div>
   );
 }
