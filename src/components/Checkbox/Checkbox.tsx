@@ -1,5 +1,13 @@
-import { CSSProperties, MutableRefObject, useRef } from "react";
+import {
+  CSSProperties,
+  FunctionComponent,
+  MouseEventHandler,
+  MutableRefObject,
+  useMemo,
+  useRef,
+} from "react";
 import "./style";
+import { getCheckStateIcon } from "./func";
 
 export declare interface ICheckboxProps {
   /**
@@ -13,29 +21,27 @@ export declare interface ICheckboxProps {
    */
   label?: string | number;
   /**
-   * 复选框 icon的附加样式
-   * checkbox icon additional className
+   *  图标的颜色
+   *  icon color
    */
-  iconClassName?: string;
+  iconColor?: string;
   /**
-   * 复选框 icon的附加style
-   * checkbox icon additional style
+   * 图标渲染函数
+   * icon render function
    */
-  iconStyle?: CSSProperties;
-
+  iconRender?: FunctionComponent<ICheckboxProps>;
+  onChange?: MouseEventHandler<HTMLLabelElement>;
 }
 
 function Checkbox(props: ICheckboxProps) {
-  let ref = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;
+  let iconNode = useMemo(
+    () => getCheckStateIcon(props),
+    [props.iconRender, props.iconColor, props.isCheck]
+  );
   return (
-    <label className={`hs-checkbox`}>
-      {/*real checkbox*/}
-      <input ref={ref} hidden={true} type={"checkbox"} />
-      {/*icon container*/}
-      <span className={`hs-checkbox-icon`}>
-        {/*icon*/}
-        <span></span>
-      </span>
+    <label className={`hs-checkbox`} onClick={props.onChange}>
+      {/*icon*/}
+      {iconNode}
       {/* label*/}
       <span className={`hs-checkbox-label`}>{props.label}</span>
     </label>

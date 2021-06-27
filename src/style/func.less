@@ -9,3 +9,15 @@
 .hs-base {
   .hs-base-font();
 }
+
+.transition_property(@property:"all") {
+  transition: ~"@{property}" @hs-transition-time linear;
+}
+
+.opacity_one {
+  opacity: 1;
+}
+
+.opacity_zero {
+  opacity: 0;
+}
