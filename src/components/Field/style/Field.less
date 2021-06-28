@@ -1,0 +1,78 @@
+@import "../../../style/var";
+@import "../../../style/func";
+
+@com-prefix: ~"@{hs-prefix}-field";
+
+.@{com-prefix} {
+  &::placeholder {
+    /*Webkit browsers*/
+    color: @hs-info-color;
+    opacity: 0.7;
+  }
+
+  &::-webkit-input-placeholder {
+    /*Webkit browsers*/
+    color: @hs-info-color;
+    opacity: 0.7;
+  }
+
+  &::-moz-placeholder {
+    /*Mozilla Firefox 4 to 8*/
+    color: @hs-info-color;
+    opacity: 0.7;
+  }
+
+  &::-ms-input-placeholder {
+    /*Internet Explorer 10+*/
+    color: @hs-info-color;
+    opacity: 0.7;
+  }
+
+  .hs-base();
+  display: inline-block;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid @hs-info-color;
+
+  &_primary {
+    &:focus {
+      border-bottom: 1px solid @hs-primary-color;
+    }
+  }
+
+  &_danger {
+    &:focus {
+      border-bottom: 1px solid @hs-danger-color;
+    }
+  }
+
+  &_success {
+    &:focus {
+      border-bottom: 1px solid @hs-success-color;
+    }
+  }
+
+  &_warning {
+    &:focus {
+      border-bottom: 1px solid @hs-warning-color;
+    }
+  }
+
+  &_none {
+    border: none;
+  }
+
+  &_clearable {
+    position: relative;
+    padding-right: @hs-padding;
+
+    &::after {
+      content: "+";
+      display: inline-block;
+      position: absolute;
+      right: @hs-padding;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}

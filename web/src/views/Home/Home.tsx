@@ -28,6 +28,9 @@ function Home(props: HomeProps) {
       <a href="#/checkbox" className={"a"}>
         checkbox 复选框
       </a>
+      <a href="#/field" className={"a"}>
+        field 输入框
+      </a>
     </div>
   );
 }
