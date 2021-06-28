@@ -1,10 +1,7 @@
 import {
-  CSSProperties,
   FunctionComponent,
   MouseEventHandler,
-  MutableRefObject,
   useMemo,
-  useRef,
 } from "react";
 import "./style";
 import { getCheckStateIcon } from "./func";
