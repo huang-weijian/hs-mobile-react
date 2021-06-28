@@ -42,3 +42,22 @@ export function getStyle(props: IFieldProps): CSSProperties {
     temp
   );
 }
+
+/**
+ * 根据field的类型转换字符串
+ * @param val 输入的字符串
+ * @param props
+ */
+export function transformInputVal(val: string, props: IFieldProps): string {
+  switch (props.type) {
+    case "email":
+      break;
+    case "number":
+      break;
+    case "passwd":
+      break;
+    default:
+      val = val;
+  }
+  return val;
+}

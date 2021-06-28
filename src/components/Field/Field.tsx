@@ -1,7 +1,16 @@
 import "./style";
-import { getClassName, getStyle } from "./func";
-import { CSSProperties, useMemo } from "react";
+import { getClassName, getStyle, transformInputVal } from "./func";
+import {
+  CSSProperties,
+  FormEvent,
+  FormEventHandler,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { Property } from "csstype";
+import { prefix } from "../../string/txt";
 
 export declare interface IFieldProps {
   /**
@@ -9,6 +18,21 @@ export declare interface IFieldProps {
    * field type todo
    */
   type?: "text" | "passwd" | "number" | "email";
+  /**
+   * input原生属性
+   * input native prop
+   */
+  maxlength?: number;
+  /**
+   * 容器的className
+   * input container className
+   */
+  containerClassName?: string;
+  /**
+   * 容器的style
+   * input container style
+   */
+  containerStyle?: CSSProperties;
   /**
    * 附加className
    * additional className
@@ -35,18 +59,55 @@ export declare interface IFieldProps {
    */
   placeholder?: string;
   textAlign?: Property.TextAlign;
+  onInput?: FormEventHandler<InputEvent>;
 }
 
 function Field(props: IFieldProps) {
-  let className = useMemo(() => getClassName(props), [props.className]);
+  let [val, setVal] = useState("");
+  let className = useMemo(
+    () => getClassName(props),
+    [props.type, props.className, props.bottomType, props.clearable]
+  );
   let style = useMemo(() => getStyle(props), [props.style, props.textAlign]);
+  let onInput = useCallback(
+    function (e: FormEvent<HTMLInputElement>) {
+      let val = transformInputVal(e.currentTarget.value, props);
+      console.info(val);
+      setVal(val);
+    },
+    [props.onInput]
+  );
+  let containerStyle = useMemo<CSSProperties>(
+    () => ({
+      ...{ display: "inline-flex", justifyContent: "space-between" },
+      ...props.containerStyle,
+    }),
+    [props.style]
+  );
+  let maxlength = useMemo(
+    () => (props.maxlength === undefined ? 9999999 : props.maxlength),
+    [props.maxlength]
+  );
+  let clearableNode = useMemo<ReactNode>(
+    () =>
+      props.clearable ? (
+        <span className={`${prefix}-field-clean`}>+</span>
+      ) : null,
+    [props.clearable]
+  );
   return (
-    <input
-      style={style}
-      placeholder={props.placeholder}
-      className={className}
-      type="text"
-    />
+    <span className={props.containerClassName} style={containerStyle}>
+      <input
+        value={val}
+        onInput={onInput}
+        style={style}
+        maxLength={maxlength}
+        placeholder={props.placeholder}
+        className={className}
+        type="text"
+      />
+      {clearableNode}
+    </span>
   );
 }
 

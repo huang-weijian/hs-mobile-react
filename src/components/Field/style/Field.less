@@ -63,16 +63,15 @@
   }
 
   &_clearable {
-    position: relative;
-    padding-right: @hs-padding;
-
-    &::after {
-      content: "+";
-      display: inline-block;
-      position: absolute;
-      right: @hs-padding;
-      top: 50%;
-      transform: translateY(-50%);
-    }
   }
+}
+
+.@{com-prefix}-clean {
+  line-height: 1;
+  font-weight: bold;
+  font-size: (@hs-font-size*1.5);
+  display: inline-block;
+  padding: (@hs-padding / 2);
+  text-align: center;
+  transform: rotateZ(45deg);
 }
