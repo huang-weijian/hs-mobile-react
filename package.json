@@ -1,6 +1,6 @@
 {
   "name": "hs-mobile-react",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "hs-mobile-react react-mobile-ui react移动端UI",
   "main": "index.js",
   "scripts": {
