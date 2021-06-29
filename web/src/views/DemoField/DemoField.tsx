@@ -87,6 +87,30 @@ function DemoField(props: IDemoFieldProps) {
           ></Field>
         }
       ></Cell>
+      <SplitLine title={"readOnly"}></SplitLine>
+      <Cell
+        title={"readOnly"}
+        rightChild={
+          <Field
+            placeholder={"请输入文字"}
+            bottomType={"none"}
+            textAlign={"right"}
+            readOnly={true}
+          ></Field>
+        }
+      ></Cell>
+      <SplitLine title={"disabled"}></SplitLine>
+      <Cell
+        title={"disabled"}
+        rightChild={
+          <Field
+            placeholder={"请输入文字"}
+            bottomType={"none"}
+            textAlign={"right"}
+            disabled={true}
+          ></Field>
+        }
+      ></Cell>
     </div>
   );
 }

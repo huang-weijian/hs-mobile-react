@@ -17,9 +17,19 @@ import { prefix } from "../../string/txt";
 export declare interface IFieldProps {
   /**
    * field类型
-   * field type todo
+   * field type
    */
-  type?: "text" | "passwd" | "float" | "int" | "email";
+  type?: "text" | "passwd" | "float" | "int";
+  /**
+   * 原生属性
+   * native prop
+   */
+  readOnly?: boolean;
+  /**
+   * 原生属性
+   * native prop
+   */
+  disabled?: boolean;
   /**
    * input原生属性
    * input native prop
@@ -52,7 +62,7 @@ export declare interface IFieldProps {
   bottomType?: "primary" | "warning" | "success" | "danger" | "none";
   /**
    * 是否可清理文本
-   * can clean up all text todo
+   * can clean up all text
    */
   clearable?: boolean;
   /**
@@ -101,6 +111,8 @@ function Field(props: IFieldProps) {
     }),
     [props.style]
   );
+  let readOnly = props.readOnly ? true : false;
+  let disabled = props.disabled ? true : false;
   let maxlength = useMemo(
     () => (props.maxlength === undefined ? 9999999 : props.maxlength),
     [props.maxlength]
@@ -118,6 +130,8 @@ function Field(props: IFieldProps) {
     <span className={props.containerClassName} style={containerStyle}>
       <input
         value={val}
+        readOnly={readOnly}
+        disabled={disabled}
         onInput={onInput}
         style={style}
         maxLength={maxlength}

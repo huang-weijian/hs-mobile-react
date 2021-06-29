@@ -57,8 +57,6 @@ export function transformInputVal(
   props: IFieldProps
 ): string {
   switch (props.type) {
-    case "email":
-      break;
     case "int":
       if (val === "") {
         val = val;
