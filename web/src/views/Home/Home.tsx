@@ -31,6 +31,9 @@ function Home(props: HomeProps) {
       <a href="#/field" className={"a"}>
         field 输入框
       </a>
+      <a href="#/radio" className={"a"}>
+        radio 单选框
+      </a>
     </div>
   );
 }
