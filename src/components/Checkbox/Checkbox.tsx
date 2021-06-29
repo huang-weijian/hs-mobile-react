@@ -5,6 +5,7 @@ import {
 } from "react";
 import "./style";
 import { getCheckStateIcon } from "./func";
+import {prefix} from "../../string/txt";
 
 export declare interface ICheckboxProps {
   /**
@@ -43,6 +44,12 @@ function Checkbox(props: ICheckboxProps) {
       <span className={`hs-checkbox-label`}>{props.label}</span>
     </label>
   );
+}
+
+
+
+namespace Checkbox {
+  export const displayName: string = `${prefix.toUpperCase()}Checkbox`;
 }
 
 export default Checkbox;

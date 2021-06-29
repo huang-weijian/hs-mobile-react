@@ -21,6 +21,11 @@ export declare interface IFieldProps {
    */
   type?: "text" | "passwd" | "float" | "int";
   /**
+   * 初始value
+   * init value
+   */
+  initValue?: string;
+  /**
    * 原生属性
    * native prop
    */
@@ -75,9 +80,12 @@ export declare interface IFieldProps {
 }
 
 function Field(props: IFieldProps) {
-  let [val, setVal] = useState("");
-  let [realVal, setRealVal] = useState("");
-  let preVal = useRef<string>("");
+  // 初始化value
+  // init value
+  let initValue = props.initValue ? props.initValue : "";
+  let [val, setVal] = useState(initValue);
+  let [realVal, setRealVal] = useState(initValue);
+  let preVal = useRef<string>(initValue);
   useEffect(() => {
     preVal.current = val;
   }, [val]);
@@ -117,6 +125,8 @@ function Field(props: IFieldProps) {
     () => (props.maxlength === undefined ? 9999999 : props.maxlength),
     [props.maxlength]
   );
+  // clean按钮节点
+  // cleanButton Node
   let clearableNode = useMemo<ReactNode>(
     () =>
       props.clearable && val ? (
@@ -142,6 +152,10 @@ function Field(props: IFieldProps) {
       {clearableNode}
     </span>
   );
+}
+
+namespace Field {
+  export const displayName: string = `${prefix.toUpperCase()}Field`;
 }
 
 export default Field;

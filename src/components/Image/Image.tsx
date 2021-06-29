@@ -1,10 +1,7 @@
 import {
-  createElement,
   MouseEventHandler,
   ReactChild,
-  MouseEvent,
   CSSProperties,
-  SyntheticEvent,
   ReactEventHandler,
   useRef,
   MutableRefObject,
@@ -14,6 +11,7 @@ import {
 import { Property } from "csstype";
 import { getClassName, getRadius, getRectangle } from "./func";
 import "./style";
+import { prefix } from "../../string/txt";
 
 export declare interface ImageProps {
   width?: number | string;
@@ -112,6 +110,10 @@ function Image(props: ImageProps) {
       />
     </div>
   );
+}
+
+namespace Image {
+  export const displayName: string = `${prefix.toUpperCase()}Image`;
 }
 
 export default Image;

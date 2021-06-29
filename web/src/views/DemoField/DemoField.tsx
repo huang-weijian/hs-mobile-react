@@ -22,6 +22,7 @@ function DemoField(props: IDemoFieldProps) {
         rightChild={<Field bottomType={"warning"}></Field>}
       ></Cell>
       <Cell
+        bottomBorder={false}
         title={"none"}
         rightChild={
           <Field placeholder={"请输入文字"} bottomType={"none"}></Field>
@@ -77,6 +78,7 @@ function DemoField(props: IDemoFieldProps) {
       ></Cell>
       <Cell
         title={"passwd"}
+        bottomBorder={false}
         rightChild={
           <Field
             type={"passwd"}
@@ -92,6 +94,7 @@ function DemoField(props: IDemoFieldProps) {
         title={"readOnly"}
         rightChild={
           <Field
+            initValue={"只读readOnly"}
             placeholder={"请输入文字"}
             bottomType={"none"}
             textAlign={"right"}
@@ -108,6 +111,18 @@ function DemoField(props: IDemoFieldProps) {
             bottomType={"none"}
             textAlign={"right"}
             disabled={true}
+          ></Field>
+        }
+      ></Cell>
+      <SplitLine title={"initVal"}></SplitLine>
+      <Cell
+        title={"initVal"}
+        rightChild={
+          <Field
+            initValue={"初始值"}
+            placeholder={"请输入文字"}
+            bottomType={"none"}
+            textAlign={"right"}
           ></Field>
         }
       ></Cell>

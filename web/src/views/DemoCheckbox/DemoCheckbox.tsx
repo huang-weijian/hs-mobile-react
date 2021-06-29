@@ -1,4 +1,4 @@
-import Checkbox from "../../../../src/components/Checkbox";
+import { Checkbox } from "@hs";
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { useState } from "react";
 
