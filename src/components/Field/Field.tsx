@@ -61,11 +61,12 @@ export declare interface IFieldProps {
    */
   placeholder?: string;
   textAlign?: Property.TextAlign;
-  onInput?: FormEventHandler<InputEvent>;
+  onInput?: FormEventHandler<HTMLInputElement>;
 }
 
 function Field(props: IFieldProps) {
   let [val, setVal] = useState("");
+  let [realVal, setRealVal] = useState("");
   let preVal = useRef<string>("");
   useEffect(() => {
     preVal.current = val;
@@ -77,8 +78,19 @@ function Field(props: IFieldProps) {
   let style = useMemo(() => getStyle(props), [props.style, props.textAlign]);
   let onInput = useCallback(
     function (e: FormEvent<HTMLInputElement>) {
-      let val = transformInputVal(preVal.current, e.currentTarget.value, props);
+      let val = transformInputVal(
+        realVal,
+        preVal.current,
+        e.currentTarget.value,
+        props
+      );
       setVal(val);
+      if (props.type === "passwd") {
+        setRealVal(e.currentTarget.value);
+      }
+      if (props.onInput) {
+        props.onInput(e);
+      }
     },
     [props.onInput]
   );

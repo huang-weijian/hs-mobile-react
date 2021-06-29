@@ -63,6 +63,30 @@ function DemoField(props: IDemoFieldProps) {
           ></Field>
         }
       ></Cell>
+      <Cell
+        title={"float"}
+        rightChild={
+          <Field
+            type={"float"}
+            placeholder={"请输入浮点数"}
+            bottomType={"none"}
+            textAlign={"right"}
+            clearable={false}
+          ></Field>
+        }
+      ></Cell>
+      <Cell
+        title={"passwd"}
+        rightChild={
+          <Field
+            type={"passwd"}
+            placeholder={"请输入密码"}
+            bottomType={"none"}
+            textAlign={"right"}
+            clearable={false}
+          ></Field>
+        }
+      ></Cell>
     </div>
   );
 }
