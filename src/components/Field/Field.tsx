@@ -6,7 +6,9 @@ import {
   FormEventHandler,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { Property } from "csstype";
@@ -17,7 +19,7 @@ export declare interface IFieldProps {
    * field类型
    * field type todo
    */
-  type?: "text" | "passwd" | "number" | "email";
+  type?: "text" | "passwd" | "float" | "int" | "email";
   /**
    * input原生属性
    * input native prop
@@ -64,6 +66,10 @@ export declare interface IFieldProps {
 
 function Field(props: IFieldProps) {
   let [val, setVal] = useState("");
+  let preVal = useRef<string>("");
+  useEffect(() => {
+    preVal.current = val;
+  }, [val]);
   let className = useMemo(
     () => getClassName(props),
     [props.type, props.className, props.bottomType, props.clearable]
@@ -71,8 +77,7 @@ function Field(props: IFieldProps) {
   let style = useMemo(() => getStyle(props), [props.style, props.textAlign]);
   let onInput = useCallback(
     function (e: FormEvent<HTMLInputElement>) {
-      let val = transformInputVal(e.currentTarget.value, props);
-      console.info(val);
+      let val = transformInputVal(preVal.current, e.currentTarget.value, props);
       setVal(val);
     },
     [props.onInput]
@@ -90,10 +95,12 @@ function Field(props: IFieldProps) {
   );
   let clearableNode = useMemo<ReactNode>(
     () =>
-      props.clearable ? (
-        <span className={`${prefix}-field-clean`}>+</span>
+      props.clearable && val ? (
+        <span onClick={() => setVal("")} className={`${prefix}-field-clean`}>
+          C
+        </span>
       ) : null,
-    [props.clearable]
+    [props.clearable, val]
   );
   return (
     <span className={props.containerClassName} style={containerStyle}>

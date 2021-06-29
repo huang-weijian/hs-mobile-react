@@ -50,6 +50,19 @@ function DemoField(props: IDemoFieldProps) {
           ></Field>
         }
       ></Cell>
+      <SplitLine title={"type"}></SplitLine>
+      <Cell
+        title={"int"}
+        rightChild={
+          <Field
+            type={"int"}
+            placeholder={"请输入整数"}
+            bottomType={"none"}
+            textAlign={"right"}
+            clearable={false}
+          ></Field>
+        }
+      ></Cell>
     </div>
   );
 }

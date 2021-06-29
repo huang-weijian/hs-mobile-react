@@ -45,14 +45,28 @@ export function getStyle(props: IFieldProps): CSSProperties {
 
 /**
  * 根据field的类型转换字符串
+ * @param preVal 上次输入的字符串
  * @param val 输入的字符串
  * @param props
  */
-export function transformInputVal(val: string, props: IFieldProps): string {
+export function transformInputVal(
+  preVal: string,
+  val: string,
+  props: IFieldProps
+): string {
   switch (props.type) {
     case "email":
       break;
-    case "number":
+    case "int":
+      if (val === "") {
+        val = val;
+        break;
+      }
+      let tempInt = parseInt(val);
+      val = tempInt || val === "0" ? String(tempInt) : preVal;
+      break;
+    case "float":
+      // 判断是不是第一个.号
       break;
     case "passwd":
       break;
