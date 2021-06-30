@@ -81,7 +81,7 @@ function App() {
             component={warpRouteComponent(DemoRadio)}
           ></Route>
           <Route
-            path={"/swtich"}
+            path={"/switch"}
             component={warpRouteComponent(DemoSwitch)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>

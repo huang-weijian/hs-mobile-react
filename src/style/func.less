@@ -10,8 +10,8 @@
   .hs-base-font();
 }
 
-.transition_property(@property:"all") {
-  transition: ~"@{property}" @hs-transition-time linear;
+.transition_property(@property:"all",@time:200ms) {
+  transition: ~"@{property}" @time linear;
 }
 
 .opacity_one {

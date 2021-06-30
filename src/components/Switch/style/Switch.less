@@ -1,0 +1,42 @@
+@import "../../../style/var";
+@import "../../../style/func";
+
+@com-prefix: ~"@{hs-prefix}-switch";
+
+.@{com-prefix} {
+  .hs-base();
+  position: relative;
+  display: inline-block;
+  width: @hs-font-size* 4;
+  height: @hs-font-size*2;
+  border-radius: @hs-font-size;
+  .transition_property("background-color");
+  background-color: @hs-base-white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &__active {
+    background-color: @hs-primary-color;
+  }
+
+  &__disabled {
+    opacity: @hs-disabled-opacity;
+  }
+
+  .@{com-prefix}-torus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: @hs-font-size*2;
+    height: @hs-font-size*2;
+    background-color: @hs-base-white;
+    border-radius: @hs-font-size;
+    box-shadow: 0 3px 1px 0 rgb(0 0 0 / 5%), 0 2px 2px 0 rgb(0 0 0 / 10%),
+      0 3px 3px 0 rgb(0 0 0 / 5%);
+    .transition_property("left");
+
+    &__active {
+      left: @hs-font-size* 2;
+    }
+  }
+}
