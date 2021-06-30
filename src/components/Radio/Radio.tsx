@@ -54,7 +54,7 @@ function Radio(props: IRadioProps) {
   }, [props.className, props.disabled]);
   let iconClassName = useMemo<string>(
     () => getIconClassName(props, check, radioContext),
-    [props.type, props.iconClassName, props.value, radioContext.value]
+    [check, props.type, props.iconClassName, props.value, radioContext.value]
   );
   let iconNode = props.iconRender ? (
     props.iconRender(props, check)
