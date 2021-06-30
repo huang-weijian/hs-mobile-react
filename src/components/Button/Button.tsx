@@ -85,31 +85,32 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   });
   useEffect(() => {
     // 获得水波纹容器位置（get ripple container position）
-    setRippleConPos({
-      x: rippleConRef.current.offsetLeft,
-      y: rippleConRef.current.offsetTop,
-    });
+    rippleConRef.current
+      ? setRippleConPos({
+          x: rippleConRef.current.offsetLeft,
+          y: rippleConRef.current.offsetTop,
+        })
+      : null;
   }, []);
 
   // click event handler
-  let clickHandler = useCallback(
-    function (e: MouseEvent<HTMLButtonElement>): void {
-      // 添加水波纹效果（add ripple animated）
-      let tempChild = createRipple({
-        x: e.pageX - rippleConPos.x,
-        y: e.pageY - rippleConPos.y,
-      });
-      rippleConRef.current.appendChild(tempChild);
-      setTimeout(() => {
-        rippleConRef.current.removeChild(tempChild);
-      }, 1000);
-      // trigger click
-      if (props.onClick) {
-        props.onClick(e);
-      }
-    },
-    [rippleConPos,props.onClick]
-  );
+  let clickHandler = function (e: MouseEvent<HTMLButtonElement>): void {
+    // 添加水波纹效果（add ripple animated）
+    let tempChild = createRipple({
+      x: e.pageX - rippleConPos.x,
+      y: e.pageY - rippleConPos.y,
+    });
+    rippleConRef.current ? rippleConRef.current.appendChild(tempChild) : null;
+    setTimeout(() => {
+      // 按钮可能被隐藏了
+      // if rippleConRef.current none
+      rippleConRef.current ? rippleConRef.current.removeChild(tempChild) : null;
+    }, 1000);
+    // trigger click
+    if (props.onClick) {
+      props.onClick(e);
+    }
+  };
 
   return (
     <button

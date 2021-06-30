@@ -37,6 +37,9 @@ function Home(props: HomeProps) {
       <a href="#/switch" className={"a"}>
         switch 开关
       </a>
+      <a href="#/dialog" className={"a"}>
+        dialog 弹出框
+      </a>
     </div>
   );
 }

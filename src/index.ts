@@ -9,3 +9,4 @@ export { default as Checkbox } from "./components/Checkbox";
 export { default as Field } from "./components/Field";
 export { default as Radio } from "./components/Radio";
 export { default as Switch } from "./components/Switch";
+export { default as Dialog } from "./components/Dialog";
