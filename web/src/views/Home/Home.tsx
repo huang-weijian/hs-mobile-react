@@ -34,6 +34,9 @@ function Home(props: HomeProps) {
       <a href="#/radio" className={"a"}>
         radio 单选框
       </a>
+      <a href="#/switch" className={"a"}>
+        switch 开关
+      </a>
     </div>
   );
 }
