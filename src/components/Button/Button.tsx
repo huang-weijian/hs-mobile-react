@@ -17,6 +17,7 @@ import "./style";
 import { sizes, types } from "../../types/types";
 import { prefix } from "../../string/txt";
 import { createRipple, getClassByProp } from "./func";
+import { operaIndex } from "../../util";
 
 export declare interface ButtonProps {
   type?: types;
@@ -100,12 +101,13 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       x: e.pageX - rippleConPos.x,
       y: e.pageY - rippleConPos.y,
     });
+    tempChild.style.zIndex = String(operaIndex.get());
     rippleConRef.current ? rippleConRef.current.appendChild(tempChild) : null;
     setTimeout(() => {
       // 按钮可能被隐藏了
       // if rippleConRef.current none
       rippleConRef.current ? rippleConRef.current.removeChild(tempChild) : null;
-    }, 1000);
+    }, 100000);
     // trigger click
     if (props.onClick) {
       props.onClick(e);

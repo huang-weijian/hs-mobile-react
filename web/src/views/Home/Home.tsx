@@ -40,6 +40,9 @@ function Home(props: HomeProps) {
       <a href="#/dialog" className={"a"}>
         dialog 弹出框
       </a>
+      <a href="#/badge" className={"a"}>
+        badge 徽标
+      </a>
     </div>
   );
 }

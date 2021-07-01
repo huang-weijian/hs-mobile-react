@@ -24,6 +24,7 @@ const DemoField = lazy(() => import("./views/DemoField/DemoField"));
 const DemoRadio = lazy(() => import("./views/DemoRadio/DemoRadio"));
 const DemoSwitch = lazy(() => import("./views/DemoSwitch/DemoSwitch"));
 const DemoDialog = lazy(() => import("./views/DemoDialog/DemoDialog"));
+const DemoBadge = lazy(() => import("./views/DemoBadge/DemoBadge"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -88,6 +89,10 @@ function App() {
           <Route
             path={"/dialog"}
             component={warpRouteComponent(DemoDialog)}
+          ></Route>
+          <Route
+            path={"/badge"}
+            component={warpRouteComponent(DemoBadge)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>

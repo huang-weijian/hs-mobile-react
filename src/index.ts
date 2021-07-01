@@ -10,3 +10,4 @@ export { default as Field } from "./components/Field";
 export { default as Radio } from "./components/Radio";
 export { default as Switch } from "./components/Switch";
 export { default as Dialog } from "./components/Dialog";
+export { default as Badge } from "./components/Badge";
