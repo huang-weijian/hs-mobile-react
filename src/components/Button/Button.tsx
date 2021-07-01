@@ -85,7 +85,9 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     y: 0,
   });
   useEffect(() => {
-    // 获得水波纹容器位置（get ripple container position）
+    // 获得水波纹容器位置
+    // get ripple container position
+    // todo button may be hidden
     rippleConRef.current
       ? setRippleConPos({
           x: rippleConRef.current.offsetLeft,
@@ -107,7 +109,7 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
       // 按钮可能被隐藏了
       // if rippleConRef.current none
       rippleConRef.current ? rippleConRef.current.removeChild(tempChild) : null;
-    }, 100000);
+    }, 1000);
     // trigger click
     if (props.onClick) {
       props.onClick(e);
