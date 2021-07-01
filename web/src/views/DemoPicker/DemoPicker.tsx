@@ -7,7 +7,7 @@ function DemoPicker(props: IDemoPickerProps) {
   return (
     <div>
       <SplitLine title={"picker"}></SplitLine>
-      <Picker></Picker>
+      <Picker titleNode={"test"}></Picker>
     </div>
   );
 }

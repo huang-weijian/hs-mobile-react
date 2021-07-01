@@ -1,1 +1,1 @@
-import "Picker.less";
+import "./Picker.less";

@@ -5,4 +5,40 @@
 
 .@{com-prefix} {
   .hs-base();
+  height: 40vh;
+
+  .@{com-prefix}-toolbar {
+    height: 2 * @hs-font-size;
+    justify-content: space-between;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+
+    .@{com-prefix}-toolbar-cancel {
+      text-align: left;
+      width: 5 * @hs-top-font-size;
+      color: @hs-info-color;
+    }
+
+    .@{com-prefix}-toolbar-title {
+      font-size: @hs-top-font-size;
+      font-weight: bold;
+      align-self: start;
+    }
+
+    .@{com-prefix}-toolbar-sure {
+      text-align: right;
+      width: 5 * @hs-top-font-size;
+      color: @hs-primary-color;
+    }
+  }
+
+  .@{com-prefix}-scroll-container {
+    height: calc(100% - (4 * @hs-font-size));
+    overflow: auto;
+  }
+
+  .@{com-prefix}-safe-area {
+    height: 2 * @hs-font-size;
+  }
 }
