@@ -8,16 +8,14 @@ function DemoDialog(props: IDemoDialogProps) {
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
+  const [show3, setShow3] = useState(false);
   return (
     <div>
       <SplitLine title={"dialog"}></SplitLine>
-      <Button type={"primary"} onClick={() => setShow((preShow) => !preShow)}>
+      <Button type={"primary"} onClick={() => setShow(true)}>
         dialog
       </Button>
-      <Dialog
-        show={show}
-        onCancel={() => setShow((preShow) => !preShow)}
-      ></Dialog>
+      <Dialog show={show} onCancel={() => setShow(false)}></Dialog>
       <SplitLine title={"dialog style"}></SplitLine>
       <Button
         type={"primary"}
@@ -30,7 +28,7 @@ function DemoDialog(props: IDemoDialogProps) {
         bodyStyle={{ height: "30%" }}
         onCancel={() => setShow1((preShow1) => !preShow1)}
       >
-        <Dialog show={show2} onCancel={() => setShow2((preShow) => !preShow)}>
+        <Dialog show={show2} onCancel={() => setShow2(false)}>
           <p>I'm Child Dialog</p>
         </Dialog>
         <p>Hi!</p>
@@ -50,6 +48,13 @@ function DemoDialog(props: IDemoDialogProps) {
           </Button>
         </p>
       </Dialog>
+      <SplitLine title={"hide mask"}></SplitLine>
+      <Dialog hideMask show={show3} onCancel={() => setShow3(false)}>
+        I had hide the mask
+      </Dialog>
+      <Button type={"primary"} onClick={() => setShow3(true)}>
+        hide mask
+      </Button>
     </div>
   );
 }
