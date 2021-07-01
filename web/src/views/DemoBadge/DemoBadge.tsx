@@ -1,5 +1,6 @@
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { Badge } from "@hs";
+import { ReactChild } from "react";
 
 export declare interface IDemoBadgeProps {}
 
