@@ -5,8 +5,47 @@
 
 .@{com-prefix} {
   .hs-base();
+  padding: 0;
   position: relative;
+  display: inline-block;
+  margin-right: @hs-font-size*2;
 
   .@{com-prefix}-content {
+    display: inline-block;
+    max-width: @hs-font-size*2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: @hs-sub-font-size;
+    color: @hs-base-white;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, -50%);
+    border-radius: @hs-border-radius-2;
+    padding: (@hs-padding / 8) (@hs-padding / 2);
+
+    // 没有content的时候
+    // there is not content
+    &__none {
+      width: (@hs-font-size / 2);
+      height: (@hs-font-size / 2);
+      padding: 0;
+      border-radius: 50%;
+    }
+
+    &_primary {
+      background-color: @hs-primary-color;
+    }
+
+    &_danger {
+      background-color: @hs-danger-color;
+    }
+
+    &_warning {
+      background-color: @hs-warning-color;
+    }
+
+    &_info {
+      background-color: @hs-info-color;
+    }
   }
 }

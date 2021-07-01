@@ -36,7 +36,7 @@ function DemoDialog(props: IDemoDialogProps) {
         <p style={{ textAlign: "center" }}>
           <Button
             type={"primary"}
-
+            onClick={() => setShow2((preShow) => !preShow)}
           >
             Child
           </Button>

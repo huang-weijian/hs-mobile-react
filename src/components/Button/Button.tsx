@@ -90,8 +90,8 @@ function Button(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
     // todo button may be hidden
     rippleConRef.current
       ? setRippleConPos({
-          x: rippleConRef.current.offsetLeft,
-          y: rippleConRef.current.offsetTop,
+          x: rippleConRef.current.getBoundingClientRect().left,
+          y: rippleConRef.current.getBoundingClientRect().top,
         })
       : null;
   }, []);
