@@ -2,11 +2,20 @@ import { prefix } from "../../../../string/txt";
 import {
   getClassName,
   getCursorClassName,
-  getCursorMiddleClassName, getCursorSpaceClassName,
+  getCursorMiddleClassName,
+  getCursorSpaceClassName,
   getLineClassName,
   getLineContainerClassName,
 } from "./func";
-import { CSSProperties, TouchEventHandler, useMemo, useState } from "react";
+import {
+  CSSProperties,
+  MutableRefObject,
+  TouchEventHandler,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import "./style";
 
 export declare interface IDataItem<T> {
@@ -33,6 +42,23 @@ interface ITouchPosition {
 
 function PickerScrollItem(props: IPickerScrollItemProps) {
   // hooks
+  let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
+  // Prevent page scroll,add to listener list of the element to be moving,
+  // don't prevent default event in react event system
+  useEffect(() => {
+    ref.current
+      ? ref.current.addEventListener(
+          "touchmove",
+          (e) => {
+            e.preventDefault();
+          },
+          {
+            passive: false,
+          }
+        )
+      : null;
+  }, []);
   // 每一次移动完之后的位置
   // position after each move
   let [basePosition, setBasePosition] = useState<ITouchPosition>({
@@ -81,8 +107,8 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     []
   );
   let cursorSpaceClassName = useMemo<string>(
-      () => getCursorSpaceClassName(props),
-      []
+    () => getCursorSpaceClassName(props),
+    []
   );
   let lineContainerClassName = useMemo<string>(
     () => getLineContainerClassName(props),
@@ -118,6 +144,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   };
   return (
     <div
+      ref={ref}
       className={className}
       style={style}
       onTouchStart={touchStartHandler}
