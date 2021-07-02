@@ -7,7 +7,9 @@ function DemoPicker(props: IDemoPickerProps) {
   return (
     <div>
       <SplitLine title={"picker"}></SplitLine>
-      <Picker titleNode={"test"}></Picker>
+      <div style={{ height: "40vh" }}>
+        <Picker titleNode={"test"}></Picker>
+      </div>
     </div>
   );
 }
