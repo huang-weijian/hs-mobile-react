@@ -4,11 +4,14 @@
 @com-prefix: ~"@{hs-prefix}-picker";
 
 .@{com-prefix} {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
   .hs-base();
   height: 100%;
 
   .@{com-prefix}-toolbar {
-    height: 2 * @hs-font-size;
+    height: 2.5 * @hs-font-size;
     justify-content: space-between;
     display: flex;
     box-sizing: border-box;
@@ -34,8 +37,10 @@
   }
 
   .@{com-prefix}-scroll-container {
+    display: flex;
+    justify-content: space-around;
     height: calc(100% - (4 * @hs-font-size));
-    overflow: auto;
+    overflow: hidden;
   }
 
   .@{com-prefix}-safe-area {

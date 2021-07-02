@@ -1,0 +1,46 @@
+@import "../../../../../style/var";
+@import "../../../../../style/func";
+
+@com-prefix: ~"@{hs-prefix}-picker-scroll-item";
+
+.@{com-prefix} {
+  .hs-base();
+  height: 100%;
+  position: relative;
+
+  .@{com-prefix}-cursor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+
+    .@{com-prefix}-cursor-space {
+      flex: 1;
+      background-color: rgba(0, 0, 0, 0.01);
+    }
+
+    .@{com-prefix}-cursor-middle {
+      border-top: 1px solid @hs-default-color;
+      border-bottom: 1px solid @hs-default-color;
+      height: (2.5 * @hs-top-font-size);
+      box-sizing: border-box;
+    }
+  }
+
+  .@{com-prefix}-line-container {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .@{com-prefix}-line {
+      font-size: @hs-top-font-size;
+      height: (2.5 * @hs-top-font-size);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

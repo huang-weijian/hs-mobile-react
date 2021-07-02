@@ -10,6 +10,7 @@ function DemoPicker(props: IDemoPickerProps) {
       <div style={{ height: "40vh" }}>
         <Picker titleNode={"test"}></Picker>
       </div>
+      <SplitLine title={"date-picker"}></SplitLine>
     </div>
   );
 }

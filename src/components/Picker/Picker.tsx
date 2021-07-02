@@ -1,6 +1,6 @@
 import "./style";
 import { prefix } from "../../string/txt";
-import { CSSProperties, MouseEventHandler, ReactChild } from "react";
+import { CSSProperties, MouseEventHandler, ReactChild, useState } from "react";
 import {
   getClassName,
   getSafeAreaClassName,
@@ -11,6 +11,9 @@ import {
   getToolbarClassName,
   getToolbarStyle,
 } from "./func";
+import PickerScrollItem, {
+  IDataItem,
+} from "./components/PickerScrollItem/PickerScrollItem";
 
 export declare interface IPickerProps {
   // style
@@ -32,7 +35,17 @@ export declare interface IPickerProps {
 
 export const COM_PREFIX = `${prefix}-picker`;
 
+let count: number = 1;
+let demoList: IDataItem<string>[] = Array(20)
+  .fill(1)
+  .map((item) => {
+    let strTempCount = `星期${String(count++)}`;
+    return { text: strTempCount, value: strTempCount, id: strTempCount };
+  });
+
 function Picker(props: IPickerProps) {
+  // hooks
+  let [list, setList] = useState(demoList);
   // className
   let className = getClassName(props);
   let toolBarClassName = getToolbarClassName(props);
@@ -61,10 +74,11 @@ function Picker(props: IPickerProps) {
       </div>
       {/*  滚轴容器*/}
       {/*  scroll container*/}
-      <div
-        className={scrollContainerClassName}
-        style={scrollContainerStyle}
-      ></div>
+      <div className={scrollContainerClassName} style={scrollContainerStyle}>
+        <PickerScrollItem style={{flex:1}} data={list}></PickerScrollItem>
+        <PickerScrollItem style={{flex:1}} data={list}></PickerScrollItem>
+        <PickerScrollItem style={{flex:1}} data={list}></PickerScrollItem>
+      </div>
       {/*  安全区*/}
       {/*  safe area*/}
       <div className={safeAreaClassName} style={safeAreaStyle}></div>
