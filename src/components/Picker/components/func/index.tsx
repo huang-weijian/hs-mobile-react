@@ -13,6 +13,11 @@ export function getCursorClassName(props: IPickerScrollItemProps): string {
   return `${className}`;
 }
 
+export function getLineContainerClassName(props: IPickerScrollItemProps): string {
+  let className = `${COM_PREFIX}-line-container`;
+  return `${className}`;
+}
+
 export function getLineClassName(props: IPickerScrollItemProps): string {
   let className = `${COM_PREFIX}-line`;
   return `${className}`;
