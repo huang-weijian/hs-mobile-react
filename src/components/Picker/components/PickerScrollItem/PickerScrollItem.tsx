@@ -6,11 +6,14 @@ import {
   getCursorSpaceClassName,
   getLineClassName,
   getLineContainerClassName,
+  getFormatDeviation,
 } from "./func";
 import {
   CSSProperties,
   MutableRefObject,
+  ReactChild,
   TouchEventHandler,
+  useDebugValue,
   useEffect,
   useMemo,
   useRef,
@@ -20,7 +23,7 @@ import "./style";
 
 export declare interface IDataItem<T> {
   id: string;
-  text: string;
+  text: ReactChild;
   value: T;
 
   [props: string]: any;
@@ -40,40 +43,33 @@ interface ITouchPosition {
   y: number;
 }
 
+/**
+ * 基础高度
+ * base height
+ */
+export const BASE_HEIGHT: number = 14;
+export const LINE_HEIGHT: number = 42;
+
 function PickerScrollItem(props: IPickerScrollItemProps) {
   // hooks
-  let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
-  // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
-  // Prevent page scroll,add to listener list of the element to be moving,
-  // don't prevent default event in react event system
-  useEffect(() => {
-    ref.current
-      ? ref.current.addEventListener(
-          "touchmove",
-          (e) => {
-            e.preventDefault();
-          },
-          {
-            passive: false,
-          }
-        )
-      : null;
-  }, []);
+
+  // states
   // 每一次移动完之后的位置
   // position after each move
   let [basePosition, setBasePosition] = useState<ITouchPosition>({
     x: 0,
-    y: 0,
+    y: -BASE_HEIGHT,
   });
+  useDebugValue(`"basePosition ${basePosition}`);
   // 开始移动的位置
   // Where to start moving
   let [startPosition, setStartPosition] = useState<ITouchPosition>({
     x: 0,
     y: 0,
   });
-  // 移动中的位置
-  // Position on the moving
-  let [movePosition, setMovePosition] = useState<ITouchPosition>({
+  // 偏移的距离
+  // deviation
+  let [deviation, setDeviation] = useState<ITouchPosition>({
     x: 0,
     y: 0,
   });
@@ -83,14 +79,18 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     x: 0,
     y: 0,
   });
+  let [transformStyle, setTransformStyle] = useState<CSSProperties>({
+    transform: `translateY(${basePosition.y}px)`,
+  });
 
+  // refs
+  let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
+  // Prevent page scroll,add to listener list of the element to be moving,
+  // don't prevent default event in react event system
+
+  // memos
   // style
-  let transformStyle: CSSProperties = useMemo<CSSProperties>(() => {
-    let tempY = movePosition.y - startPosition.y;
-    return {
-      transform: `translateY(${basePosition.y + tempY}px)`,
-    };
-  }, [movePosition]);
   let style: CSSProperties = {
     ...{ height: "100%" },
     ...props.style,
@@ -98,7 +98,6 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   let containerStyle: CSSProperties = {
     ...transformStyle,
   };
-
   // className
   let className = useMemo<string>(() => getClassName(props), []);
   let cursorClassName = useMemo<string>(() => getCursorClassName(props), []);
@@ -116,6 +115,21 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   );
   let lineClassName = useMemo<string>(() => getLineClassName(props), []);
 
+  // effects
+  useEffect(() => {
+    ref.current
+      ? ref.current.addEventListener(
+          "touchmove",
+          (e) => {
+            e.preventDefault();
+          },
+          {
+            passive: false,
+          }
+        )
+      : null;
+  }, []);
+
   // event handler
   let touchStartHandler: TouchEventHandler<HTMLDivElement> = function (e) {
     // 只需要第一根手指
@@ -128,15 +142,32 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   };
   let touchMove: TouchEventHandler<HTMLDivElement> = function (e) {
     let finger = e.changedTouches.item(0);
-    setMovePosition({
+    setTransformStyle({
+      transform: `translateY(${
+        finger.clientY - startPosition.y + basePosition.y
+      }px)`,
+    });
+    setDeviation({
       x: finger.clientX,
-      y: finger.clientY,
+      y: finger.clientY - startPosition.y,
     });
   };
   let touchEnd: TouchEventHandler<HTMLDivElement> = function (e) {
     let finger = e.changedTouches.item(0);
-    let tempY = movePosition.y - startPosition.y;
-    setBasePosition({ x: 0, y: basePosition.y + tempY });
+    let formattedDeviation = getFormatDeviation(deviation.y);
+
+    // todo 添加动画效果
+    setDeviation({
+      x: 0,
+      y: formattedDeviation,
+    });
+    setTransformStyle({
+      transform: `translateY(${formattedDeviation + basePosition.y}px)`,
+    });
+    setBasePosition({
+      x: 0,
+      y: formattedDeviation + basePosition.y,
+    });
     setEndPosition({
       x: finger.clientX,
       y: finger.clientY,

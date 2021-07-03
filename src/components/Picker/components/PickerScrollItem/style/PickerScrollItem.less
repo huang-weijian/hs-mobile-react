@@ -3,6 +3,7 @@
 
 @com-prefix: ~"@{hs-prefix}-picker-scroll-item";
 
+@line-height: 42px;
 .@{com-prefix} {
   .hs-base();
   height: 100%;
@@ -25,7 +26,7 @@
     .@{com-prefix}-cursor-middle {
       border-top: 1px solid @hs-default-color;
       border-bottom: 1px solid @hs-default-color;
-      height: (2.5 * @hs-top-font-size);
+      height: @line-height;
       box-sizing: border-box;
     }
   }
@@ -37,7 +38,7 @@
 
     .@{com-prefix}-line {
       font-size: @hs-top-font-size;
-      height: (2.5 * @hs-top-font-size);
+      height: @line-height;
       display: flex;
       justify-content: center;
       align-items: center;
