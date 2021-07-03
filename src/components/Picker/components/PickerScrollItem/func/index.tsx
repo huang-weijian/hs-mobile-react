@@ -45,10 +45,13 @@ export function getLineClassName(props: IPickerScrollItemProps): string {
  * @param y 移动的距离 deviation
  */
 export function getFormatDeviation(y: number): number {
+  // 在选项之间
+  // between data item
   let result = 0;
   let multiple = Math.round(y / LINE_HEIGHT);
   let deviation = multiple * LINE_HEIGHT;
-  console.info(multiple,deviation)
   result = deviation;
+  // 超出选项范围
+  // outside of data item todo
   return result;
 }

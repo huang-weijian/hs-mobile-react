@@ -82,6 +82,9 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   let [transformStyle, setTransformStyle] = useState<CSSProperties>({
     transform: `translateY(${basePosition.y}px)`,
   });
+  let [transitionStyle,setTransitionStyle]=useState<CSSProperties>({
+    transition:"none"
+  })
 
   // refs
   let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
@@ -97,6 +100,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   };
   let containerStyle: CSSProperties = {
     ...transformStyle,
+    ...transitionStyle
   };
   // className
   let className = useMemo<string>(() => getClassName(props), []);
@@ -135,6 +139,9 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     // 只需要第一根手指
     // just the first finger
     let finger = e.changedTouches.item(0);
+    setTransitionStyle({
+      transition:"none"
+    })
     setStartPosition({
       x: finger.clientX,
       y: finger.clientY,
@@ -156,7 +163,9 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     let finger = e.changedTouches.item(0);
     let formattedDeviation = getFormatDeviation(deviation.y);
 
-    // todo 添加动画效果
+    setTransitionStyle({
+      transition:"transform 200ms linear"
+    })
     setDeviation({
       x: 0,
       y: formattedDeviation,
