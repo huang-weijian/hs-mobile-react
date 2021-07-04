@@ -1,8 +1,4 @@
-import {
-  COM_PREFIX,
-  IPickerScrollItemProps,
-  LINE_HEIGHT,
-} from "../PickerScrollItem";
+import { COM_PREFIX, IPickerScrollItemProps } from "../PickerScrollItem";
 
 export function getClassName(props: IPickerScrollItemProps): string {
   let className = `${COM_PREFIX}`;
@@ -33,9 +29,14 @@ export function getLineContainerClassName(
   return `${className}`;
 }
 
-export function getLineClassName(props: IPickerScrollItemProps): string {
+export function getLineClassName(
+  props: IPickerScrollItemProps,
+  idx: number,
+  selectedIdx?: number
+): string {
   let className = `${COM_PREFIX}-line`;
-  return `${className}`;
+  let selectedClassName = idx === selectedIdx ? `${className}_selected` : "";
+  return `${className} ${selectedClassName}`.trim();
 }
 
 /**
@@ -43,15 +44,15 @@ export function getLineClassName(props: IPickerScrollItemProps): string {
  * Judge whether to move up or down according to the current moving distance
  * @param y 移动的距离 deviation
  */
-export function getFormatDeviation(y: number): number {
+export function getFormatDeviation(y: number, lineHeight: number): number {
+  if (y === 0) {
+    return 0;
+  }
   // 在选项之间
   // between data item
   let result = 0;
-  let multiple = Math.round(y / LINE_HEIGHT);
-  let deviation = multiple * LINE_HEIGHT;
+  let multiple = Math.round(y / lineHeight);
+  let deviation = multiple * lineHeight;
   result = deviation;
-
-  // Highlight selected data item todo
-  // computed BASE_TOP todo
   return result;
 }

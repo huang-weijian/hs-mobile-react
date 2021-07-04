@@ -21,46 +21,48 @@ import {
 } from "react";
 import "./style";
 
-export declare interface IDataItem<T> {
+export declare interface IDataItem {
   id: string;
   text: ReactChild;
-  value: T;
+  value: string;
 
   [props: string]: any;
 }
 
-export declare interface IPickerScrollItemProps<T = any> {
-  data: Array<IDataItem<T>>;
-  style?: CSSProperties;
-  className?: string;
-  select?: (data: IDataItem<T>) => void;
-}
-
-export const COM_PREFIX = `${prefix}-picker-scroll-item`;
-
-interface ITouchPosition {
+export declare interface ITouchPosition {
   x: number;
   y: number;
 }
 
-/**
- * 基础高度
- * base height
- */
-export const BASE_TOP: number = 14;
-export const LINE_HEIGHT: number = 42;
+export declare interface IPickerScrollItemClassNames {
+  className?: string;
+  cursorClassName?: string;
+  cursorMiddleClassName?: string;
+  cursorSpaceClassName?: string;
+  lineContainerClassName?: string;
+  lineClassName?: string;
+}
+
+export declare type IPickerScrollItemProps = {
+  data: Array<IDataItem>;
+  style?: CSSProperties;
+  onSelect?: (data: IDataItem, idx: number) => void;
+  lineHeight?: number;
+  value?: IDataItem["id"];
+} & Pick<IPickerScrollItemClassNames, keyof IPickerScrollItemClassNames>;
+
+export const COM_PREFIX = `${prefix}-picker-scroll-item`;
 
 function PickerScrollItem(props: IPickerScrollItemProps) {
   // hooks
-
   // states
+  let [lineHeight] = useState<number>(props.lineHeight || 42);
   // 每一次移动完之后的位置
   // position after each move
   let [basePosition, setBasePosition] = useState<ITouchPosition>({
     x: 0,
-    y: -BASE_TOP,
+    y: 0,
   });
-  useDebugValue(`"basePosition ${basePosition}`);
   // 开始移动的位置
   // Where to start moving
   let [startPosition, setStartPosition] = useState<ITouchPosition>({
@@ -79,12 +81,18 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     x: 0,
     y: 0,
   });
+  // 选中的选项
+  let [selectedIdx,setSelectedIdx]=useState<number>(0)
   let [transformStyle, setTransformStyle] = useState<CSSProperties>({
     transform: `translateY(${basePosition.y}px)`,
   });
   let [transitionStyle, setTransitionStyle] = useState<CSSProperties>({
     transition: "none",
   });
+  let [containerMarginTop, setContainerMarginTop] = useState<CSSProperties>({
+    marginTop: "0px",
+  });
+
   let [outsideHeight, setOutsideHeight] = useState<number>(0);
   let [transformContainerHeight, setTransformContainerHeight] =
     useState<number>(0);
@@ -104,9 +112,13 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     ...{ height: "100%" },
     ...props.style,
   };
+  let lineHeightStyle: CSSProperties = {
+    height: `${lineHeight}px`,
+  };
   let containerStyle: CSSProperties = {
     ...transformStyle,
     ...transitionStyle,
+    ...containerMarginTop,
   };
   // className
   let className = useMemo<string>(() => getClassName(props), []);
@@ -123,9 +135,35 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     () => getLineContainerClassName(props),
     []
   );
-  let lineClassName = useMemo<string>(() => getLineClassName(props), []);
 
   // effects
+  useEffect(() => {
+    // 计算超出高度
+    // computed outside height
+    let spaceComputedStyle = window.self.getComputedStyle(
+      cursorSpaceRef.current,
+      null
+    );
+    let spaceHeight = parseFloat(spaceComputedStyle.height);
+    setOutsideHeight(spaceHeight);
+    // set margin-top
+    setContainerMarginTop({
+      marginTop: `${spaceHeight}px`,
+    });
+    let baseTransformY = 0;
+    // 计算滚动几个数据项的高度
+    // computed scroll data items height
+    if (props.data.length > 0 && props.value) {
+      let idx = props.data.findIndex((item) => item.id === props.value);
+      idx = idx === -1 ? 0 : idx;
+      setSelectedIdx(idx)
+      baseTransformY = idx * lineHeight;
+    }
+    setBasePosition({ x: 0, y: -baseTransformY });
+    setTransformStyle({
+      transform: `translateY(${-baseTransformY}px)`,
+    });
+  }, [props.value]);
   useEffect(() => {
     // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
     // Prevent page scroll,add to listener list of the element to be moving,
@@ -141,14 +179,8 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
           }
         )
       : null;
-    // 计算超出高度
-    // computed outside height
-    let spaceComputedStyle = window.self.getComputedStyle(
-      cursorSpaceRef.current,
-      null
-    );
-    setOutsideHeight(parseFloat(spaceComputedStyle.height));
     // 计算数据容器高度
+    // computed container height
     let containerComputedStyle = window.self.getComputedStyle(
       transformContainerRef.current,
       null
@@ -172,34 +204,45 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   let touchMove: TouchEventHandler<HTMLDivElement> = function (e) {
     let finger = e.changedTouches.item(0);
     let tempDeviation = finger.clientY - startPosition.y;
-    let finalTransform=tempDeviation + basePosition.y
-    let bottomTransform=-(transformContainerHeight - outsideHeight - LINE_HEIGHT)
+    // 位移后的偏移值
+    // moved
+    let finalTransform = tempDeviation + basePosition.y;
+    let bottomTransform = -(transformContainerHeight - lineHeight);
     // 超出高度
     // outside of data items height
-    finalTransform=finalTransform>outsideHeight?outsideHeight:finalTransform
-    finalTransform=finalTransform<bottomTransform?bottomTransform:finalTransform
+    // 拉到顶
+    // be top
+    finalTransform = finalTransform > 0 ? 0 : finalTransform;
+    // 拉到底
+    // be bottom
+    finalTransform =
+      finalTransform < bottomTransform ? bottomTransform : finalTransform;
     setTransformStyle({
       transform: `translateY(${finalTransform}px)`,
     });
     setDeviation({
       x: finger.clientX,
-      y: finalTransform-basePosition.y,
+      y: finalTransform - basePosition.y,
     });
   };
   let touchEnd: TouchEventHandler<HTMLDivElement> = function (e) {
     let finger = e.changedTouches.item(0);
-    let formattedDeviation = getFormatDeviation(deviation.y);
-    let finalTransform=formattedDeviation + basePosition.y
+    let formattedDeviation = getFormatDeviation(deviation.y, lineHeight);
+    let finalTransform = formattedDeviation + basePosition.y;
+    let tempSelectedIdx= Math.abs(finalTransform)/lineHeight
+    setSelectedIdx(tempSelectedIdx)
     // 添加过渡动画
     // add animated
     setTransitionStyle({
       transition: "transform 200ms linear",
     });
-    // 记录最终位移
-    // record final formatted deviation
+    // 因为点击也会触发touch start和touch end，而不触发touch move
+    // because click will trigger touch start event and touch end event,but not trigger touch move
+    // 重置位移
+    // reset deviation
     setDeviation({
       x: 0,
-      y: formattedDeviation,
+      y: 0,
     });
     // 记录最终位移
     // record final formatted deviation
@@ -229,7 +272,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
       {/*cursor*/}
       <div className={cursorClassName}>
         <div className={cursorSpaceClassName} ref={cursorSpaceRef}></div>
-        <div className={cursorMiddleClassName}></div>
+        <div className={cursorMiddleClassName} style={lineHeightStyle}></div>
         <div className={cursorSpaceClassName}></div>
       </div>
       {/*scroll container*/}
@@ -239,8 +282,8 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
         ref={transformContainerRef}
       >
         {/*scroll line*/}
-        {props.data.map((item) => (
-          <li className={lineClassName} key={item.id}>
+        {props.data.map((item,idx) => (
+          <li className={getLineClassName(props,idx,selectedIdx)} style={lineHeightStyle} key={item.id}>
             {item.text}
           </li>
         ))}

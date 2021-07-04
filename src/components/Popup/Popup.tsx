@@ -132,7 +132,9 @@ function Popup(props: PopupProps) {
         {props.bodyTitleNode}
         {/*popup body content*/}
         <div className={`hs-popup-body-content`}>
-          {props.show ? props.children : null}
+          {/*完全挂载之后再展示*/}
+          {/*display children after mounted complete*/}
+          {props.show&&state==="entered" ? props.children : null}
         </div>
       </div>
     );

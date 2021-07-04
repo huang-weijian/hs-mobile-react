@@ -20,6 +20,7 @@ export declare interface IPickerProps {
   style?: CSSProperties;
   toolbarStyle?: CSSProperties;
   scrollContainerStyle?: CSSProperties;
+  safeArea?:boolean
   safeAreaStyle?: CSSProperties;
   // className
   className?: string;
@@ -29,14 +30,16 @@ export declare interface IPickerProps {
   titleNode?: ReactChild;
   cancelNode?: ReactChild;
   sureNode?: ReactChild;
+  // todo
   onCancel?: MouseEventHandler<HTMLSpanElement>;
+  // todo
   onSure?: MouseEventHandler<HTMLSpanElement>;
 }
 
 export const COM_PREFIX = `${prefix}-picker`;
 
 let count: number = 1;
-let demoList: IDataItem<string>[] = Array(10)
+let demoList: IDataItem[] = Array(15)
   .fill(1)
   .map((item) => {
     let strTempCount = `星期${String(count++)}`;
@@ -46,6 +49,7 @@ let demoList: IDataItem<string>[] = Array(10)
 function Picker(props: IPickerProps) {
   // hooks
   let [list, setList] = useState(demoList);
+  let [defaultVal]=useState<string>("星期3")
   // className
   let className = getClassName(props);
   let toolBarClassName = getToolbarClassName(props);
@@ -76,12 +80,13 @@ function Picker(props: IPickerProps) {
       {/*  scroll container*/}
       <div className={scrollContainerClassName} style={scrollContainerStyle}>
         <PickerScrollItem style={{flex:1}} data={list}></PickerScrollItem>
-        <PickerScrollItem style={{flex:1}} data={list}></PickerScrollItem>
-        <PickerScrollItem style={{flex:1}} data={list}></PickerScrollItem>
+        <PickerScrollItem style={{flex:1}} data={list} value={"星期2"}></PickerScrollItem>
+        <PickerScrollItem style={{flex:1}} data={list} value={defaultVal}></PickerScrollItem>
+        <PickerScrollItem style={{flex:1}} data={list} value={"星期4"}></PickerScrollItem>
       </div>
       {/*  安全区*/}
       {/*  safe area*/}
-      <div className={safeAreaClassName} style={safeAreaStyle}></div>
+      {props.safeArea?<div className={safeAreaClassName} style={safeAreaStyle}></div>:null}
     </div>
   );
 }
