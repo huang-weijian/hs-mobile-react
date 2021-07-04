@@ -36,7 +36,7 @@ export declare interface IPickerProps {
 export const COM_PREFIX = `${prefix}-picker`;
 
 let count: number = 1;
-let demoList: IDataItem<string>[] = Array(20)
+let demoList: IDataItem<string>[] = Array(10)
   .fill(1)
   .map((item) => {
     let strTempCount = `星期${String(count++)}`;

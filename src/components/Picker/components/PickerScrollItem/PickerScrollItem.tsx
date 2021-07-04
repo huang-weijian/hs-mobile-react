@@ -47,7 +47,7 @@ interface ITouchPosition {
  * 基础高度
  * base height
  */
-export const BASE_HEIGHT: number = 14;
+export const BASE_TOP: number = 14;
 export const LINE_HEIGHT: number = 42;
 
 function PickerScrollItem(props: IPickerScrollItemProps) {
@@ -58,7 +58,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   // position after each move
   let [basePosition, setBasePosition] = useState<ITouchPosition>({
     x: 0,
-    y: -BASE_HEIGHT,
+    y: -BASE_TOP,
   });
   useDebugValue(`"basePosition ${basePosition}`);
   // 开始移动的位置
@@ -82,15 +82,21 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   let [transformStyle, setTransformStyle] = useState<CSSProperties>({
     transform: `translateY(${basePosition.y}px)`,
   });
-  let [transitionStyle,setTransitionStyle]=useState<CSSProperties>({
-    transition:"none"
-  })
+  let [transitionStyle, setTransitionStyle] = useState<CSSProperties>({
+    transition: "none",
+  });
+  let [outsideHeight, setOutsideHeight] = useState<number>(0);
+  let [transformContainerHeight, setTransformContainerHeight] =
+    useState<number>(0);
 
   // refs
   let ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
-  // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
-  // Prevent page scroll,add to listener list of the element to be moving,
-  // don't prevent default event in react event system
+  // cursor space ref
+  let cursorSpaceRef =
+    useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  // data items container ref
+  let transformContainerRef =
+    useRef<HTMLUListElement>() as MutableRefObject<HTMLUListElement>;
 
   // memos
   // style
@@ -100,7 +106,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   };
   let containerStyle: CSSProperties = {
     ...transformStyle,
-    ...transitionStyle
+    ...transitionStyle,
   };
   // className
   let className = useMemo<string>(() => getClassName(props), []);
@@ -121,6 +127,9 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
 
   // effects
   useEffect(() => {
+    // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
+    // Prevent page scroll,add to listener list of the element to be moving,
+    // don't prevent default event in react event system
     ref.current
       ? ref.current.addEventListener(
           "touchmove",
@@ -132,6 +141,19 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
           }
         )
       : null;
+    // 计算超出高度
+    // computed outside height
+    let spaceComputedStyle = window.self.getComputedStyle(
+      cursorSpaceRef.current,
+      null
+    );
+    setOutsideHeight(parseFloat(spaceComputedStyle.height));
+    // 计算数据容器高度
+    let containerComputedStyle = window.self.getComputedStyle(
+      transformContainerRef.current,
+      null
+    );
+    setTransformContainerHeight(parseFloat(containerComputedStyle.height));
   }, []);
 
   // event handler
@@ -140,8 +162,8 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     // just the first finger
     let finger = e.changedTouches.item(0);
     setTransitionStyle({
-      transition:"none"
-    })
+      transition: "none",
+    });
     setStartPosition({
       x: finger.clientX,
       y: finger.clientY,
@@ -149,33 +171,46 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   };
   let touchMove: TouchEventHandler<HTMLDivElement> = function (e) {
     let finger = e.changedTouches.item(0);
+    let tempDeviation = finger.clientY - startPosition.y;
+    let finalTransform=tempDeviation + basePosition.y
+    let bottomTransform=-(transformContainerHeight - outsideHeight - LINE_HEIGHT)
+    // 超出高度
+    // outside of data items height
+    finalTransform=finalTransform>outsideHeight?outsideHeight:finalTransform
+    finalTransform=finalTransform<bottomTransform?bottomTransform:finalTransform
     setTransformStyle({
-      transform: `translateY(${
-        finger.clientY - startPosition.y + basePosition.y
-      }px)`,
+      transform: `translateY(${finalTransform}px)`,
     });
     setDeviation({
       x: finger.clientX,
-      y: finger.clientY - startPosition.y,
+      y: finalTransform-basePosition.y,
     });
   };
   let touchEnd: TouchEventHandler<HTMLDivElement> = function (e) {
     let finger = e.changedTouches.item(0);
     let formattedDeviation = getFormatDeviation(deviation.y);
-
+    let finalTransform=formattedDeviation + basePosition.y
+    // 添加过渡动画
+    // add animated
     setTransitionStyle({
-      transition:"transform 200ms linear"
-    })
+      transition: "transform 200ms linear",
+    });
+    // 记录最终位移
+    // record final formatted deviation
     setDeviation({
       x: 0,
       y: formattedDeviation,
     });
+    // 记录最终位移
+    // record final formatted deviation
     setTransformStyle({
-      transform: `translateY(${formattedDeviation + basePosition.y}px)`,
+      transform: `translateY(${finalTransform}px)`,
     });
+    // 记录每一次拖动后的基础高度
+    // record each transformed base height
     setBasePosition({
       x: 0,
-      y: formattedDeviation + basePosition.y,
+      y: finalTransform,
     });
     setEndPosition({
       x: finger.clientX,
@@ -193,12 +228,16 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     >
       {/*cursor*/}
       <div className={cursorClassName}>
-        <div className={cursorSpaceClassName}></div>
+        <div className={cursorSpaceClassName} ref={cursorSpaceRef}></div>
         <div className={cursorMiddleClassName}></div>
         <div className={cursorSpaceClassName}></div>
       </div>
       {/*scroll container*/}
-      <ul className={lineContainerClassName} style={containerStyle}>
+      <ul
+        className={lineContainerClassName}
+        style={containerStyle}
+        ref={transformContainerRef}
+      >
         {/*scroll line*/}
         {props.data.map((item) => (
           <li className={lineClassName} key={item.id}>

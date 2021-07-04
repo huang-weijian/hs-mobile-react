@@ -1,5 +1,4 @@
 import {
-  BASE_HEIGHT,
   COM_PREFIX,
   IPickerScrollItemProps,
   LINE_HEIGHT,
@@ -51,7 +50,8 @@ export function getFormatDeviation(y: number): number {
   let multiple = Math.round(y / LINE_HEIGHT);
   let deviation = multiple * LINE_HEIGHT;
   result = deviation;
-  // 超出选项范围
-  // outside of data item todo
+
+  // Highlight selected data item todo
+  // computed BASE_TOP todo
   return result;
 }
