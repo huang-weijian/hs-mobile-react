@@ -29,6 +29,11 @@ export declare interface IDataItem {
   [props: string]: any;
 }
 
+export declare interface IDeviation {
+  x: number;
+  y: number;
+}
+
 export declare interface ITouchPosition {
   x: number;
   y: number;
@@ -71,7 +76,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   });
   // 偏移的距离
   // deviation
-  let [deviation, setDeviation] = useState<ITouchPosition>({
+  let [deviation, setDeviation] = useState<IDeviation>({
     x: 0,
     y: 0,
   });
