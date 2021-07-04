@@ -13,7 +13,6 @@ import {
   MutableRefObject,
   ReactChild,
   TouchEventHandler,
-  useDebugValue,
   useEffect,
   useMemo,
   useRef,
@@ -51,9 +50,10 @@ export declare interface IPickerScrollItemClassNames {
 export declare type IPickerScrollItemProps = {
   data: Array<IDataItem>;
   style?: CSSProperties;
-  onSelect?: (data: IDataItem, idx: number) => void;
   lineHeight?: number;
   value?: IDataItem["id"];
+  // todo
+  onSelect?: (data: IDataItem, idx: number) => void;
 } & Pick<IPickerScrollItemClassNames, keyof IPickerScrollItemClassNames>;
 
 export const COM_PREFIX = `${prefix}-picker-scroll-item`;
