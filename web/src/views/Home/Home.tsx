@@ -49,6 +49,9 @@ function Home(props: HomeProps) {
       <a href="#/picker" className={"a"}>
         picker 选择器
       </a>
+      <a href="#/countDown" className={"a"}>
+        countDown 倒计时
+      </a>
     </div>
   );
 }

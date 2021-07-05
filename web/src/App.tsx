@@ -29,6 +29,7 @@ const DemoPicker = lazy(() => import("./views/DemoPicker/DemoPicker"));
 const DemoPickerScrollItem = lazy(
   () => import("./views/DemoPickerScrollItem/DemoPickerScrollItem")
 );
+const DemoCountDown = lazy(() => import("./views/DemoCountDown/DemoCountDown"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -105,6 +106,10 @@ function App() {
           <Route
             path={"/pickerScrollItem"}
             component={warpRouteComponent(DemoPickerScrollItem)}
+          ></Route>
+          <Route
+            path={"/countDown"}
+            component={warpRouteComponent(DemoCountDown)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>
