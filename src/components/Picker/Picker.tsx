@@ -49,17 +49,16 @@ export declare interface IPickerProps {
   safeArea?: boolean;
   titleNode?: ReactChild;
   cancelNode?: ReactChild;
-  sureNode?: ReactChild;
+  confirmNode?: ReactChild;
   columns: Array<IPickerDataItem>;
   values: Array<IDataItem["value"]>;
   onSelected?: (item: IPickerSelectDataItem) => any;
-  // todo
-  onCancel?: MouseEventHandler<HTMLSpanElement>;
+  onCancel?: (MouseEventHandler<HTMLSpanElement>);
   onConfirm?: (
     selected: IPickerSelectDataItem[],
-    ids?: IPickerSelectDataItem["id"][],
-    values?: IPickerSelectDataItem["data"]["value"][],
-    idxes?: IPickerSelectDataItem["idx"][]
+    ids: IPickerSelectDataItem["id"][],
+    values: IPickerSelectDataItem["data"]["value"][],
+    idxes: IPickerSelectDataItem["idx"][]
   ) => any;
 }
 
@@ -105,7 +104,7 @@ function Picker(props: IPickerProps) {
             }
           }}
         >
-          {props.sureNode || "confirm"}
+          {props.confirmNode || "confirm"}
         </span>
       </div>
       {/*  滚轴容器*/}

@@ -27,6 +27,7 @@ function DemoPicker(props: IDemoPickerProps) {
   // hooks
   let [data, setData] = useState(demoData);
   let [show, setShow] = useState(false);
+  let [defaultValues, setDefaultValues] = useState(["星期3", "星期6", "星期2"]);
   return (
     <div>
       <SplitLine title={"picker"}></SplitLine>
@@ -36,10 +37,13 @@ function DemoPicker(props: IDemoPickerProps) {
           columns={data}
           values={["星期2"]}
           onSelected={(item) => console.info(item)}
-          onConfirm={(selected,ids,values,idxes) => console.info(selected,ids,values,idxes)}
+          onConfirm={(selected, ids, values, idxes) =>
+            console.info(selected, ids, values, idxes)
+          }
         ></Picker>
       </div>
       <SplitLine title={"popup-picker"}></SplitLine>
+      <p>{defaultValues.join(",")}</p>
       <Button type={"primary"} onClick={() => setShow(true)}>
         show popup
       </Button>
@@ -53,8 +57,14 @@ function DemoPicker(props: IDemoPickerProps) {
         <Picker
           titleNode={"popup picker"}
           cancelNode={"no"}
-          sureNode={"yes"}
+          confirmNode={"yes"}
           columns={data}
+          values={defaultValues}
+          onCancel={() => setShow(false)}
+          onConfirm={(selected, ids, values) => {
+            setDefaultValues(values);
+            setShow(false);
+          }}
         ></Picker>
       </Popup>
       <SplitLine title={"date-picker"}></SplitLine>

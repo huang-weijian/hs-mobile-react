@@ -144,29 +144,37 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   useEffect(() => {
     // 计算超出高度
     // computed outside height
-    let spaceComputedStyle = window.self.getComputedStyle(
-      cursorSpaceRef.current,
-      null
-    );
-    let spaceHeight = parseFloat(spaceComputedStyle.height);
-    setOutsideHeight(spaceHeight);
-    // set margin-top
-    setContainerMarginTop({
-      marginTop: `${spaceHeight}px`,
-    });
-    let baseTransformY = 0;
-    // 计算滚动几个数据项的高度
-    // computed scroll data items height
-    if (props.data.length > 0 && props.value) {
-      let idx = props.data.findIndex((item) => item.id === props.value);
-      idx = idx === -1 ? 0 : idx;
-      setSelectedIdx(idx)
-      baseTransformY = idx * lineHeight;
+    function computedOutsideHeight(){
+      if (!cursorSpaceRef.current){
+        return
+      }
+      let spaceComputedStyle = window.self.getComputedStyle(
+          cursorSpaceRef.current,
+          null
+      );
+      let spaceHeight = parseFloat(spaceComputedStyle.height);
+      setOutsideHeight(spaceHeight);
+      // set margin-top
+      setContainerMarginTop({
+        marginTop: `${spaceHeight}px`,
+      });
+      let baseTransformY = 0;
+      // 计算滚动几个数据项的高度
+      // computed scroll data items height
+      if (props.data.length > 0 && props.value) {
+        let idx = props.data.findIndex((item) => item.id === props.value);
+        idx = idx === -1 ? 0 : idx;
+        setSelectedIdx(idx)
+        baseTransformY = idx * lineHeight;
+      }
+      setBasePosition({ x: 0, y: -baseTransformY });
+      setTransformStyle({
+        transform: `translateY(${-baseTransformY}px)`,
+      });
     }
-    setBasePosition({ x: 0, y: -baseTransformY });
-    setTransformStyle({
-      transform: `translateY(${-baseTransformY}px)`,
-    });
+    // 避免计算误差
+    // Avoid calculation error
+    setTimeout(computedOutsideHeight,0)
   }, [props.value]);
   useEffect(() => {
     // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
