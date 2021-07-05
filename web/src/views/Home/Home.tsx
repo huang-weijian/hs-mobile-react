@@ -43,6 +43,9 @@ function Home(props: HomeProps) {
       <a href="#/badge" className={"a"}>
         badge 徽标
       </a>
+      <a href="#/pickerScrollItem" className={"a"}>
+        pickerScrollItem 滚动列
+      </a>
       <a href="#/picker" className={"a"}>
         picker 选择器
       </a>

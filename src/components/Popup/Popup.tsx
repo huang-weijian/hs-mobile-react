@@ -1,5 +1,4 @@
 import {
-  createElement,
   CSSProperties,
   MutableRefObject,
   ReactChild,
@@ -17,6 +16,7 @@ import {
   Transition,
   TransitionStatus,
 } from "react-transition-group";
+import {createPortal} from "react-dom";
 
 export declare interface PopupProps {
   /**
@@ -139,40 +139,39 @@ function Popup(props: PopupProps) {
       </div>
     );
   };
-  return (
-    <CSSTransition
-      in={props.show}
-      timeout={200}
-      classNames={"hs-popup-css"}
-      addEndListener={() => {}}
-      nodeRef={popupRef}
-      onEnter={() => setZIndex(get())}
-      onEntered={props.onOpened}
-      onExited={props.onClosed}
-    >
-      <div className={"hs-popup"} style={{ zIndex: zIndex }} ref={popupRef}>
-        {/*遮罩层 mask*/}
-        <div
-          style={{
-            zIndex: zIndex + 1,
-            ...props.maskStyle,
-            ...(props.showMask ? {} : { opacity: 0 }),
-          }}
-          className={`hs-popup-mask ${props.maskClassName}`}
-          onClick={() => props.onCancel()}
-        ></div>
-        {/*popup body*/}
-        <Transition
-          nodeRef={bodyRef}
+  return createPortal(
+      <CSSTransition
           in={props.show}
           timeout={200}
+          classNames={"hs-popup-css"}
           addEndListener={() => {}}
-        >
-          {popBody}
-        </Transition>
-      </div>
-    </CSSTransition>
-  );
+          nodeRef={popupRef}
+          onEnter={() => setZIndex(get())}
+          onEntered={props.onOpened}
+          onExited={props.onClosed}
+      >
+        <div className={"hs-popup"} style={{ zIndex: zIndex }} ref={popupRef}>
+          {/*遮罩层 mask*/}
+          <div
+              style={{
+                zIndex: zIndex + 1,
+                ...props.maskStyle,
+                ...(props.showMask ? {} : { opacity: 0 }),
+              }}
+              className={`hs-popup-mask ${props.maskClassName}`}
+              onClick={() => props.onCancel()}
+          ></div>
+          {/*popup body*/}
+          <Transition
+              nodeRef={bodyRef}
+              in={props.show}
+              timeout={200}
+              addEndListener={() => {}}
+          >
+            {popBody}
+          </Transition>
+        </div>
+      </CSSTransition>,document.body);
 }
 
 namespace Popup {

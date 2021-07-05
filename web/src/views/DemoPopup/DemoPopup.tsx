@@ -123,21 +123,23 @@ function DemoPopup(props: DemoPopupProps) {
         onCancel={() => setFirst(false)}
         round
       >
-        <div>
-          <Button type={"primary"} onClick={() => setSecond(!second)}>
-            second
-          </Button>
+        <div style={{ height: "100%", overflow: "auto" }}>
+          <div>
+            <Button type={"primary"} onClick={() => setSecond(!second)}>
+              second
+            </Button>
+          </div>
+          {Array(10)
+            .fill("这是第一段话，真的不知道说什么了")
+            .map(
+              (function () {
+                let count = 0;
+                return (item: string) => (
+                  <div key={item.concat(String(++count))}>{item}</div>
+                );
+              })()
+            )}
         </div>
-        {Array(10)
-          .fill("这是第一段话，真的不知道说什么了")
-          .map(
-            (function () {
-              let count = 0;
-              return (item: string) => (
-                <div key={item.concat(String(++count))}>{item}</div>
-              );
-            })()
-          )}
       </Popup>
       <Button type={"primary"} onClick={() => setFirst(!bodyStyle)}>
         first

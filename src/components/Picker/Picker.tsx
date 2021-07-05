@@ -21,7 +21,7 @@ export declare interface IPickerDataItem {
   data: IDataItem[];
 }
 
-export declare type IPickerSelectDataItem = {
+export declare type IPickerSelectedDataItem = {
   /**
    * 选中项所在的IPickerDataItem的id
    * ID of the IPickerDataItem where the selected item is located
@@ -52,13 +52,13 @@ export declare interface IPickerProps {
   confirmNode?: ReactChild;
   columns: Array<IPickerDataItem>;
   values: Array<IDataItem["value"]>;
-  onSelected?: (item: IPickerSelectDataItem) => any;
+  onSelected?: (item: IPickerSelectedDataItem) => any;
   onCancel?: (MouseEventHandler<HTMLSpanElement>);
   onConfirm?: (
-    selected: IPickerSelectDataItem[],
-    ids: IPickerSelectDataItem["id"][],
-    values: IPickerSelectDataItem["data"]["value"][],
-    idxes: IPickerSelectDataItem["idx"][]
+    selected: IPickerSelectedDataItem[],
+    ids: IPickerSelectedDataItem["id"][],
+    values: IPickerSelectedDataItem["data"]["value"][],
+    idxes: IPickerSelectedDataItem["idx"][]
   ) => any;
 }
 
@@ -66,7 +66,7 @@ export const COM_PREFIX = `${prefix}-picker`;
 
 function Picker(props: IPickerProps) {
   // hooks
-  let [selected, setSelected] = useState<IPickerSelectDataItem[]>(
+  let [selected, setSelected] = useState<IPickerSelectedDataItem[]>(
     getPickerSelectedByValues(props)
   );
 
@@ -81,6 +81,16 @@ function Picker(props: IPickerProps) {
   let toolbarStyle = getToolbarStyle(props);
   let scrollContainerStyle = getScrollContainerStyle(props);
   let safeAreaStyle = getSafeAreaStyle(props);
+
+  // event handler
+  let confirmHandler=() => {
+    if (props.onConfirm) {
+      let tempIds = selected.map((item) => item.id);
+      let tempValues = selected.map((item) => item.data.value);
+      let tempIndexes = selected.map((item) => item.idx);
+      props.onConfirm(selected, tempIds, tempValues, tempIndexes);
+    }
+  }
   return (
     <div className={className} style={style}>
       {/*  工具栏*/}
@@ -95,14 +105,7 @@ function Picker(props: IPickerProps) {
         <span className={`${COM_PREFIX}-toolbar-title`}>{props.titleNode}</span>
         <span
           className={`${COM_PREFIX}-toolbar-sure`}
-          onClick={() => {
-            if (props.onConfirm) {
-              let tempIds = selected.map((item) => item.id);
-              let tempValues = selected.map((item) => item.data.value);
-              let tempIndexes = selected.map((item) => item.idx);
-              props.onConfirm(selected, tempIds, tempValues, tempIndexes);
-            }
-          }}
+          onClick={confirmHandler}
         >
           {props.confirmNode || "confirm"}
         </span>

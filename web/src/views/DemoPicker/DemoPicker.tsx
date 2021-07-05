@@ -67,7 +67,6 @@ function DemoPicker(props: IDemoPickerProps) {
           }}
         ></Picker>
       </Popup>
-      <SplitLine title={"date-picker"}></SplitLine>
     </div>
   );
 }

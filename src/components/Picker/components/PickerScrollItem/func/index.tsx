@@ -2,31 +2,31 @@ import { COM_PREFIX, IPickerScrollItemProps } from "../PickerScrollItem";
 
 export function getClassName(props: IPickerScrollItemProps): string {
   let className = `${COM_PREFIX}`;
-  return `${className}`;
+  return `${className} ${props.className || ""}`.trim();
 }
 
 export function getCursorClassName(props: IPickerScrollItemProps): string {
   let className = `${COM_PREFIX}-cursor`;
-  return `${className}`;
+  return `${className} ${props.cursorClassName || ""}`.trim();
 }
 
 export function getCursorMiddleClassName(
   props: IPickerScrollItemProps
 ): string {
   let className = `${COM_PREFIX}-cursor-middle`;
-  return `${className}`;
+  return `${className} ${props.cursorMiddleClassName || ""}`.trim();
 }
 
 export function getCursorSpaceClassName(props: IPickerScrollItemProps): string {
   let className = `${COM_PREFIX}-cursor-space`;
-  return `${className}`;
+  return `${className} ${props.cursorSpaceClassName || ""}`.trim();
 }
 
 export function getLineContainerClassName(
   props: IPickerScrollItemProps
 ): string {
   let className = `${COM_PREFIX}-line-container`;
-  return `${className}`;
+  return `${className} ${props.lineContainerClassName || ""}`.trim();
 }
 
 export function getLineClassName(
@@ -36,7 +36,9 @@ export function getLineClassName(
 ): string {
   let className = `${COM_PREFIX}-line`;
   let selectedClassName = idx === selectedIdx ? `${className}_selected` : "";
-  return `${className} ${selectedClassName}`.trim();
+  return `${className} ${selectedClassName} ${
+    props.lineClassName || ""
+  }`.trim();
 }
 
 /**
