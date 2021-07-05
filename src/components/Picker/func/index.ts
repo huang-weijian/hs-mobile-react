@@ -1,4 +1,4 @@
-import { COM_PREFIX, IPickerProps } from "../Picker";
+import { COM_PREFIX, IPickerProps, IPickerSelectDataItem } from "../Picker";
 import { CSSProperties } from "react";
 
 export function getClassName(props: IPickerProps): string {
@@ -53,4 +53,36 @@ export function getSafeAreaStyle(props: IPickerProps): CSSProperties {
     ...props.safeAreaStyle,
   };
   return style;
+}
+
+export function getPickerSelectedByValues(props: IPickerProps) {
+  let tempSelected: IPickerSelectDataItem[] = [];
+  let tempValues=props.values||[]
+  props.columns.forEach((column,columnIdx)=>{
+    let defaultVal=tempValues[columnIdx]
+    if (defaultVal){
+      // 循环单个PickerScrollItem的数据
+      // foreach each PickerScrollItem's data
+      column.data.forEach((dataItem,dataIdx)=>{
+        if (dataItem.value === defaultVal) {
+          let tempSelectedItem: IPickerSelectDataItem = {
+            id: column.id,
+            idx: dataIdx,
+            data: dataItem
+          };
+          tempSelected[columnIdx]=tempSelectedItem
+        }
+      })
+    }else{
+      // 没有默认值就取首位
+      // get first data item when there is not default
+      let tempSelectedItem: IPickerSelectDataItem = {
+        id: column.id,
+        idx: 0,
+        data: column.data[0]
+      };
+      tempSelected[columnIdx]=tempSelectedItem
+    }
+  })
+  return tempSelected
 }

@@ -52,7 +52,6 @@ export declare type IPickerScrollItemProps = {
   style?: CSSProperties;
   lineHeight?: number;
   value?: IDataItem["id"];
-  // todo
   onSelect?: (data: IDataItem, idx: number) => void;
 } & Pick<IPickerScrollItemClassNames, keyof IPickerScrollItemClassNames>;
 
@@ -236,6 +235,9 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     let finalTransform = formattedDeviation + basePosition.y;
     let tempSelectedIdx= Math.abs(finalTransform)/lineHeight
     setSelectedIdx(tempSelectedIdx)
+    if (props.onSelect){
+      props.onSelect(props.data[tempSelectedIdx],tempSelectedIdx)
+    }
     // 添加过渡动画
     // add animated
     setTransitionStyle({
