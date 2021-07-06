@@ -47,13 +47,14 @@ export declare interface IPickerScrollItemClassNames {
   lineClassName?: string;
 }
 
-export declare type IPickerScrollItemProps = {
+export declare interface IPickerScrollItemProps
+  extends IPickerScrollItemClassNames {
   data: Array<IDataItem>;
   style?: CSSProperties;
   lineHeight?: number;
   value?: IDataItem["id"];
   onSelect?: (data: IDataItem, idx: number) => void;
-} & Pick<IPickerScrollItemClassNames, keyof IPickerScrollItemClassNames>;
+}
 
 export const COM_PREFIX = `${prefix}-picker-scroll-item`;
 
@@ -86,7 +87,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     y: 0,
   });
   // 选中的选项
-  let [selectedIdx,setSelectedIdx]=useState<number>(0)
+  let [selectedIdx, setSelectedIdx] = useState<number>(0);
   let [transformStyle, setTransformStyle] = useState<CSSProperties>({
     transform: `translateY(${basePosition.y}px)`,
   });
@@ -144,13 +145,13 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
   useEffect(() => {
     // 计算超出高度
     // computed outside height
-    function computedOutsideHeight(){
-      if (!cursorSpaceRef.current){
-        return
+    function computedOutsideHeight() {
+      if (!cursorSpaceRef.current) {
+        return;
       }
       let spaceComputedStyle = window.self.getComputedStyle(
-          cursorSpaceRef.current,
-          null
+        cursorSpaceRef.current,
+        null
       );
       let spaceHeight = parseFloat(spaceComputedStyle.height);
       setOutsideHeight(spaceHeight);
@@ -164,7 +165,7 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
       if (props.data.length > 0 && props.value) {
         let idx = props.data.findIndex((item) => item.id === props.value);
         idx = idx === -1 ? 0 : idx;
-        setSelectedIdx(idx)
+        setSelectedIdx(idx);
         baseTransformY = idx * lineHeight;
       }
       setBasePosition({ x: 0, y: -baseTransformY });
@@ -172,9 +173,10 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
         transform: `translateY(${-baseTransformY}px)`,
       });
     }
+
     // 避免计算误差
     // Avoid calculation error
-    setTimeout(computedOutsideHeight,0)
+    setTimeout(computedOutsideHeight, 0);
   }, [props.value]);
   useEffect(() => {
     // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
@@ -241,10 +243,10 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
     let finger = e.changedTouches.item(0);
     let formattedDeviation = getFormatDeviation(deviation.y, lineHeight);
     let finalTransform = formattedDeviation + basePosition.y;
-    let tempSelectedIdx= Math.abs(finalTransform)/lineHeight
-    setSelectedIdx(tempSelectedIdx)
-    if (props.onSelect){
-      props.onSelect(props.data[tempSelectedIdx],tempSelectedIdx)
+    let tempSelectedIdx = Math.abs(finalTransform) / lineHeight;
+    setSelectedIdx(tempSelectedIdx);
+    if (props.onSelect) {
+      props.onSelect(props.data[tempSelectedIdx], tempSelectedIdx);
     }
     // 添加过渡动画
     // add animated
@@ -297,8 +299,12 @@ function PickerScrollItem(props: IPickerScrollItemProps) {
         ref={transformContainerRef}
       >
         {/*scroll line*/}
-        {props.data.map((item,idx) => (
-          <li className={getLineClassName(props,idx,selectedIdx)} style={lineHeightStyle} key={item.id}>
+        {props.data.map((item, idx) => (
+          <li
+            className={getLineClassName(props, idx, selectedIdx)}
+            style={lineHeightStyle}
+            key={item.id}
+          >
             {item.text}
           </li>
         ))}
