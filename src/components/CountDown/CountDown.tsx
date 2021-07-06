@@ -9,6 +9,7 @@ import {
 } from "react";
 import {
   getClassName,
+  getColonClassName,
   getDayClassName,
   getHourClassName,
   getMinuteClassName,
@@ -29,17 +30,11 @@ export declare interface ICountDownProps {
    */
   time: number;
   style?: CSSProperties;
-  // todo
   className?: string;
-  // todo
   dayClassName?: string;
-  // todo
   hourClassName?: string;
-  // todo
   minuteClassName?: string;
-  // todo
   secondClassName?: string;
-  // todo
   colonClassName?: string;
   render?: (time: ICountDownTime, remaining: number) => ReactChild;
 }
@@ -79,7 +74,7 @@ function CountDown(
   let hourClassName = getHourClassName(props);
   let minuteClassName = getMinuteClassName(props);
   let secondClassName = getSecondClassName(props);
-  let colonClassName = getSecondClassName(props);
+  let colonClassName = getColonClassName(props);
 
   // style
   let style: CSSProperties = {
@@ -88,11 +83,11 @@ function CountDown(
   let child = (
     <Fragment>
       <span className={dayClassName}>{time.day}</span>
-      <span className={props.colonClassName}>:</span>
+      <span className={colonClassName}>:</span>
       <span className={hourClassName}>{time.hour}</span>
-      <span className={props.colonClassName}>:</span>
+      <span className={colonClassName}>:</span>
       <span className={minuteClassName}>{time.minute}</span>
-      <span className={props.colonClassName}>:</span>
+      <span className={colonClassName}>:</span>
       <span className={secondClassName}>{time.second}</span>
     </Fragment>
   );
