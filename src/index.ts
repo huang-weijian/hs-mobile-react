@@ -13,3 +13,4 @@ export { default as Dialog } from "./components/Dialog";
 export { default as Badge } from "./components/Badge";
 export { default as PickerScrollItem } from "./components/Picker/components/PickerScrollItem";
 export { default as Picker } from "./components/Picker";
+export { default as CountDown } from "./components/CountDown";
