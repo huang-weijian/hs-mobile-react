@@ -52,6 +52,9 @@ function Home(props: HomeProps) {
       <a href="#/countDown" className={"a"}>
         countDown 倒计时
       </a>
+      <a href="#/divider" className={"a"}>
+        divider 分割线
+      </a>
     </div>
   );
 }

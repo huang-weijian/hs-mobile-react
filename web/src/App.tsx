@@ -1,13 +1,4 @@
-import {
-  Component,
-  ComponentType,
-  createElement,
-  lazy,
-  MutableRefObject,
-  Suspense,
-  useEffect,
-  useRef,
-} from "react";
+import { Component, ComponentType, lazy, Suspense } from "react";
 import "./css/app.less";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
@@ -30,6 +21,7 @@ const DemoPickerScrollItem = lazy(
   () => import("./views/DemoPickerScrollItem/DemoPickerScrollItem")
 );
 const DemoCountDown = lazy(() => import("./views/DemoCountDown/DemoCountDown"));
+const DemoDivider = lazy(() => import("./views/DemoDivider/DemoDivider"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -110,6 +102,10 @@ function App() {
           <Route
             path={"/countDown"}
             component={warpRouteComponent(DemoCountDown)}
+          ></Route>
+          <Route
+            path={"/divider"}
+            component={warpRouteComponent(DemoDivider)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>
