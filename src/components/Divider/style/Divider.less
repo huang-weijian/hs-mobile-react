@@ -1,0 +1,53 @@
+@import "../../../style/var";
+@import "../../../style/func";
+
+@com-prefix: ~"@{hs-prefix}-divider";
+
+.@{com-prefix} {
+  .hs-base();
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  align-items: center;
+  margin: @hs-margin 0;
+
+  .@{com-prefix}-line {
+    width: 50%;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    transform: scaleY(0.5);
+
+    &_dashed {
+      border-style: dashed;
+    }
+
+    &_primary {
+      border-color: @hs-primary-color;
+    }
+
+    &_success {
+      border-color: @hs-success-color;
+    }
+
+    &_warning {
+      border-color: @hs-warning-color;
+    }
+
+    &_danger {
+      border-color: @hs-danger-color;
+    }
+
+    &_info {
+      border-color: @hs-info-color;
+    }
+
+    &_default {
+      border-color: @hs-default-color;
+    }
+  }
+
+  .@{com-prefix}-txt {
+    white-space: nowrap;
+    font-size: @hs-top-font-size;
+  }
+}
