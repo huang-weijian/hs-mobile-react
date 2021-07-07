@@ -18,7 +18,7 @@ import {
 import useCountDown, { ICountDownTime } from "../../hooks/useCountDown";
 
 export declare interface ICountDownImperative {
-  restart: () => any;
+  restart: (newBase?: number) => any;
   continue: () => any;
   stop: () => any;
 }
@@ -54,8 +54,8 @@ function CountDown(
     ref,
     () => {
       return {
-        restart: () => {
-          restartTask();
+        restart: (newBase?: number) => {
+          restartTask(newBase);
         },
         continue: () => {
           continueTask();

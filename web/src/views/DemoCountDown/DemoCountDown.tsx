@@ -1,5 +1,5 @@
 import SplitLine from "@/components/SplitLine/SplitLine";
-import { Button, CountDown } from "@hs";
+import { Button, CountDown, Field } from "@hs";
 import { MutableRefObject, useRef, useState } from "react";
 // @ts-ignore
 import { ICountDownImperative } from "@hs/components/CountDown/CountDown";
@@ -10,7 +10,7 @@ export declare interface IDemoCountDownProps {}
 function DemoCountDown(props: IDemoCountDownProps) {
   let ref =
     useRef<ICountDownImperative>() as MutableRefObject<ICountDownImperative>;
-  let [flag, setFlag] = useState(true);
+  let [val, setVal] = useState(0);
 
   return (
     <div>
@@ -52,18 +52,27 @@ function DemoCountDown(props: IDemoCountDownProps) {
           stop
         </Button>
       </div>
-      <SplitLine title={"custom"}></SplitLine>
-      <Button onClick={()=>setFlag(false)}>toggle</Button>
-      {flag ? (
-        <CountDown
-          time={10 * 1000}
-          render={(time) => {
-            return `${time.day}天${time.hour}小时${time.minute}分${time.second}秒`;
+      <p>
+        <Field type={"int"} onInput={(val) => setVal(parseInt(val))}></Field>
+        <Button
+          size={"mini"}
+          type={"primary"}
+          onClick={() => {
+            if (ref.current) {
+              ref.current.restart(val);
+            }
           }}
-        ></CountDown>
-      ) : (
-        <span>flag</span>
-      )}
+        >
+          reset input
+        </Button>
+      </p>
+      <SplitLine title={"custom"}></SplitLine>
+      <CountDown
+        time={10 * 1000}
+        render={(time) => {
+          return `${time.day}天${time.hour}小时${time.minute}分${time.second}秒`;
+        }}
+      ></CountDown>
     </div>
   );
 }

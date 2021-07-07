@@ -76,7 +76,7 @@ export declare interface IFieldProps {
    */
   placeholder?: string;
   textAlign?: Property.TextAlign;
-  onInput?: FormEventHandler<HTMLInputElement>;
+  onInput?: (val:string)=>any;
 }
 
 function Field(props: IFieldProps) {
@@ -107,7 +107,11 @@ function Field(props: IFieldProps) {
         setRealVal(e.currentTarget.value);
       }
       if (props.onInput) {
-        props.onInput(e);
+        if (props.type === "passwd"){
+          props.onInput(e.currentTarget.value);
+        }else{
+          props.onInput(val);
+        }
       }
     },
     [props.onInput]

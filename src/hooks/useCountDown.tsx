@@ -7,10 +7,18 @@ export declare interface ICountDownTime {
   second: number;
 }
 
-function useCountDown(baseTime: number) {
+export declare interface ICountDownHook {
+  time: ICountDownTime;
+  remaining: number;
+  restartTask: (newBase?: number) => void;
+  stopTask: () => void;
+  continueTask: () => void;
+}
+
+function useCountDown(baseTime: number): ICountDownHook {
   // 最初剩余时间
   // Initial remaining time
-  let [baseTimeState] = useState(baseTime);
+  let [baseTimeState, setBaseTimeState] = useState(baseTime);
   // 剩余时间
   // remaining time
   let [remaining, setRemaining] = useState(baseTime);
@@ -21,8 +29,11 @@ function useCountDown(baseTime: number) {
     setFlag(true);
   };
 
-  let restartTask = function () {
-    setRemaining(baseTimeState);
+  let restartTask = function (newBase?: number) {
+    if (newBase) {
+      setBaseTimeState(newBase);
+    }
+    setRemaining(newBase || baseTimeState);
     setFlag(true);
   };
 
