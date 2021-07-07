@@ -57,6 +57,9 @@ function Home(props: HomeProps) {
       <a href="#/divider" className={"a"}>
         divider 分割线
       </a>
+      <a href="#/noticeBar" className={"a"}>
+        noticeBar 通知栏
+      </a>
     </div>
   );
 }

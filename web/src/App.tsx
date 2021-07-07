@@ -22,6 +22,7 @@ const DemoPickerScrollItem = lazy(
 );
 const DemoCountDown = lazy(() => import("./views/DemoCountDown/DemoCountDown"));
 const DemoDivider = lazy(() => import("./views/DemoDivider/DemoDivider"));
+const DemoNoticeBar = lazy(() => import("./views/DemoNoticeBar/DemoNoticeBar"));
 
 function ViewLoading() {
   return <div>View Loading......</div>;
@@ -106,6 +107,10 @@ function App() {
           <Route
             path={"/divider"}
             component={warpRouteComponent(DemoDivider)}
+          ></Route>
+          <Route
+            path={"/noticeBar"}
+            component={warpRouteComponent(DemoNoticeBar)}
           ></Route>
           <Route path={"/*"} render={() => <div>It is nothing</div>}></Route>
         </Switch>
