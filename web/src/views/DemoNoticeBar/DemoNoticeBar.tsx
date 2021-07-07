@@ -1,10 +1,13 @@
-export declare interface IDemoNoticeBarProps {
-}
+import { NoticeBar } from "@hs";
+
+export declare interface IDemoNoticeBarProps {}
 
 function DemoNoticeBar(props: IDemoNoticeBarProps) {
-    return (
-        <div></div>
-    );
+  return (
+    <div>
+      <NoticeBar></NoticeBar>
+    </div>
+  );
 }
 
 namespace DemoNoticeBar {

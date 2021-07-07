@@ -8,7 +8,7 @@ function Home(props: HomeProps) {
   return (
     <div className={"view-home"}>
       <p>请使用手机模式预览</p>
-      <p>Please use mobile mode to Preview</p>
+      <p>Please use mobile mode to preview</p>
       <a href="#/button" className={"a"}>
         button 按钮
       </a>

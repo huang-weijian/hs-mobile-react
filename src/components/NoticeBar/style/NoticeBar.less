@@ -1,0 +1,51 @@
+@import "../../../style/var";
+@import "../../../style/func";
+
+@com-prefix: ~"@{hs-prefix}-notice-bar";
+
+.@{com-prefix} {
+  .hs-base();
+  height: 1.4 * @hs-font-size;
+  padding: @hs-padding;
+
+  .@{com-prefix}-mask {
+    width: 100%;
+    opacity: @hs-disabled-opacity;
+
+    &_primary {
+      background-color: @hs-primary-color;
+    }
+
+    &_success {
+      background-color: @hs-success-color;
+    }
+
+    &_danger {
+      background-color: @hs-danger-color;
+    }
+
+    &_warning {
+      background-color: @hs-warning-color;
+    }
+  }
+
+  .@{com-prefix}-body {
+    width: 100%;
+
+    &_primary {
+      color: @hs-primary-color;
+    }
+
+    &_success {
+      color: @hs-success-color;
+    }
+
+    &_danger {
+      color: @hs-danger-color;
+    }
+
+    &_warning {
+      color: @hs-warning-color;
+    }
+  }
+}

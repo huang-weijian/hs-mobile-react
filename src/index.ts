@@ -15,3 +15,4 @@ export { default as PickerScrollItem } from "./components/Picker/components/Pick
 export { default as Picker } from "./components/Picker";
 export { default as CountDown } from "./components/CountDown";
 export { default as Divider } from "./components/Divider";
+export { default as NoticeBar } from "./components/NoticeBar";
