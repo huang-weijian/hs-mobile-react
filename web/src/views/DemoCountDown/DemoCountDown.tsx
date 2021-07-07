@@ -18,6 +18,7 @@ function DemoCountDown(props: IDemoCountDownProps) {
       <CountDown
         time={10 * 60 * 1000}
         ref={ref}
+        interval={2000}
         colonClassName={"demo-colon-class"}
       ></CountDown>
       <div>

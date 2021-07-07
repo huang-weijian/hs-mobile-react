@@ -29,6 +29,16 @@ export declare interface ICountDownProps {
    * countdown, unit millisecond
    */
   time: number;
+  /**
+   * 间隔时间
+   * Interval time
+   */
+  interval?: number;
+  /**
+   * 递减值
+   * decreasing value
+   */
+  decreasing?: number;
   style?: CSSProperties;
   className?: string;
   dayClassName?: string;
@@ -46,9 +56,19 @@ function CountDown(
   ref: ForwardedRef<ICountDownImperative>
 ) {
   // hooks
-  let { time, remaining, restartTask, continueTask, stopTask } = useCountDown(
-    props.time
-  );
+  let {
+    time,
+    remaining,
+    restartTask,
+    continueTask,
+    stopTask,
+    setDecreasing,
+    setInterval,
+  } = useCountDown({
+    baseTime: props.time,
+    interval: props.interval,
+    decreasing: props.decreasing,
+  });
 
   useImperativeHandle<ICountDownImperative, ICountDownImperative>(
     ref,
