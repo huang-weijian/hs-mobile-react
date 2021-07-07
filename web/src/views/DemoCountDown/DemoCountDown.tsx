@@ -14,6 +14,15 @@ function DemoCountDown(props: IDemoCountDownProps) {
 
   return (
     <div>
+      <p>
+        推荐直接使用本包内的useCountDown
+        hook，有更多的扩展方法，可随时更改递减时间、递减值等
+      </p>
+      <p>
+        It is recommended to directly use useCountDown hook in this package.
+        There are more extension methods, and you can change the decrement time
+        and decrement value at any time
+      </p>
       <SplitLine title={"countDown"}></SplitLine>
       <CountDown
         time={10 * 60 * 1000}
