@@ -5,12 +5,13 @@
 
 .@{com-prefix} {
   .hs-base();
-  height: 1.4 * @hs-font-size;
-  padding: @hs-padding;
+  height: 2 * @hs-font-size;
+  position: relative;
 
   .@{com-prefix}-mask {
     width: 100%;
-    opacity: @hs-disabled-opacity;
+    height: 100%;
+    opacity: 0.2;
 
     &_primary {
       background-color: @hs-primary-color;
@@ -27,10 +28,24 @@
     &_warning {
       background-color: @hs-warning-color;
     }
+
+    &_info {
+      background-color: @hs-info-color;
+    }
+
+    &_default {
+      background-color: @hs-default-color;
+    }
   }
 
   .@{com-prefix}-body {
-    width: 100%;
+    height: 100%;
+    line-height: 2 * @hs-font-size;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 0 @hs-padding;
+    top: 50%;
+    transform: translateY(-50%);
 
     &_primary {
       color: @hs-primary-color;
@@ -46,6 +61,14 @@
 
     &_warning {
       color: @hs-warning-color;
+    }
+
+    &_info {
+      color: @hs-info-color;
+    }
+
+    &_default {
+      color: @hs-default-color;
     }
   }
 }
