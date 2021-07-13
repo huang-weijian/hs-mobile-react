@@ -59,3 +59,15 @@ export function getBodyClassName(props: INoticeBarProps): string {
   }
   return `${className} ${propsClassName} ${typeClassName}`.trim();
 }
+
+export function getMsgClassName(props: INoticeBarProps): string {
+  let className = `${COM_PREFIX}-body-msg`;
+  let propsClassName = props.msgClassName || "";
+  return `${className} ${propsClassName}`.trim();
+}
+
+export function getCloseClassName(props: INoticeBarProps): string {
+  let className = `${COM_PREFIX}-body-close`;
+  let propsClassName = props.closeClassName || "";
+  return `${className} ${propsClassName}`.trim();
+}

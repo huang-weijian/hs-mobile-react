@@ -1,7 +1,13 @@
 import "./style";
 import { prefix } from "../../string/txt";
 import { types } from "../../types/types";
-import { getClassName, getMaskClassName, getBodyClassName } from "./func";
+import {
+  getClassName,
+  getMaskClassName,
+  getBodyClassName,
+  getMsgClassName,
+  getCloseClassName,
+} from "./func";
 import { ReactChild, useMemo } from "react";
 
 export declare interface INoticeBarProps {
@@ -9,11 +15,17 @@ export declare interface INoticeBarProps {
   className?: string;
   maskClassName?: string;
   bodyClassName?: string;
+  msgClassName?: string;
+  closeClassName?: string;
   /**
    * 循环播放的次数
    * The number of times to loop
    */
   cycles?: number;
+  showClose?: boolean;
+  closeNode?: ReactChild;
+  onClose?: () => any;
+  onMsgClick?: () => any;
   children?: ReactChild;
 }
 
@@ -27,12 +39,31 @@ function NoticeBar(props: INoticeBarProps) {
     () => getBodyClassName(props),
     [props.bodyClassName, props.type]
   );
+  let msgClassName = useMemo(
+    () => getMsgClassName(props),
+    [props.msgClassName]
+  );
+  let closeClassName = useMemo(
+    () => getCloseClassName(props),
+    [props.closeClassName]
+  );
   return (
     <div className={className}>
       {/*mask 背景*/}
       <div className={maskClassName}></div>
       {/*notice 消息体*/}
-      <div className={bodyClassName}>{props.children}</div>
+      <div className={bodyClassName}>
+        {/*消息 msg*/}
+        <div className={msgClassName} onClick={props.onMsgClick}>
+          {props.children}
+        </div>
+        {/*关闭 close*/}
+        {props.showClose && (
+          <span className={closeClassName} onClick={props.onClose}>
+            {props.closeNode || "C"}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
