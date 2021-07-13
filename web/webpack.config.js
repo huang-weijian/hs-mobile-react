@@ -10,7 +10,7 @@ const publicIP = require("public-ip");
 
 const port = 9999;
 module.exports = {
-  devtool:"source-map",
+  devtool: "source-map",
   entry: "./src/index.tsx",
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
@@ -28,7 +28,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              sourceMaps:true,
+              sourceMaps: true,
               presets: [
                 [
                   "@babel/preset-env",
@@ -48,15 +48,18 @@ module.exports = {
               plugins: [
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-transform-async-to-generator",
-                require.resolve("react-refresh/babel"),
-              ],
+              ].concat(
+                process.env.NODE_ENV == "development"
+                  ? require.resolve("react-refresh/babel")
+                  : []
+              ),
             },
           },
           {
             loader: require.resolve("ts-loader"),
             options: {
               getCustomTransformers: () => ({
-                before: [ReactRefreshTypeScript()],
+                before: process.env.NODE_ENV == "development"?[ReactRefreshTypeScript()]:[],
               }),
             },
           },
@@ -69,7 +72,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              sourceMaps:true,
+              sourceMaps: true,
               presets: [
                 [
                   "@babel/preset-env",
@@ -89,15 +92,21 @@ module.exports = {
               plugins: [
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-transform-async-to-generator",
-                require.resolve("react-refresh/babel"),
-              ],
+              ].concat(
+                process.env.NODE_ENV == "development"
+                  ? require.resolve("react-refresh/babel")
+                  : []
+              ),
             },
           },
         ],
       },
       {
         test: /.css$/,
-        loaders: ["style-loader", { loader: 'css-loader', options: { sourceMap: true } }],
+        loaders: [
+          "style-loader",
+          { loader: "css-loader", options: { sourceMap: true } },
+        ],
       },
       {
         test: /.(less)$/,
@@ -152,9 +161,7 @@ module.exports = {
     new webpack.DefinePlugin({
       VERSION: "1.0.0",
     }),
-    new ReactRefreshWebpackPlugin(),
     new CleanWebpackPluginAll.CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProgressPlugin(function (percentage, msg) {
       let perMsg = percentage * 100 + "";
       console.log(
@@ -180,7 +187,14 @@ module.exports = {
         });
       }
     }),
-  ],
+  ].concat(
+    process.env.NODE_ENV == "development"
+      ? [
+          new ReactRefreshWebpackPlugin(),
+          new webpack.HotModuleReplacementPlugin(),
+        ]
+      : []
+  ),
   optimization: {
     splitChunks: {
       // include all types of chunks

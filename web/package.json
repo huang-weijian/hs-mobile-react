@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build:web": "webpack",
+    "dev": "set NODE_ENV=development && webpack-dev-server",
+    "build:web": "set NODE_ENV=production && webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
