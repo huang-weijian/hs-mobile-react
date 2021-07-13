@@ -1,4 +1,4 @@
-window.HS_VERSION = "1.0.19";
+window.HS_VERSION = "1.0.20";
 
 export { default as Button } from "./components/Button";
 export { default as Cell } from "./components/Cell";
@@ -16,3 +16,4 @@ export { default as Picker } from "./components/Picker";
 export { default as CountDown } from "./components/CountDown";
 export { default as Divider } from "./components/Divider";
 export { default as NoticeBar } from "./components/NoticeBar";
+export { default as useCountDown } from "./hooks/useCountDown";
