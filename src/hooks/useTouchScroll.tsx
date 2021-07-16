@@ -5,12 +5,9 @@ import { MutableRefObject, useEffect, useRef, useState } from "react";
  * Judge whether to move up or down according to the current moving distance
  * @param y 移动的距离 deviation
  */
-export function getFormatDeviation(
-  y: number,
-  base: number
-): { deviation: number; multiple: number } {
+export function getFormatDeviation(y: number, base: number): number {
   if (y === 0) {
-    return { deviation: 0, multiple: 0 };
+    return 0;
   }
   // 在选项之间
   // between data item
@@ -18,22 +15,19 @@ export function getFormatDeviation(
   let multiple = Math.round(y / base);
   let deviation = multiple * base;
   result = deviation;
-  return { deviation: result, multiple: multiple };
+  return result;
 }
 
 export declare interface IUseTouchScrollParam<E extends HTMLElement> {
   ref: MutableRefObject<E>;
-  minX?: number;
-  maxX?: number;
-  minY?: number;
-  maxY?: number;
   onMoveStart?: () => any;
   onMoving?: () => any;
   onMoveEnd?: () => any;
   // 位移基数，每次moving结束都会根据基数取向最接近倍数基数值
   // move deviation base,
   // At the end of each moving, the nearest multiple base value will be oriented according to the cardinality
-  deviationBase?: number;
+  deviationXBase?: number;
+  deviationYBase?: number;
 }
 
 export declare interface IPosition {
@@ -51,40 +45,28 @@ export declare interface IUseTouchScrollReturn {
     base: IPosition;
     // position before moving
     start: IPosition;
+    // 当次touch偏移值
     // touch moving deviation
     deviation: IPosition;
-    // 偏移量
-    result: IPosition;
+    // 格式化之后的偏移值
+    formattedDeviation: IPosition;
   };
-  // 基础位移倍数
-  // Foundation displacement multiple
-  moveMultiple: number;
 }
 
 export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
   param: IUseTouchScrollParam<E>
 ): IUseTouchScrollReturn {
-  // scroll最远距离
-  // scroll max deviation
-  const [maxX, setMaxX] = useState<IPosition>({ x: 0, y: 0 });
-  const [maxY, setMaxY] = useState<IPosition>({ x: 0, y: 0 });
-  // scroll最远距离
-  // scroll max deviation
-  const [minX, setMinX] = useState<IPosition>({ x: 0, y: 0 });
-  const [minY, setMinY] = useState<IPosition>({ x: 0, y: 0 });
   // 初始距离，每次位移结束都会改变
   // base position
   const [base, setBase] = useState<IPosition>({ x: 0, y: 0 });
-  // 位移结果
-  // moving result
-  const [result, setResult] = useState<IPosition>({ x: 0, y: 0 });
   // 位移开始坐标
   const [start, setStart] = useState<IPosition>({ x: 0, y: 0 });
   // 每次touch拖动偏移量
   // each touch scroll deviation
   const [deviation, setDeviation] = useState<IPosition>({ x: 0, y: 0 });
   const [isMoving, setIsMoving] = useState<boolean>(false);
-  const [multiple, setMultiple] = useState<number>(0);
+  const [deviationXBase] = useState<number>(param.deviationXBase || 0);
+  const [deviationYBase] = useState<number>(param.deviationYBase || 0);
 
   useEffect(() => {
     // 防止页面滚动，要加在被移动的元素上，不能在react的绑定事件中阻止默认事件
@@ -118,19 +100,20 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
       });
       element.addEventListener("touchend", function (e) {
         setDeviation((preDeviation) => {
-          // 计算出位移结果
-          // The displacement results are calculated
-          let resultPosition: IPosition = {
-            x: preDeviation.x,
-            y: preDeviation.y,
-          };
-          // 计算出位移后的值
-          // Calculate the value after displacement
-          setResult(resultPosition);
-          setBase((preBase) => ({
-            x: preBase.x + resultPosition.x,
-            y: preBase.y + resultPosition.y,
-          }));
+          setBase((preBase) => {
+            let baseX = preBase.x + preDeviation.x;
+            let baseY = preBase.y + preDeviation.y;
+            if (deviationXBase) {
+              baseX = getFormatDeviation(baseX, deviationXBase);
+            }
+            if (deviationYBase) {
+              baseY = getFormatDeviation(baseY, deviationYBase);
+            }
+            return {
+              x: baseX,
+              y: baseY,
+            };
+          });
           // 归零
           // return zero
           return { x: 0, y: 0 };
@@ -145,8 +128,7 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
       base: base,
       start: start,
       deviation: deviation,
-      result: result,
+      formattedDeviation: deviation,
     },
-    moveMultiple: multiple,
   };
 }

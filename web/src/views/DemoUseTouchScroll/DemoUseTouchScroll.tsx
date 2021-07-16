@@ -1,5 +1,5 @@
 import SplitLine from "@/components/SplitLine/SplitLine";
-import { MutableRefObject, useRef, useState } from "react";
+import { CSSProperties, MutableRefObject, useRef, useState } from "react";
 import { useTouchScroll } from "@hs";
 import "./index.less";
 
@@ -15,7 +15,13 @@ function DemoUseTouchScroll(props: IDemoUseTouchScrollProps) {
   });
   const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
 
-  const { isMoving, positions, moveMultiple } = useTouchScroll({ ref: ref });
+  const { isMoving, positions } = useTouchScroll({
+    ref: ref,
+    deviationYBase: 50,
+  });
+  let transitionStyle: CSSProperties = {
+    transition: "transform 400ms linear",
+  };
 
   return (
     <div>
@@ -26,20 +32,26 @@ function DemoUseTouchScroll(props: IDemoUseTouchScrollProps) {
         deviation：{JSON.stringify(positions.deviation)}
       </p>
       <p className={"demo-p"}>base：{JSON.stringify(positions.base)}</p>
-      <p className={"demo-p"}>result：{JSON.stringify(positions.result)}</p>
-      <p className={"demo-p"}>moveMultiple:{moveMultiple}</p>
       <div className={"demo-container"}>
         <div
           style={{
-            transform: `translate(${
-              positions.base.x + positions.deviation.x
-            }px,${positions.base.y + positions.deviation.y}px)`,
+            ...{
+              transform: `translate(${
+                positions.base.x + positions.deviation.x
+              }px,${positions.base.y + positions.deviation.y}px)`,
+              ...(isMoving ? {} : transitionStyle),
+            },
           }}
           ref={ref}
         >
           {list.map((item) => (
             <div
-              style={{ color: "white", textAlign: "center", margin: "10px 0" }}
+              style={{
+                color: "white",
+                textAlign: "center",
+                margin: "10px 0",
+                border: "1px white solid",
+              }}
               key={item}
             >
               {item}
