@@ -60,6 +60,9 @@ function Home(props: HomeProps) {
       <a href="#/noticeBar" className={"a"}>
         noticeBar 通知栏
       </a>
+      <a href="#/useTouchScroll" className={"a"}>
+        useTouchScroll
+      </a>
     </div>
   );
 }
