@@ -1,11 +1,11 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 
 /**
  * 根据当前移动距离判断是上移还是下移多少基础高度
  * Judge whether to move up or down according to the current moving distance
  * @param y 移动的距离 deviation
  */
-export function getFormatDeviation(y: number, base: number): number {
+function getFormatDeviation(y: number, base: number): number {
   if (y === 0) {
     return 0;
   }
@@ -20,9 +20,6 @@ export function getFormatDeviation(y: number, base: number): number {
 
 export declare interface IUseTouchScrollParam<E extends HTMLElement> {
   ref: MutableRefObject<E>;
-  onMoveStart?: () => any;
-  onMoving?: () => any;
-  onMoveEnd?: () => any;
   // 位移基数，每次moving结束都会根据基数取向最接近倍数基数值
   // move deviation base,
   // At the end of each moving, the nearest multiple base value will be oriented according to the cardinality
@@ -48,6 +45,7 @@ export declare interface IUseTouchScrollReturn {
     // 当次touch偏移值
     // touch moving deviation
     deviation: IPosition;
+    // Offset value after formatting
     // 格式化之后的偏移值
     formattedDeviation: IPosition;
   };
@@ -64,7 +62,14 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
   // 每次touch拖动偏移量
   // each touch scroll deviation
   const [deviation, setDeviation] = useState<IPosition>({ x: 0, y: 0 });
+  const [formattedDeviation, setFormattedDeviation] = useState<IPosition>({
+    x: 0,
+    y: 0,
+  });
   const [isMoving, setIsMoving] = useState<boolean>(false);
+  // 位移基数，每次moving结束都会根据基数取向最接近倍数基数值
+  // move deviation base,
+  // At the end of each moving, the nearest multiple base value will be oriented according to the cardinality
   const [deviationXBase] = useState<number>(param.deviationXBase || 0);
   const [deviationYBase] = useState<number>(param.deviationYBase || 0);
 
@@ -101,17 +106,18 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
       element.addEventListener("touchend", function (e) {
         setDeviation((preDeviation) => {
           setBase((preBase) => {
-            let baseX = preBase.x + preDeviation.x;
-            let baseY = preBase.y + preDeviation.y;
+            let formattedX = preDeviation.x;
+            let formattedY = preDeviation.y;
             if (deviationXBase) {
-              baseX = getFormatDeviation(baseX, deviationXBase);
+              formattedX = getFormatDeviation(preDeviation.x, deviationXBase);
             }
             if (deviationYBase) {
-              baseY = getFormatDeviation(baseY, deviationYBase);
+              formattedY = getFormatDeviation(preDeviation.y, deviationYBase);
             }
+            setFormattedDeviation({ x: formattedX, y: formattedY });
             return {
-              x: baseX,
-              y: baseY,
+              x: preBase.x + formattedX,
+              y: preBase.y + formattedY,
             };
           });
           // 归零
@@ -120,6 +126,8 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
         });
         setIsMoving(false);
       });
+    } else {
+      console.error("please input ref");
     }
   }, []);
   return {
@@ -128,7 +136,7 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
       base: base,
       start: start,
       deviation: deviation,
-      formattedDeviation: deviation,
+      formattedDeviation: formattedDeviation,
     },
   };
 }

@@ -31,6 +31,9 @@ function DemoUseTouchScroll(props: IDemoUseTouchScrollProps) {
       <p className={"demo-p"}>
         deviation：{JSON.stringify(positions.deviation)}
       </p>
+      <p className={"demo-p"}>
+        formattedDeviation：{JSON.stringify(positions.formattedDeviation)}
+      </p>
       <p className={"demo-p"}>base：{JSON.stringify(positions.base)}</p>
       <div className={"demo-container"}>
         <div
