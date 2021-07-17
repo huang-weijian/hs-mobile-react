@@ -8,7 +8,7 @@ export declare interface IDemoUseTouchScrollProps {}
 function DemoUseTouchScroll(props: IDemoUseTouchScrollProps) {
   const [list] = useState<number[]>(function () {
     let arr = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 50; i++) {
       arr.push(i);
     }
     return arr;
@@ -17,10 +17,10 @@ function DemoUseTouchScroll(props: IDemoUseTouchScrollProps) {
 
   const { isMoving, positions } = useTouchScroll({
     ref: ref,
-    deviationYBase: 50,
+    deviationYBase: 80,
   });
   let transitionStyle: CSSProperties = {
-    transition: "transform 400ms linear",
+    transition: "transform 200ms linear",
   };
 
   return (

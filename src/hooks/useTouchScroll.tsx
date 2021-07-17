@@ -12,8 +12,8 @@ function getFormatDeviation(y: number, base: number): number {
   // 在选项之间
   // between data item
   let result = 0;
-  let multiple = Math.round(y / base);
-  let deviation = multiple * base;
+  const multiple = Math.round(y / base);
+  const deviation = multiple * base;
   result = deviation;
   return result;
 }
@@ -32,6 +32,11 @@ export declare interface IPosition {
   y: number;
 }
 
+export declare interface IDeviation {
+  x: number;
+  y: number;
+}
+
 export declare interface IUseTouchScrollReturn {
   // 是否在移动中
   // is moving
@@ -39,15 +44,17 @@ export declare interface IUseTouchScrollReturn {
   // deviation return value
   positions: {
     // 位移之后的结果值
-    base: IPosition;
+    // move result
+    base: IDeviation;
+    // 位移开始位置
     // position before moving
     start: IPosition;
     // 当次touch偏移值
     // touch moving deviation
-    deviation: IPosition;
+    deviation: IDeviation;
     // Offset value after formatting
     // 格式化之后的偏移值
-    formattedDeviation: IPosition;
+    formattedDeviation: IDeviation;
   };
 }
 
@@ -56,13 +63,13 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
 ): IUseTouchScrollReturn {
   // 初始距离，每次位移结束都会改变
   // base position
-  const [base, setBase] = useState<IPosition>({ x: 0, y: 0 });
+  const [base, setBase] = useState<IDeviation>({ x: 0, y: 0 });
   // 位移开始坐标
   const [start, setStart] = useState<IPosition>({ x: 0, y: 0 });
   // 每次touch拖动偏移量
   // each touch scroll deviation
-  const [deviation, setDeviation] = useState<IPosition>({ x: 0, y: 0 });
-  const [formattedDeviation, setFormattedDeviation] = useState<IPosition>({
+  const [deviation, setDeviation] = useState<IDeviation>({ x: 0, y: 0 });
+  const [formattedDeviation, setFormattedDeviation] = useState<IDeviation>({
     x: 0,
     y: 0,
   });
@@ -78,7 +85,7 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
     // Prevent page scroll,add to listener list of the element to be moving,
     // don't prevent default event in react event system
     if (param.ref.current) {
-      let element = param.ref.current;
+      const element = param.ref.current;
       element.addEventListener(
         "touchmove",
         (e) => {
@@ -88,13 +95,13 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
           passive: false,
         }
       );
-      element.addEventListener("touchstart", function (e) {
-        let finger = e.changedTouches.item(0) as Touch;
+      element.addEventListener("touchstart", (e) => {
+        const finger = e.changedTouches.item(0) as Touch;
         setStart({ x: finger.screenX, y: finger.screenY });
         setIsMoving(true);
       });
-      element.addEventListener("touchmove", function (e) {
-        let finger = e.changedTouches.item(0) as Touch;
+      element.addEventListener("touchmove", (e) => {
+        const finger = e.changedTouches.item(0) as Touch;
         setStart((pre) => {
           setDeviation({
             x: finger.screenX - pre.x,
@@ -103,7 +110,7 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
           return pre;
         });
       });
-      element.addEventListener("touchend", function (e) {
+      element.addEventListener("touchend", () => {
         setDeviation((preDeviation) => {
           setBase((preBase) => {
             let formattedX = preDeviation.x;
@@ -131,12 +138,12 @@ export default function useTouchScroll<E extends HTMLElement = HTMLElement>(
     }
   }, []);
   return {
-    isMoving: isMoving,
+    isMoving,
     positions: {
-      base: base,
-      start: start,
-      deviation: deviation,
-      formattedDeviation: formattedDeviation,
+      base,
+      start,
+      deviation,
+      formattedDeviation,
     },
   };
 }
