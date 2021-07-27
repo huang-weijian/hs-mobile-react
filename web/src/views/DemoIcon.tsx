@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import SplitLine from "@/components/SplitLine/SplitLine";
 
 export declare interface DemoIconProps {}

@@ -1,8 +1,73 @@
 import { createElement, useState } from "react";
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { Button, Popup } from "@hs";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface DemoPopupProps {}
+
+const propsStr = `interface PopupProps {
+  /**
+   * 是否展示popup  show or hide popup
+   */
+  show: boolean;
+  /**
+   * popup body的style  popup body style
+   */
+  bodyStyle?: CSSProperties;
+  /**
+   * popup body的className  popup body className
+   */
+  bodyClassName?: string;
+  /**
+   * 是否展示遮罩层  show or hide mask
+   */
+  showMask?: boolean;
+  position?: positions;
+  /**
+   * 遮罩层的class  mask class
+   */
+  maskClassName?: string;
+  /**
+   * 遮罩层的style  mask style
+   */
+  maskStyle?: CSSProperties;
+  /**
+   * 动画持续时间单位ms animated duration time unit number
+   * todo
+   */
+  duration?: number;
+  /**
+   * 是否是圆角  is round
+   */
+  round?: boolean;
+  /**
+   * popup body radius
+   */
+  radius?: string;
+  /**
+   *  是否适配手机安全区域  phone safe area
+   */
+  safeArea?: boolean;
+  bodyTitleNode?: ReactChild;
+  /**
+   * 是否展示右上角关闭按钮  show or hide top-right close btn
+   */
+  showClose?: boolean;
+  children?: ReactNode;
+  /**
+   *  popup打开后的事件 on Popup opened
+   */
+  onOpened?: () => any;
+  /**
+   *  popup关闭后的事件 on Popup closed
+   */
+  onClosed?: () => any;
+  /**
+   * 取消popup  cancel popup
+   */
+  onCancel: () => any;
+}`;
 
 function DemoPopup(props: DemoPopupProps) {
   const [flag, setFlag] = useState(false);
@@ -18,6 +83,10 @@ function DemoPopup(props: DemoPopupProps) {
   return (
     <div>
       <SplitLine title={"top"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <Popup show={flag} onCancel={() => setFlag(false)}>
         top
       </Popup>

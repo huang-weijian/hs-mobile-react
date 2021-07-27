@@ -4,8 +4,44 @@ import { MutableRefObject, useRef, useState } from "react";
 // @ts-ignore
 import { ICountDownImperative } from "@hs/components/CountDown/CountDown";
 import "./index.less";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface IDemoCountDownProps {}
+
+const propsStr = `interface ICountDownProps {
+  /**
+   * 倒计时数，单位毫秒
+   * countdown, unit millisecond
+   */
+  time: number;
+  /**
+   * 间隔时间
+   * Interval time
+   */
+  interval?: number;
+  /**
+   * 递减值
+   * decreasing value
+   */
+  decreasing?: number;
+  style?: CSSProperties;
+  className?: string;
+  dayClassName?: string;
+  hourClassName?: string;
+  minuteClassName?: string;
+  secondClassName?: string;
+  colonClassName?: string;
+  render?: (time: ICountDownTime, remaining: number) => ReactChild;
+}
+
+interface ICountDownTime {
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+}
+`;
 
 function DemoCountDown(props: IDemoCountDownProps) {
   let ref =
@@ -24,6 +60,10 @@ function DemoCountDown(props: IDemoCountDownProps) {
         and decrement value at any time
       </p>
       <SplitLine title={"countDown"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <CountDown
         time={10 * 60 * 1000}
         ref={ref}

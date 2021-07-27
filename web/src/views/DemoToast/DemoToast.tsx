@@ -1,6 +1,8 @@
 import { Button, Toast } from "@hs";
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { RouteComponentProps } from "react-router";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface DemoToastProps {
   name?: string;
@@ -11,10 +13,93 @@ export declare interface DemoToastProps {
   };
 }
 
+const propsStr = `interface IToastMsg {
+  /**
+   * 消息的类型
+   * toast theme type
+   */
+  type?: toastTypes;
+  /**
+   * Toast位置
+   * Toast Position
+   */
+  position?: toastPositions;
+  /**
+   * 展示或隐藏Icon
+   * show or hide Icon
+   */
+  showIcon?: boolean;
+  /**
+   * 自定义Icon节点
+   * custom Icon Node
+   */
+  iconNode?: ReactChild;
+  /**
+   * toast消息
+   * toast msg
+   */
+  msg?: string;
+  /**
+   * toast持续时间
+   * toast duration time unit ms
+   * -1为不关闭
+   */
+  duration?: number;
+  /**
+   * Toast的样式
+   * Toast className
+   */
+  toastClassName?: string;
+  /**
+   * Toast的style
+   * Toast style
+   */
+  toastStyle?: CSSProperties;
+  /**
+   * Toast body的样式
+   * Toast body className
+   */
+  bodyClassName?: string;
+  /**
+   * Toast body的style
+   * Toast body style
+   */
+  bodyStyle?: CSSProperties;
+  /**
+   * Toast msg的样式
+   * Toast msg className
+   */
+  msgClassName?: string;
+  /**
+   * Toast msg的style
+   * Toast msg style
+   */
+  msgStyle?: CSSProperties;
+  /**
+   * Toast mask的样式
+   * Toast mask className
+   */
+  maskClassName?: string;
+  /**
+   * Toast mask的style
+   * Toast mask style
+   */
+  maskStyle?: CSSProperties;
+  /**
+   * 展示或隐藏遮罩层
+   * show or hide mask
+   */
+  showMask?: boolean;
+}`;
+
 function DemoToast(props: DemoToastProps & RouteComponentProps) {
   return (
     <div>
       <SplitLine title={"Toast"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <p>Toast的自带图标是dom和css</p>
       <p>Toast's icons are dom node</p>
       <p>Toast是单例模式</p>

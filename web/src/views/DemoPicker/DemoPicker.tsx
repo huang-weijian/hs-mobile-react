@@ -4,6 +4,8 @@ import { useState } from "react";
 import { IDataItem } from "../../../../src/components/Picker/components/PickerScrollItem/PickerScrollItem";
 import { clone } from "../../../../src/util";
 import { IPickerProps } from "../../../../src/components/Picker/Picker";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface IDemoPickerProps {}
 
@@ -23,6 +25,34 @@ let demoData: IPickerProps["columns"] = [
   },
 ];
 
+const propsStr = `interface IPickerProps {
+  // style
+  style?: CSSProperties;
+  toolbarStyle?: CSSProperties;
+  scrollContainerStyle?: CSSProperties;
+  safeAreaStyle?: CSSProperties;
+  // className
+  className?: string;
+  toolbarClassName?: string;
+  scrollContainerClassName?: string;
+  safeAreaClassName?: string;
+  // normal
+  safeArea?: boolean;
+  titleNode?: ReactChild;
+  cancelNode?: ReactChild;
+  confirmNode?: ReactChild;
+  columns: Array<IPickerDataItem>;
+  values: Array<IDataItem["value"]>;
+  onSelected?: (item: IPickerSelectedDataItem) => any;
+  onCancel?: (MouseEventHandler<HTMLSpanElement>);
+  onConfirm?: (
+    selected: IPickerSelectedDataItem[],
+    ids: IPickerSelectedDataItem["id"][],
+    values: IPickerSelectedDataItem["data"]["value"][],
+    idxes: IPickerSelectedDataItem["idx"][]
+  ) => any;
+}`;
+
 function DemoPicker(props: IDemoPickerProps) {
   // hooks
   let [data, setData] = useState(demoData);
@@ -31,6 +61,10 @@ function DemoPicker(props: IDemoPickerProps) {
   return (
     <div>
       <SplitLine title={"picker"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <div style={{ height: "40vh" }}>
         <Picker
           titleNode={"test"}

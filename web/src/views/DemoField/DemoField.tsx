@@ -1,12 +1,83 @@
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { Cell, Field } from "@hs";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface IDemoFieldProps {}
+
+const propsStr = `interface IFieldProps {
+  /**
+   * field类型
+   * field type
+   */
+  type?: "text" | "passwd" | "float" | "int";
+  /**
+   * 初始value
+   * init value
+   */
+  initValue?: string;
+  /**
+   * 原生属性
+   * native prop
+   */
+  readOnly?: boolean;
+  /**
+   * 原生属性
+   * native prop
+   */
+  disabled?: boolean;
+  /**
+   * input原生属性
+   * input native prop
+   */
+  maxlength?: number;
+  /**
+   * 容器的className
+   * input container className
+   */
+  containerClassName?: string;
+  /**
+   * 容器的style
+   * input container style
+   */
+  containerStyle?: CSSProperties;
+  /**
+   * 附加className
+   * additional className
+   */
+  className?: string;
+  /**
+   * 附加style
+   * additional style
+   */
+  style?: CSSProperties;
+  /**
+   * 底部横线颜色类型
+   * bottom border color type
+   */
+  bottomType?: "primary" | "warning" | "success" | "danger" | "none";
+  /**
+   * 是否可清理文本
+   * can clean up all text
+   */
+  clearable?: boolean;
+  /**
+   * 原声属性
+   * native prop
+   */
+  placeholder?: string;
+  textAlign?: Property.TextAlign;
+  onInput?: (val:string)=>any;
+}`;
 
 function DemoField(props: IDemoFieldProps) {
   return (
     <div>
       <SplitLine title={"field"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <Field></Field>
       <SplitLine title={"bottomType"}></SplitLine>
       <Cell

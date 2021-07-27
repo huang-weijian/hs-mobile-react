@@ -1,13 +1,35 @@
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { Radio } from "@hs";
 import "./radio.less";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface IDemoRadioProps {}
+
+const propsStr = `interface IRadioProps {
+  value?: any;
+  type?: "primary" | "danger" | "warning";
+  /**
+   * radio标签
+   * radio txt label
+   */
+  label?: string;
+  className?: string;
+  iconClassName?: string;
+  disabled?: boolean;
+  iconRender?: (props: IRadioProps, check: boolean) => ReactNode;
+  onChange?: (val: any, check: boolean) => void;
+  children?: ReactNode;
+}`;
 
 function DemoRadio(props: IDemoRadioProps) {
   return (
     <div>
       <SplitLine title={"radio"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <Radio className={`demo-radio-item`}>primary</Radio>
       <Radio type={"danger"} className={`demo-radio-item`}>
         danger

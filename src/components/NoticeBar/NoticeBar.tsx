@@ -17,11 +17,6 @@ export declare interface INoticeBarProps {
   bodyClassName?: string;
   msgClassName?: string;
   closeClassName?: string;
-  /**
-   * 循环播放的次数
-   * The number of times to loop
-   */
-  cycles?: number;
   showClose?: boolean;
   closeNode?: ReactChild;
   onClose?: () => any;

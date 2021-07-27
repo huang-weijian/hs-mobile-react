@@ -1,8 +1,46 @@
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { PickerScrollItem } from "@hs";
 import { useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface IDemoPickerScrollItemProps {}
+
+const propsStr = `interface IDataItem {
+  id: string;
+  text: ReactChild;
+  value: string;
+
+  [props: string]: any;
+}
+
+interface IDeviation {
+  x: number;
+  y: number;
+}
+
+interface ITouchPosition {
+  x: number;
+  y: number;
+}
+
+interface IPickerScrollItemClassNames {
+  className?: string;
+  cursorClassName?: string;
+  cursorMiddleClassName?: string;
+  cursorSpaceClassName?: string;
+  lineContainerClassName?: string;
+  lineClassName?: string;
+}
+
+interface IPickerScrollItemProps
+  extends IPickerScrollItemClassNames {
+  data: Array<IDataItem>;
+  style?: CSSProperties;
+  lineHeight?: number;
+  value?: IDataItem["id"];
+  onSelect?: (data: IDataItem, idx: number) => void;
+}`;
 
 function DemoPickerScrollItem(props: IDemoPickerScrollItemProps) {
   let [list] = useState(
@@ -16,6 +54,10 @@ function DemoPickerScrollItem(props: IDemoPickerScrollItemProps) {
   return (
     <div>
       <SplitLine title={"PickerScorllItem"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <p>current：{JSON.stringify(current)}</p>
       <div style={{ height: "250px" }}>
         <PickerScrollItem

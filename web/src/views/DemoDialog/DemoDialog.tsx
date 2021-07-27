@@ -1,8 +1,37 @@
 import { useState } from "react";
 import SplitLine from "@/components/SplitLine/SplitLine";
 import { Button, Dialog } from "@hs";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { androidstudio } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare interface IDemoDialogProps {}
+
+const propsStr = `interface IDialogProps {
+  show: boolean;
+  className?: string;
+  maskClassName?: string;
+  bodyClassName?: string;
+  style?: CSSProperties;
+  bodyStyle?: CSSProperties;
+  /**
+   * 是否隐藏mask
+   * hide mask
+   */
+  hideMask?: boolean;
+  children?: ReactNode;
+  /**
+   *  Dialog打开后的事件 on Dialog opened
+   */
+  onOpened?: () => any;
+  /**
+   *  Dialog关闭后的事件 on Dialog closed
+   */
+  onClosed?: () => any;
+  /**
+   * 取消Dialog  cancel Dialog
+   */
+  onCancel: () => any;
+}`;
 
 function DemoDialog(props: IDemoDialogProps) {
   const [show, setShow] = useState(false);
@@ -12,6 +41,10 @@ function DemoDialog(props: IDemoDialogProps) {
   return (
     <div>
       <SplitLine title={"dialog"}></SplitLine>
+      <SplitLine title={"props"}></SplitLine>
+      <SyntaxHighlighter language={"typescript"} style={androidstudio}>
+        {propsStr}
+      </SyntaxHighlighter>
       <Button type={"primary"} onClick={() => setShow(true)}>
         dialog
       </Button>
