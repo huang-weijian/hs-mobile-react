@@ -4080,6 +4080,11 @@ hpack.js@^2.1.6:
     readable-stream "^2.0.1"
     wbuf "^1.1.0"
 
+hs-style@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/hs-style/-/hs-style-1.0.0.tgz#fc343912e8fc0b8c46a21eb2f9106bf68ef223c0"
+  integrity sha512-vr1hhk8WFURXhikSF/HkAJdalpj/8qPYHTmp4g1AkPnVT3gu1h9Zdp2z5L3x68snCzv5lxjd1MW0K8YJZceoYw==
+
 html-entities@^1.2.1, html-entities@^1.3.1:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.4.0.tgz#cfbd1b01d2afaf9adca1b10ae7dffab98c71d2dc"
